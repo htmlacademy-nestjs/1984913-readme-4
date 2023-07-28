@@ -1,6 +1,5 @@
-import { Tag } from "./tag.interface";
+import { Publication } from "./publication.interface";
 
-export interface PhotoPublication {
+export interface PhotoPublication extends Publication{
   photo: string;
-  tags?:Tag[];
 }

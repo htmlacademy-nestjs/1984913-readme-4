@@ -1,7 +1,6 @@
-import { Tag } from "./tag.interface";
+import { Publication } from "./publication.interface";
 
-export interface QuotePublication {
+export interface QuotePublication extends Publication {
   text: string;
   author: string;
-  tags?:Tag[];
 }

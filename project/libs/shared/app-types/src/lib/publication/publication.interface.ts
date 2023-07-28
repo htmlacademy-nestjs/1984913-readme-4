@@ -1,9 +1,8 @@
-import { Comment } from "../reaction/comment.interface";
 import { PublicationStatus } from "./publication-status.enum";
 import { PublicationType } from "./publication-type.enum";
 
 export interface Publication {
-  _id?: number;
+  _id?: string;
   _userId?: string;
   _originUserId?: string;
   _originId?: string;
@@ -15,5 +14,4 @@ export interface Publication {
   tags?: string[];
   likesCount: number;
   commentsCount: number;
-  comments: Comment[];
 }

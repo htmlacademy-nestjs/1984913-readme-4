@@ -23,9 +23,9 @@ export class CommentMemoryRepository implements CRUDRepository<CommentEntity, st
     return null;
   }
 
-  public async findByPostId(id: string): Promise<Comment[] | null> {
+  public async findByPostId(postId: string): Promise<Comment[] | null> {
     const existComment = Object.values(this.repository)
-      .filter((item) => item._id === id);
+      .filter((item) => item.postId === postId);
 
     if (! existComment) {
       return null;

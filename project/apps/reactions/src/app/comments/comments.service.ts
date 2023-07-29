@@ -16,7 +16,7 @@ export class CommentsService {
   ) {
     const comment = {
       ...dto,
-      _userId: '',
+      _userId: '1',
       createdDate:dayjs().unix(),
     };
 
@@ -27,7 +27,7 @@ export class CommentsService {
   }
 
   public async findByPostId(postId: string) {
-   const existingComments = await this.commentRepository.findByPostId(postId);
+  const existingComments = await this.commentRepository.findByPostId(postId);
 
     if (!existingComments) {
       throw new NotFoundException(CommentsError.PostNotFound);

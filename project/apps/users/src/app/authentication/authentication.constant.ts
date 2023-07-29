@@ -12,3 +12,13 @@ export const AuthPath = {
   Login:'login',
   Id: ':id'
 }as const;
+
+export const UserNameLength = {
+  Min: 3,
+  Max: 50,
+};
+
+export const UserPasswordLength = {
+  Min: 6,
+  Max: 12,
+};

@@ -45,7 +45,7 @@ export class CommentsService {
     if(!isAuthor){
       throw new BadRequestException (CommentsError.WrongUser);
     }
-    return this.commentRepository.destroy(comment._id);
+    return this.commentRepository.destroy(id);
   }
 
 

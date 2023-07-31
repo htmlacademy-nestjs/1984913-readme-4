@@ -5,18 +5,14 @@ export class VideoPublicationEntity extends PublicationEntity implements VideoPu
   public title: string;
   public link: string;
 
-  constructor(PublicationData: VideoPublication) {
-    super(PublicationData);
-    this.fillEntity(PublicationData);
+  constructor(publicationData: VideoPublication) {
+    super(publicationData);
+    this.fillEntity(publicationData);
   }
 
-  public toObject() {
-    return {...this};
-  }
-
-  public fillEntity(PublicationData: VideoPublication) {
-    this.title = PublicationData.title;
-    this.link = PublicationData.link;
+  public fillEntity(publicationData: VideoPublication) {
+    this.title = publicationData.title;
+    this.link = publicationData.link;
   }
 
 }

@@ -4,17 +4,13 @@ import { PublicationEntity } from './publication.entity';
 export class PhotoPublicationEntity extends PublicationEntity implements PhotoPublication {
   public photo: string;
 
-  constructor(PublicationData: PhotoPublication) {
-    super(PublicationData);
-    this.fillEntity(PublicationData);
+  constructor(publicationData: PhotoPublication) {
+    super(publicationData);
+    this.fillEntity(publicationData);
   }
 
-  public toObject() {
-    return {...this};
-  }
-
-  public fillEntity(PublicationData: PhotoPublication) {
-    this.photo = PublicationData.photo;
+  public fillEntity(publicationData: PhotoPublication) {
+    this.photo = publicationData.photo;
   }
 
 }

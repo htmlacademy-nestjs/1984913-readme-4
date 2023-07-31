@@ -5,18 +5,14 @@ export class QuotePublicationEntity extends PublicationEntity implements QuotePu
   public text: string;
   public author: string;
 
-  constructor(PublicationData: QuotePublication) {
-    super(PublicationData);
-    this.fillEntity(PublicationData);
+  constructor(publicationData: QuotePublication) {
+    super(publicationData);
+    this.fillEntity(publicationData);
   }
 
-  public toObject() {
-    return {...this};
-  }
-
-  public fillEntity(PublicationData: QuotePublication) {
-    this.text = PublicationData.text;
-    this.author = PublicationData.author;
+  public fillEntity(publicationData: QuotePublication) {
+    this.text = publicationData.text;
+    this.author = publicationData.author;
   }
 
 }

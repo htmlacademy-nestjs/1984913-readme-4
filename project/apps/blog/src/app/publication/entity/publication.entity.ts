@@ -1,42 +1,42 @@
-import {Publication, PublicationStatus, PublicationType} from '@project/shared/app-types';
+import {Publication} from '@project/shared/app-types';
 import { DEFAULT_AMOUNT, DEFAULT_STATUS } from '../publication.constant';
 
 export class PublicationEntity implements Publication {
-  public _id: string;
-  public _userId: string;
-  public _originUserId: string;
-  public _originId: string;
-  public type: PublicationType;
+  public _id?: string;
+  public _userId?: string;
+  public _originUserId?: string;
+  public _originId?: string;
+  public type: string;
   public createdDate: string;
   public postedDate: string;
-  public status: PublicationStatus;
+  public status: string;
   public isReposted:boolean;
   public tags:string[];
   public likesCount:number;
   public commentsCount:number;
 
 
-  constructor(PublicationData: Publication) {
-    this.fillEntity(PublicationData);
+  constructor(publicationData: Publication) {
+    this.fillEntity(publicationData);
   }
 
   public toObject() {
     return {...this};
   }
 
-  public fillEntity(PublicationData: Publication) {
-    this._id = PublicationData._id;
-    this._userId = PublicationData._userId;
-    this._originUserId = PublicationData._originUserId;
-    this._originId = PublicationData._originId;
-    this.type = PublicationData.type;
-    this.createdDate = PublicationData.createdDate;
-    this.postedDate = PublicationData.postedDate;
-    this.status = PublicationData.status;
-    this.isReposted = PublicationData.isReposted||DEFAULT_STATUS;
-    this.tags = PublicationData.tags;
-    this.likesCount = PublicationData.likesCount||DEFAULT_AMOUNT;
-    this.commentsCount = PublicationData.commentsCount||DEFAULT_AMOUNT;
+  public fillEntity(publicationData: Publication) {
+    this._id = publicationData._id;
+    this._userId = publicationData._userId;
+    this._originUserId = publicationData._originUserId;
+    this._originId = publicationData._originId;
+    this.type = publicationData.type;
+    this.createdDate = publicationData.createdDate;
+    this.postedDate = publicationData.postedDate;
+    this.status = publicationData.status;
+    this.isReposted = publicationData.isReposted||DEFAULT_STATUS;
+    this.tags = publicationData.tags;
+    this.likesCount = publicationData.likesCount||DEFAULT_AMOUNT;
+    this.commentsCount = publicationData.commentsCount||DEFAULT_AMOUNT;
   }
 
 }

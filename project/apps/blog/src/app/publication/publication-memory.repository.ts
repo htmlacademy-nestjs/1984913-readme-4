@@ -2,11 +2,12 @@ import { CRUDRepository } from '@project/util/util-types';
 import { BlogPublication } from '@project/shared/app-types';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
-import { BlogPublicationEntity } from './blog-publication-entity.type';
+import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
 
 @Injectable()
 export class PublicationMemoryRepository implements CRUDRepository<BlogPublicationEntity, string, BlogPublication> {
   private repository: Record<string, BlogPublication> = {};
+
 
   public async create(item: BlogPublicationEntity): Promise<BlogPublication> {
     const entry = { ...item.toObject(), _id: randomUUID()};

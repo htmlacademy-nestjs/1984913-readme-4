@@ -5,18 +5,14 @@ export class LinkPublicationEntity extends PublicationEntity implements LinkPubl
   public link: string;
   public description: string;
 
-  constructor(PublicationData: LinkPublication) {
-    super(PublicationData);
-    this.fillEntity(PublicationData);
+  constructor(publicationData: LinkPublication) {
+    super(publicationData);
+    this.fillEntity(publicationData);
   }
 
-  public toObject() {
-    return {...this};
-  }
-
-  public fillEntity(PublicationData: LinkPublication) {
-    this.link = PublicationData.link;
-    this.description = PublicationData.link;
+  public fillEntity(publicationData: LinkPublication) {
+    this.link = publicationData.link;
+    this.description = publicationData.link;
   }
 
 }

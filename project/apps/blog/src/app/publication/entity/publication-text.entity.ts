@@ -4,21 +4,17 @@ import { PublicationEntity } from './publication.entity';
 export class TextPublicationEntity extends PublicationEntity implements TextPublication {
   public text: string;
   public title: string;
-  public anonuncement: string;
+  public announcement: string;
 
-  constructor(PublicationData: TextPublication) {
-    super(PublicationData);
-    this.fillEntity(PublicationData);
+  constructor(publicationData: TextPublication) {
+    super(publicationData);
+    this.fillEntity(publicationData);
   }
 
-  public toObject() {
-    return {...this};
-  }
-
-  public fillEntity(PublicationData: TextPublication) {
-    this.text = PublicationData.text;
-    this.title = PublicationData.title;
-    this.anonuncement = PublicationData.anonuncement;
+  public fillEntity(publicationData: TextPublication) {
+    this.text = publicationData.text;
+    this.title = publicationData.title;
+    this.announcement = publicationData.announcement;
   }
 
 }

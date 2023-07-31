@@ -1,6 +1,6 @@
-import { Publication } from "./publication.interface";
+import { Publication } from "./publication.interface.js";
 
 export interface LinkPublication extends Publication {
   link: string;
-  description: string;
+  description?: string;
 }

@@ -10,7 +10,7 @@ export class LikesService {
   ) {}
   public async create(postId:string, userId:string ) {
     const like = {postId, userId};
-    
+
     const likes = await this.findByPostId(postId)
     const likeExists = likes.find((item)=> item.userId === userId )
     if (likeExists) {
@@ -27,7 +27,7 @@ export class LikesService {
   const existingLikes = await this.likeRepository.findByPostId(postId);
 
     if (!existingLikes) {
-      throw new NotFoundException(LikesError.PostNotFound);
+      throw new NotFoundException(LikesError.PublicationNotFound);
     }
     return existingLikes;
   }

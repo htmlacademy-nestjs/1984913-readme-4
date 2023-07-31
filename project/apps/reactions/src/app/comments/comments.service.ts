@@ -30,7 +30,7 @@ export class CommentsService {
   const existingComments = await this.commentRepository.findByPostId(postId);
 
     if (!existingComments) {
-      throw new NotFoundException(CommentsError.PostNotFound);
+      throw new NotFoundException(CommentsError.PublicationNotFound);
     }
     return existingComments;
   }
@@ -39,7 +39,7 @@ export class CommentsService {
     const comments = await this.commentRepository.findByPostId(postId)
     const comment = comments.find((item)=> item._id === id )
     if (!comment) {
-      throw new NotFoundException(CommentsError.PostNotFound);
+      throw new NotFoundException(CommentsError.PublicationNotFound);
     }
     const isAuthor = comment._userId === userId
     if(!isAuthor){

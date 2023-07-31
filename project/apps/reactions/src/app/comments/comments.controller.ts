@@ -30,7 +30,7 @@ export class CommentsController {
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: CommentsError.PostNotFound
+    description: CommentsError.PublicationNotFound
   })
   @Get(':postId')
   public async showByPostId(@Param('postId') postId: string) {

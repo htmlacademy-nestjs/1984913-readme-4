@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCommentDto {
   @ApiProperty({
-    description: 'Commented post ID',
+    description: 'Commented publication  ID',
     example: '1'
   })
   public postId: string;

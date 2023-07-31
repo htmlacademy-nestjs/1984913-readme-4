@@ -1,15 +1,13 @@
-import { PublicationStatus } from "./publication-status.enum";
-import { PublicationType } from "./publication-type.enum";
 
 export interface Publication {
   _id?: string;
   _userId?: string;
   _originUserId?: string;
   _originId?: string;
-  type: PublicationType;
-  createdDate: string;
-  postedDate: string;
-  status: PublicationStatus;
+  type: string;
+  createdDate?: string;
+  postedDate?: string;
+  status: string;
   isReposted: boolean;
   tags?: string[];
   likesCount: number;

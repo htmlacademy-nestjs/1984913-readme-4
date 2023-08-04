@@ -1,11 +1,12 @@
 import { Body, Controller, HttpStatus, Param, Post, Delete } from '@nestjs/common';
 import { LikesService } from './likes.service';
-import { LikesMessages } from './like.constant';
-import { ApiResponse } from '@nestjs/swagger';
+import { API_TAG_NAME, LikesMessages, LikesPath } from './like.constant';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { fillObject } from '@project/util/util-core';
 import { LikeRdo } from './rdo/like.rdo';
 
-@Controller('likes')
+@ApiTags(API_TAG_NAME)
+@Controller(LikesPath.Main)
 export class LikesController {
   constructor(
     private readonly likesService: LikesService
@@ -15,7 +16,7 @@ export class LikesController {
     status:HttpStatus.CREATED,
     description: LikesMessages.Add
   })
-  @Post("add/:postId")
+  @Post(LikesPath.Add)
   public async create( @Param('postId') postId:string, @Body('userId') userId:string) {
     const newLike = await this.likesService.create(postId, userId);
     return fillObject(LikeRdo, newLike);
@@ -25,7 +26,7 @@ export class LikesController {
     status: HttpStatus.OK,
     description: LikesMessages.Remove,
   })
-  @Delete('delete/:postId')
+  @Delete(LikesPath.Delete)
   public async remove(@Param('postId') postId:string, @Body('userId') userId:string) {
     return await this.likesService.delete(postId, userId);
   }

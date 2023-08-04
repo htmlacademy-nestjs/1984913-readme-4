@@ -1,11 +1,12 @@
 import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BlogListService } from './blog-list.service';
-import { BlogListError, BlogListMessages } from './blog-list.constant';
+import { API_TAG_NAME, BlogListError, BlogListMessages, BlogListPath } from './blog-list.constant';
 import { fillObject } from '@project/util/util-core';
 import { TextPublicationRdo } from '../publication/rdo/publication-text.rdo';
 
-@Controller('blog-list')
+@ApiTags(API_TAG_NAME)
+@Controller(BlogListPath.Main)
 export class BlogListController {
   constructor(
     private readonly blogListService: BlogListService
@@ -18,7 +19,7 @@ export class BlogListController {
     status: HttpStatus.NOT_FOUND,
     description: BlogListError.EmptyList
   })
-  @Get('/')
+  @Get()
   async show() {
     const posts = await this.blogListService.showAll();
     return posts.map((post) => fillObject(TextPublicationRdo, post) );
@@ -32,7 +33,7 @@ export class BlogListController {
     description: BlogListError.PublicationNotFound
   })
 
-  @Get(':id')
+  @Get(BlogListPath.Id)
   public async showById(@Param('id') id: string) {
     const publication = await this.blogListService.findByPostId(id);
     return fillObject(TextPublicationRdo, publication);

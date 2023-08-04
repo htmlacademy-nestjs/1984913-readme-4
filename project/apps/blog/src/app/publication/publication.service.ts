@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationMemoryRepository } from './publication-memory.repository';
 import { PublicationStatus } from '@project/shared/app-types';
 import dayjs from 'dayjs';
-import { PublicationsError } from './publication.constant';
+import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
 import { TextPublicationEntity } from './entity/publication-text.entity';
 import { CreateTextPublicationDto } from './dto/create/publication-text.dto';
 import { UpdateTextPublicationDto } from './dto/update/publication-text.dto';
@@ -21,8 +21,8 @@ export class PublicationService {
       createdDate: dayjs().toISOString(),
       postedDate: dayjs().toISOString(),
       status: PublicationStatus.Posted,
-      likesCount: 0,
-      commentsCount: 0,
+      likesCount: DEFAULT_AMOUNT,
+      commentsCount: DEFAULT_AMOUNT,
       isReposted: false,
     };
 

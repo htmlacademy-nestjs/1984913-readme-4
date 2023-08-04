@@ -17,15 +17,7 @@ export class BlogUserEntity implements User {
   }
 
   public toObject() {
-    return {
-      _id: this._id,
-      email: this.email,
-      name: this.name,
-      avatar: this.avatar,
-      passwordHash: this.passwordHash,
-      postsCount: this.postsCount,
-      subscribersCount: this.subscribersCount,
-    };
+    return {...this };
   }
 
   public fillEntity(blogUser: User) {

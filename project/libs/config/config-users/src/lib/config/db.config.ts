@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
-import { ConfigName, DEFAULT_ERROR_MESSAGE, DefaultPort } from './config-users.constant';
-import { DbConfig } from '../types/db-config.interface';
+import { ConfigName, DEFAULT_ERROR_MESSAGE, DefaultPort } from '../config-users.constant';
+import { DbConfig } from '../../types/db-config.interface';
 
 export default registerAs(ConfigName.Db, (): DbConfig => {
   const config: DbConfig = {

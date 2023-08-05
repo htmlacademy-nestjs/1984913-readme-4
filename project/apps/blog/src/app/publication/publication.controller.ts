@@ -1,14 +1,15 @@
 import { Body, Controller, HttpStatus, Param, Post, Delete, Patch } from '@nestjs/common';
 import { PublicationService } from './publication.service';
-import { ApiResponse } from '@nestjs/swagger';
-import { PublicationMessages, PublicationsError } from './publication.constant';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { API_TAG_NAME, PublicationMessages, PublicationPath, PublicationsError } from './publication.constant';
 import { PublicationRdo } from './rdo/publication.rdo';
 import { fillObject } from '@project/util/util-core';
 import { TextPublicationRdo } from './rdo/publication-text.rdo';
 import { CreateTextPublicationDto } from './dto/create/publication-text.dto';
 import { UpdateTextPublicationDto } from './dto/update/publication-text.dto';
 
-@Controller('publication')
+@ApiTags(API_TAG_NAME)
+@Controller(PublicationPath.Main)
 export class PublicationController {
   constructor(
     private readonly publicationsService: PublicationService
@@ -19,7 +20,7 @@ export class PublicationController {
     status: HttpStatus.CREATED,
     description: PublicationMessages.Add,
   })
-  @Post('add')
+  @Post(PublicationPath.Add)
   public async create(@Body() dto: CreateTextPublicationDto) {
     const publication = await this.publicationsService.create(dto);
     return fillObject(TextPublicationRdo, publication);
@@ -30,7 +31,7 @@ export class PublicationController {
     status: HttpStatus.CREATED,
     description: PublicationMessages.Update,
   })
-  @Patch(':id')
+  @Patch(PublicationPath.Id)
   public async update(@Param('id') id: string, @Body() dto: UpdateTextPublicationDto) {
     const publication = await this.publicationsService.update(id, dto);
     return fillObject(TextPublicationRdo, publication);
@@ -44,7 +45,7 @@ export class PublicationController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: PublicationsError.Delete
   })
-  @Delete(':id')
+  @Delete(PublicationPath.Id)
   public async delete(@Param('id') id: string) {
     return await this.publicationsService.remove(id);
   }

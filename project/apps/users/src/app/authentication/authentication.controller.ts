@@ -5,11 +5,11 @@ import { fillObject } from '@project/util/util-core';
 import { UserRdo } from './rdo/user.rdo';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { AuthPath } from './authentication.constant';
+import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authentication.constant';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 
-@ApiTags('authentication')
+@ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)
   export class AuthenticationController {
     constructor(
@@ -18,7 +18,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
     @ApiResponse({
       status:HttpStatus.CREATED,
-      description:"User registered successfully"
+      description:AuthMessages.Register
     })
     @Post(AuthPath.Register)
     public async create(@Body() dto: CreateUserDto) {
@@ -29,11 +29,11 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
     @ApiResponse({
       type: LoggedUserRdo,
       status: HttpStatus.OK,
-      description: 'Login successfull'
+      description: AuthMessages.Login
     })
     @ApiResponse({
       status: HttpStatus.UNAUTHORIZED,
-      description: 'Email or password is invalid',
+      description: AuthError.InvalidData,
     })
     @Post(AuthPath.Login)
     public async login(@Body() dto: LoginUserDto) {
@@ -43,7 +43,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
     @ApiResponse({
       type: UserRdo,
       status: HttpStatus.OK,
-      description: 'User data found'
+      description: AuthMessages.UserFound
     })
     @Get(AuthPath.Id)
     public async show(@Param('id') id: string) {

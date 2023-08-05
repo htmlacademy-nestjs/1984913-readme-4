@@ -1,3 +1,5 @@
+export const  API_TAG_NAME ='blog-list'
+
 export const BlogListError = {
   PublicationNotFound : 'Publication is not found',
   EmptyList : 'There are no posts that can be loaded',
@@ -9,3 +11,8 @@ export const BlogListMessages = {
 } as const;
 
 export const  DEFAULT_POSTS_AMOUNT = 25;
+
+export const BlogListPath = {
+  Main:'blog-list',
+  Id: ':id'
+}as const;

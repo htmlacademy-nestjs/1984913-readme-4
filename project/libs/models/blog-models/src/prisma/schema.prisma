@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Publication {
+  postId        Int               @id @default(autoincrement()) @map("post_id")
+  userId        String?           @map("user_id")
+  originUserId  String?           @map("origin_user_id")
+  originId      Int?              @map("origin_post_id")
+  type          PublicationType
+  createdDate   DateTime          @default(now()) @map("created_date")
+  postedDate    DateTime          @updatedAt @map("posted_date")
+  status        PublicationStatus @default(posted)
+  isReposted    Boolean           @default(false) @map("is_reposted")
+  tags          String[]
+  likesCount    Int               @map("likes_count")
+  commentsCount Int               @map("comments_count")
+  link          String?
+  description   String?
+  photo         String?
+  text          String?
+  author        String?
+  title         String?
+  announcement  String?
+
+  @@map("publications")
+}
+
+enum PublicationType {
+  video
+  text
+  quote
+  photo
+  link
+}
+
+enum PublicationStatus {
+  draft
+  posted
+}

@@ -31,8 +31,29 @@ model Publication {
   author        String?
   title         String?
   announcement  String?
+  comments      Comment[]
+  likes         Like[]
 
   @@map("publications")
+}
+
+model Comment {
+  commentId   Int         @id @default(autoincrement()) @map("comment_id")
+  userId      String      @default("") @map("user_id")
+  publication Publication @relation(fields: [postId], references: [postId], onDelete: Cascade, onUpdate: Cascade)
+  postId      Int         @map("post_id")
+  createdDate DateTime    @default(now()) @map("created_date")
+  text        String      @default("")
+
+  @@map("comments")
+}
+
+model Like {
+  publication     Publication @relation(fields: [postId], references: [postId], onDelete: Cascade)
+  postId          Int         @id @unique @map("post_id")
+  likedByUsersIds String[]    @map("liked_by_ids")
+
+  @@map("likes")
 }
 
 enum PublicationType {

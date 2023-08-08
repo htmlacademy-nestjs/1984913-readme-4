@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PublicationMemoryRepository } from '../publication/publication-memory.repository';
+import { PublicationRepository } from '../publication/publication.repository';
 import { BlogPublication } from '@project/shared/app-types';
 import { BlogListError } from './blog-list.constant';
 
 @Injectable()
 export class BlogListService {
   constructor(
-    private readonly publicationRepository: PublicationMemoryRepository
+    private readonly publicationRepository: PublicationRepository
   ) {}
 
-  public async findByPostId(id: string) {
+  public async findByPostId(id: number) {
     const publication  = await this.publicationRepository.findById(id);
     if (!publication) {
       throw new NotFoundException (BlogListError.PublicationNotFound);

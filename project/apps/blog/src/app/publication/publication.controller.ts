@@ -33,7 +33,8 @@ export class PublicationController {
   })
   @Patch(PublicationPath.Id)
   public async update(@Param('id') id: string, @Body() dto: UpdateTextPublicationDto) {
-    const publication = await this.publicationsService.update(id, dto);
+    const postId = parseInt(id, 10);
+    const publication = await this.publicationsService.update(postId, dto);
     return fillObject(TextPublicationRdo, publication);
   }
 
@@ -47,6 +48,7 @@ export class PublicationController {
   })
   @Delete(PublicationPath.Id)
   public async delete(@Param('id') id: string) {
-    return await this.publicationsService.remove(id);
+    const postId = parseInt(id, 10);
+    return await this.publicationsService.remove(postId);
   }
 }

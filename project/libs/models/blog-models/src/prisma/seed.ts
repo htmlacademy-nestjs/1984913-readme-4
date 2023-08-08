@@ -13,8 +13,15 @@ async function fillDb() {
       announcement: "test test",
       text: "Long text",
       status: 'posted',
-      likesCount:0,
-      commentsCount:0
+      likesCount:1,
+      commentsCount:0,
+      likes: {
+        create: [
+          {
+            likedByUsersIds: ['2']
+          }
+        ]
+      }
     }
   });
   await prisma.publication.upsert({
@@ -28,7 +35,15 @@ async function fillDb() {
       text: "Long text for publication 2",
       status: 'posted',
       likesCount:0,
-      commentsCount:0
+      commentsCount:1,
+      comments: {
+        create: [
+          {
+            userId: '2',
+            text: 'comment'
+          },
+        ]
+      },
     }
   });
 

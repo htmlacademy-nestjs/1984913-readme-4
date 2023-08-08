@@ -1,15 +1,16 @@
-import {Publication} from '@project/shared/app-types';
+import {Publication, PublicationStatus, PublicationType} from '@project/shared/app-types';
 import { DEFAULT_AMOUNT, DEFAULT_STATUS } from '../publication.constant';
+import { Entity } from '@project/util/util-types';
 
-export class PublicationEntity implements Publication {
-  public _id?: string;
+export class PublicationEntity implements Publication, Entity<PublicationEntity>{
+  public _id?: number;
   public _userId?: string;
   public _originUserId?: string;
   public _originId?: string;
-  public type: string;
+  public type: PublicationType;
   public createdDate: string;
   public postedDate: string;
-  public status: string;
+  public status: PublicationStatus;
   public isReposted:boolean;
   public tags:string[];
   public likesCount:number;

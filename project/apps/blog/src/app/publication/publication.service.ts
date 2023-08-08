@@ -1,16 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PublicationMemoryRepository } from './publication-memory.repository';
+import { PublicationRepository } from './publication.repository';
 import { PublicationStatus } from '@project/shared/app-types';
 import dayjs from 'dayjs';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
 import { TextPublicationEntity } from './entity/publication-text.entity';
-import { CreateTextPublicationDto } from './dto/create/publication-text.dto';
 import { UpdateTextPublicationDto } from './dto/update/publication-text.dto';
+import { CreateTextPublicationDto } from './dto/create/publication-text.dto';
 
 @Injectable()
 export class PublicationService {
   constructor(
-    private readonly publicationRepository: PublicationMemoryRepository
+    private readonly publicationRepository: PublicationRepository
   ) {}
 
   public async create(dto:  CreateTextPublicationDto ) {
@@ -30,7 +30,7 @@ export class PublicationService {
     return this.publicationRepository.create(postEntity);
   }
 
-  public async update(postId: string, dto: UpdateTextPublicationDto ) {
+  public async update(postId: number, dto: UpdateTextPublicationDto ) {
     const publication = await this.findByPostId(postId);
     if(!publication){
       throw new NotFoundException(PublicationsError.PublicationNotFound);
@@ -41,7 +41,7 @@ export class PublicationService {
     return this.publicationRepository.update(postId, postEntity);
   }
 
-  public async findByPostId(id: string) {
+  public async findByPostId(id: number) {
     const publication  = await this.publicationRepository.findById(id);
     if (!publication) {
       throw new NotFoundException(PublicationsError.PublicationNotFound);
@@ -50,7 +50,7 @@ export class PublicationService {
   }
 
 
-  public async remove(postId: string) {
+  public async remove(postId: number) {
     return this.publicationRepository.destroy(postId);
   }
 

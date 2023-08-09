@@ -1,28 +1,23 @@
-@commentId={{add.response.body.id}}
 
 # Send comment
-# @name add
+
 POST http://localhost:3000/api/comments/add HTTP/1.1
 Content-Type: application/json
 
 {
-  "postId": "1",
+  "postId": 2,
   "text": "text"
 }
 
 ###
 # Get comments
-GET http://localhost:3000/api/comments/1 HTTP/1.1
+GET http://localhost:3000/api/comments/2 HTTP/1.1
 Content-Type: application/json
 
 
 ###
 # Delete comment
-DELETE  http://localhost:3000/api/comments/delete/1/{{commentId}} HTTP/1.1
+DELETE  http://localhost:3000/api/comments/delete/1 HTTP/1.1
 Content-Type: application/json
-
-{
-  "userId": "1"
-}
 
 ###

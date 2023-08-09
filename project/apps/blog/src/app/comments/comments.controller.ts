@@ -5,7 +5,6 @@ import { fillObject } from '@project/util/util-core';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
-import { deleteCommentParams } from './comment-param.type';
 
 @ApiTags(API_TAG_NAME)
 @Controller(CommentsPath.Main)
@@ -34,7 +33,8 @@ export class CommentsController {
     description: CommentsError.PublicationNotFound
   })
   @Get(CommentsPath.PostId)
-  public async showByPostId(@Param('postId') postId: string) {
+  public async showByPostId(@Param('postId') id: string) {
+    const postId = parseInt(id, 10);
     const comments = await this.commentsService.findByPostId(postId);
     return fillObject(CommentRdo, comments);
   }
@@ -44,7 +44,8 @@ export class CommentsController {
     description: CommentsMessages.Remove,
   })
   @Delete(CommentsPath.Delete)
-  public async remove(@Param() params:deleteCommentParams, @Body('userId') userId:string) {
-    return await this.commentsService.delete(params.commentId, params.postId,userId );
+  public async remove( @Param('commentId') id: string) {
+    const commentId = parseInt(id, 10);
+    return await this.commentsService.delete(commentId );
   }
 }

@@ -22,5 +22,5 @@ export const CommentsPath = {
   Main:'comments',
   Add:'add',
   PostId: ':postId',
-  Delete:'delete/:postId/:commentId'
+  Delete:'delete/:commentId'
 }as const;

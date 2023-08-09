@@ -1,0 +1,13 @@
+# Add like
+POST http://localhost:3000/api/likes/3 HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "2"
+}
+
+###
+
+# Show likes
+GET   http://localhost:3000/api/likes/3 HTTP/1.1
+Content-Type: application/json

@@ -33,9 +33,6 @@ export class PublicationService {
 
   // public async update(postId: number, dto: UpdateBlogPublicationDto ) {
   //   const publication = await this.findByPostId(postId);
-  //   if(!publication){
-  //     throw new NotFoundException(PublicationsError.PublicationNotFound);
-  //   }
   //   const status = dto.status? PublicationStatus[dto.status] : publication.status
   //   const updatedPublication = {...publication, ...dto, type:PublicationType[dto.type], status}
 

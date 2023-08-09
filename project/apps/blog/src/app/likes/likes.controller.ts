@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Param, Post, Get } from '@nestjs/common';
 import { LikesService } from './likes.service';
 import { API_TAG_NAME, LikesMessages, LikesPath } from './like.constant';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -16,9 +16,10 @@ export class LikesController {
     status:HttpStatus.CREATED,
     description: LikesMessages.Add
   })
-  @Post(LikesPath.Add)
-  public async create( @Param('postId') postId:string, @Body('userId') userId:string) {
-    const newLike = await this.likesService.create(postId, userId);
+  @Post(LikesPath.Id)
+  public async changeLikeStatus( @Param('postId') id:string, @Body('userId') userId:string) {
+    const postId = parseInt(id, 10);
+    const newLike = await this.likesService.changeLikePublication(postId, userId);
     return fillObject(LikeRdo, newLike);
   }
 
@@ -26,8 +27,11 @@ export class LikesController {
     status: HttpStatus.OK,
     description: LikesMessages.Remove,
   })
-  @Delete(LikesPath.Delete)
-  public async remove(@Param('postId') postId:string, @Body('userId') userId:string) {
-    return await this.likesService.delete(postId, userId);
+  @Get(LikesPath.Id)
+  public async showLikes(@Param('postId') id:string) {
+    const postId = parseInt(id, 10);
+    const likeInfo = await this.likesService.findByPostId(postId);
+    return fillObject(LikeRdo, likeInfo);
+
   }
 }

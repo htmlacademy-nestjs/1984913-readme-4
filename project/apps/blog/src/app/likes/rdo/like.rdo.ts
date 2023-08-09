@@ -9,9 +9,9 @@ export class LikeRdo {
   public postId: string;
 
   @ApiProperty({
-    description: 'User ID'
+    description: 'User Ids who liked'
   })
   @Expose()
-  public userId: string;
+  public likedByUsersIds: string[];
 
 }

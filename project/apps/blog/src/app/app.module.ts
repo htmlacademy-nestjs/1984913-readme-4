@@ -4,9 +4,10 @@ import { PublicationModule } from './publication/publication.module';
 import { BlogListModule } from './blog-list/blog-list.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CommentsModule } from './comments/comments.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
-  imports: [PublicationModule, BlogListModule, PrismaModule, CommentsModule],
+  imports: [PublicationModule, BlogListModule, PrismaModule, CommentsModule, LikesModule],
   controllers: [],
   providers: [],
 })

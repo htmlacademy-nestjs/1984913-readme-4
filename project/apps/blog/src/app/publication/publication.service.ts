@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationRepository } from './publication.repository';
-import { PublicationStatus } from '@project/shared/app-types';
+import { PublicationStatus, PublicationType } from '@project/shared/app-types';
 import dayjs from 'dayjs';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
-import { TextPublicationEntity } from './entity/publication-text.entity';
-import { UpdateTextPublicationDto } from './dto/update/publication-text.dto';
-import { CreateTextPublicationDto } from './dto/create/publication-text.dto';
+import { CreateBlogPublicationDto } from './dto/create/blog-publication-dto.type';
+import { TypeEntityAdapter } from './utils/entity-adapter';
+import { UpdateBlogPublicationDto } from './dto/update/blog-publication-dto.type';
 
 @Injectable()
 export class PublicationService {
@@ -13,33 +13,35 @@ export class PublicationService {
     private readonly publicationRepository: PublicationRepository
   ) {}
 
-  public async create(dto:  CreateTextPublicationDto ) {
-    const publication = {
-      ...dto,
-      _userId: '1',
-      _originUserId: '1',
-      createdDate: dayjs().toISOString(),
-      postedDate: dayjs().toISOString(),
-      status: PublicationStatus.Posted,
-      likesCount: DEFAULT_AMOUNT,
-      commentsCount: DEFAULT_AMOUNT,
-      isReposted: false,
-    };
+  // public async create(dto:  CreateBlogPublicationDto ) {
+  //   const publication = {
+  //     ...dto,
+  //     _userId: '1',
+  //     _originUserId: '1',
+  //     createdDate: dayjs().toISOString(),
+  //     postedDate: dayjs().toISOString(),
+  //     status: PublicationStatus.Posted,
+  //     type: PublicationType.Text,
+  //     likesCount: DEFAULT_AMOUNT,
+  //     commentsCount: DEFAULT_AMOUNT,
+  //     isReposted: false,
+  //   };
 
-    const postEntity = new TextPublicationEntity(publication);
-    return this.publicationRepository.create(postEntity);
-  }
+  //   const postEntity =  new TypeEntityAdapter[publication.type](publication);
+  //   return this.publicationRepository.create(postEntity);
+  // }
 
-  public async update(postId: number, dto: UpdateTextPublicationDto ) {
-    const publication = await this.findByPostId(postId);
-    if(!publication){
-      throw new NotFoundException(PublicationsError.PublicationNotFound);
-    }
-    const updatedPublication = {...publication, ...dto}
-    const postEntity = new TextPublicationEntity(updatedPublication);
+  // public async update(postId: number, dto: UpdateBlogPublicationDto ) {
+  //   const publication = await this.findByPostId(postId);
+  //   if(!publication){
+  //     throw new NotFoundException(PublicationsError.PublicationNotFound);
+  //   }
+  //   const status = dto.status? PublicationStatus[dto.status] : publication.status
+  //   const updatedPublication = {...publication, ...dto, type:PublicationType[dto.type], status}
 
-    return this.publicationRepository.update(postId, postEntity);
-  }
+  //   const postEntity = new TypeEntityAdapter[publication.type](updatedPublication);
+  //   return this.publicationRepository.update(postId, postEntity);
+  // }
 
   public async findByPostId(id: number) {
     const publication  = await this.publicationRepository.findById(id);
@@ -55,4 +57,3 @@ export class PublicationService {
   }
 
 }
-

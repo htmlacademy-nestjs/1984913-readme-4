@@ -1,8 +1,9 @@
 import { CRUDRepository } from '@project/util/util-types';
-import { BlogPublication, PublicationStatus,PublicationType } from '@project/shared/app-types';
+import { BlogPublication} from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
 import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
 import { PrismaService } from '../prisma/prisma.service';
+import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
 
 @Injectable()
 export class PublicationRepository implements CRUDRepository<BlogPublicationEntity, number, BlogPublication> {
@@ -10,11 +11,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
 
   public async create(item: BlogPublicationEntity): Promise<BlogPublication> {
     const publication = await this.prisma.publication.create({data:{...item.toObject()}});
-    return {...publication,
-      createdDate: publication.createdDate.toISOString(),
-      postedDate: publication.postedDate.toISOString(),
-      type: publication.type as PublicationType,
-      status: publication.status as PublicationStatus }
+    return adaptPrismaPublication(publication)
   }
 
   public async findById(postId: number): Promise<BlogPublication | null> {
@@ -23,11 +20,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
         postId
       }
     });
-    return {...publication,
-      createdDate: publication.createdDate.toISOString(),
-      postedDate: publication.postedDate.toISOString(),
-      type: publication.type as PublicationType,
-      status: publication.status as PublicationStatus }
+    return adaptPrismaPublication(publication)
   }
 
   public async findAll(ids: number[] = []): Promise<BlogPublication[]> {
@@ -38,11 +31,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
         }
       }
     });
-    return publications.map((publication)=>{    return {...publication,
-      createdDate: publication.createdDate.toISOString(),
-      postedDate: publication.postedDate.toISOString(),
-      type: publication.type as PublicationType,
-      status: publication.status as PublicationStatus }})
+    return publications.map((publication)=> adaptPrismaPublication(publication))
   }
 
   public async update(postId: number, item: BlogPublicationEntity): Promise<BlogPublication> {
@@ -50,11 +39,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
       where: {postId},
       data: { ...item.toObject()}
     });
-    return {...publication,
-      createdDate: publication.createdDate.toISOString(),
-      postedDate: publication.postedDate.toISOString(),
-      type: publication.type as PublicationType,
-      status: publication.status as PublicationStatus }
+    return adaptPrismaPublication(publication)
   }
 
   public async destroy(postId: number): Promise<void> {

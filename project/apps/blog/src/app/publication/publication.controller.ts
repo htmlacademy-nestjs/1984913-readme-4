@@ -15,28 +15,28 @@ export class PublicationController {
     private readonly publicationsService: PublicationService
   ) {}
 
-  // @ApiResponse({
-  //   type: PublicationRdo,
-  //   status: HttpStatus.CREATED,
-  //   description: PublicationMessages.Add,
-  // })
-  // @Post(PublicationPath.Add)
-  // public async create(@Body() dto: CreateBlogPublicationDto) {
-  //   const publication = await this.publicationsService.create(dto);
-  //   return adaptRdoPublication(publication);
-  // }
+  @ApiResponse({
+    type: PublicationRdo,
+    status: HttpStatus.CREATED,
+    description: PublicationMessages.Add,
+  })
+  @Post(PublicationPath.Add)
+  public async create(@Body() dto: CreateBlogPublicationDto) {
+    const publication = await this.publicationsService.create(dto);
+    return adaptRdoPublication(publication);
+  }
 
-  // @ApiResponse({
-  //   type: PublicationRdo,
-  //   status: HttpStatus.CREATED,
-  //   description: PublicationMessages.Update,
-  // })
-  // @Patch(PublicationPath.Id)
-  // public async update(@Param('id') id: string, @Body() dto: UpdateBlogPublicationDto) {
-  //   const postId = parseInt(id, 10);
-  //   const publication = await this.publicationsService.update(postId, dto);
-  //   return adaptRdoPublication(publication);
-  // }
+  @ApiResponse({
+    type: PublicationRdo,
+    status: HttpStatus.CREATED,
+    description: PublicationMessages.Update,
+  })
+  @Patch(PublicationPath.Id)
+  public async update(@Param('id') id: string, @Body() dto: UpdateBlogPublicationDto) {
+    const postId = parseInt(id, 10);
+    const publication = await this.publicationsService.update(postId, dto);
+    return adaptRdoPublication(publication);
+  }
 
   @ApiResponse({
     status: HttpStatus.OK,

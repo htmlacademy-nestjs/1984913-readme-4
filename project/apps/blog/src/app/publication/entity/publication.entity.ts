@@ -1,8 +1,9 @@
-import {Publication, PublicationStatus, PublicationType} from '@project/shared/app-types';
+import {Publication} from '@project/shared/app-types';
 import { DEFAULT_AMOUNT, DEFAULT_STATUS } from '../publication.constant';
 import { Entity } from '@project/util/util-types';
+import { PublicationStatus, PublicationType } from '@prisma/client';
 
-export class PublicationEntity implements Publication, Entity<PublicationEntity>{
+export abstract class PublicationEntity implements Publication, Entity<PublicationEntity>{
   public _id?: number;
   public _userId?: string;
   public _originUserId?: string;

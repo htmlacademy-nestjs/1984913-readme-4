@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationRepository } from './publication.repository';
-import { PublicationStatus, PublicationType } from '@project/shared/app-types';
 import dayjs from 'dayjs';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
 import { CreateBlogPublicationDto } from './dto/create/blog-publication-dto.type';
 import { TypeEntityAdapter } from './utils/entity-adapter';
 import { UpdateBlogPublicationDto } from './dto/update/blog-publication-dto.type';
+import { PublicationStatus } from '@prisma/client';
 
 @Injectable()
 export class PublicationService {
@@ -20,22 +20,20 @@ export class PublicationService {
       _originUserId: '1',
       createdDate: dayjs().toISOString(),
       postedDate: dayjs().toISOString(),
-      status: PublicationStatus.Posted,
-      type: PublicationType.Text,
+      status: PublicationStatus.posted,
       likesCount: DEFAULT_AMOUNT,
       commentsCount: DEFAULT_AMOUNT,
       isReposted: false,
     };
-
-    const postEntity =  new TypeEntityAdapter[publication.type](publication);
+    const postEntity = await new TypeEntityAdapter[publication.type](publication);
     return this.publicationRepository.create(postEntity);
   }
 
   public async update(postId: number, dto: UpdateBlogPublicationDto ) {
     const publication = await this.findByPostId(postId);
-    const status = dto.status? PublicationStatus[dto.status] : publication.status
-    const updatedPublication = {...publication, ...dto, type:PublicationType[dto.type], status}
-    const postEntity = new TypeEntityAdapter[publication.type](updatedPublication);
+    const updatedPublication = {...publication, ...dto}
+    const postEntity = await new TypeEntityAdapter[updatedPublication.type](updatedPublication);
+
     return this.publicationRepository.update(postId, postEntity);
   }
 
@@ -53,3 +51,4 @@ export class PublicationService {
   }
 
 }
+

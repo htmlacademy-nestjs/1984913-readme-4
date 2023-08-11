@@ -33,7 +33,6 @@ export class PublicationService {
     const publication = await this.findByPostId(postId);
     const updatedPublication = {...publication, ...dto}
     const postEntity = await new TypeEntityAdapter[updatedPublication.type](updatedPublication);
-
     return this.publicationRepository.update(postId, postEntity);
   }
 

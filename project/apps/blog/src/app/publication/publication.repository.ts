@@ -1,16 +1,23 @@
 import { CRUDRepository } from '@project/util/util-types';
 import { BlogPublication} from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
-import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
+import { PublicationEntity } from './entity/publication.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
 
 @Injectable()
-export class PublicationRepository implements CRUDRepository<BlogPublicationEntity, number, BlogPublication> {
+export class PublicationRepository implements CRUDRepository<PublicationEntity, number, BlogPublication> {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async create(item: BlogPublicationEntity): Promise<BlogPublication> {
-    const publication = await this.prisma.publication.create({data:{...item.toObject()}});
+  public async create(item: PublicationEntity): Promise<BlogPublication> {
+    const data = {
+      ...item.toObject(),
+      userId: item._userId,
+      originUserId: item._originUserId
+    }
+    delete data._userId;
+    delete data._originUserId;
+    const publication = await this.prisma.publication.create({data});
     return adaptPrismaPublication(publication)
   }
 
@@ -34,10 +41,19 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     return publications.map((publication)=> adaptPrismaPublication(publication))
   }
 
-  public async update(postId: number, item: BlogPublicationEntity): Promise<BlogPublication> {
+  public async update(postId: number, item: PublicationEntity): Promise<BlogPublication> {
+    const data =   {
+        ...item.toObject(),
+        userId: item._userId,
+        originUserId: item._originUserId
+      }
+      delete data._id;
+      delete data._userId;
+      delete data._originUserId;
+
     const publication = await  this.prisma.publication.update({
       where: {postId},
-      data: { ...item.toObject()}
+      data
     });
     return adaptPrismaPublication(publication)
   }

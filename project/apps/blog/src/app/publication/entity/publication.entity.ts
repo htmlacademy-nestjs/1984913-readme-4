@@ -1,9 +1,8 @@
 import {Publication} from '@project/shared/app-types';
 import { DEFAULT_AMOUNT, DEFAULT_STATUS } from '../publication.constant';
-import { Entity } from '@project/util/util-types';
 import { PublicationStatus, PublicationType } from '@prisma/client';
 
-export abstract class PublicationEntity implements Publication, Entity<PublicationEntity>{
+export abstract class PublicationEntity implements Publication{
   public _id?: number;
   public _userId?: string;
   public _originUserId?: string;
@@ -19,14 +18,6 @@ export abstract class PublicationEntity implements Publication, Entity<Publicati
 
 
   constructor(publicationData: Publication) {
-    this.fillEntity(publicationData);
-  }
-
-  public toObject() {
-    return {...this};
-  }
-
-  public fillEntity(publicationData: Publication) {
     this._id = publicationData._id;
     this._userId = publicationData._userId;
     this._originUserId = publicationData._originUserId;
@@ -38,7 +29,10 @@ export abstract class PublicationEntity implements Publication, Entity<Publicati
     this.isReposted = publicationData.isReposted||DEFAULT_STATUS;
     this.tags = publicationData.tags;
     this.likesCount = publicationData.likesCount||DEFAULT_AMOUNT;
-    this.commentsCount = publicationData.commentsCount||DEFAULT_AMOUNT;
+    this.commentsCount = publicationData.commentsCount||DEFAULT_AMOUNT;  }
+
+  public toObject() {
+    return {...this};
   }
 
 }

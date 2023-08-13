@@ -1,47 +1,42 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PublicationMemoryRepository } from './publication-memory.repository';
-import { PublicationStatus } from '@project/shared/app-types';
+import { PublicationRepository } from './publication.repository';
 import dayjs from 'dayjs';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
-import { TextPublicationEntity } from './entity/publication-text.entity';
-import { CreateTextPublicationDto } from './dto/create/publication-text.dto';
-import { UpdateTextPublicationDto } from './dto/update/publication-text.dto';
+import { CreateBlogPublicationDto } from './dto/create/blog-publication-dto.type';
+import { TypeEntityAdapter } from './utils/entity-adapter';
+import { UpdateBlogPublicationDto } from './dto/update/blog-publication-dto.type';
+import { PublicationStatus } from '@prisma/client';
 
 @Injectable()
 export class PublicationService {
   constructor(
-    private readonly publicationRepository: PublicationMemoryRepository
+    private readonly publicationRepository: PublicationRepository,
   ) {}
 
-  public async create(dto:  CreateTextPublicationDto ) {
+  public async create(dto:  CreateBlogPublicationDto ) {
     const publication = {
       ...dto,
       _userId: '1',
       _originUserId: '1',
       createdDate: dayjs().toISOString(),
       postedDate: dayjs().toISOString(),
-      status: PublicationStatus.Posted,
+      status: PublicationStatus.posted,
       likesCount: DEFAULT_AMOUNT,
       commentsCount: DEFAULT_AMOUNT,
       isReposted: false,
     };
-
-    const postEntity = new TextPublicationEntity(publication);
+    const postEntity = await new TypeEntityAdapter[publication.type](publication);
     return this.publicationRepository.create(postEntity);
   }
 
-  public async update(postId: string, dto: UpdateTextPublicationDto ) {
+  public async update(postId: number, dto: UpdateBlogPublicationDto ) {
     const publication = await this.findByPostId(postId);
-    if(!publication){
-      throw new NotFoundException(PublicationsError.PublicationNotFound);
-    }
     const updatedPublication = {...publication, ...dto}
-    const postEntity = new TextPublicationEntity(updatedPublication);
-
+    const postEntity = await new TypeEntityAdapter[updatedPublication.type](updatedPublication);
     return this.publicationRepository.update(postId, postEntity);
   }
 
-  public async findByPostId(id: string) {
+  public async findByPostId(id: number) {
     const publication  = await this.publicationRepository.findById(id);
     if (!publication) {
       throw new NotFoundException(PublicationsError.PublicationNotFound);
@@ -50,7 +45,7 @@ export class PublicationService {
   }
 
 
-  public async remove(postId: string) {
+  public async remove(postId: number) {
     return this.publicationRepository.destroy(postId);
   }
 

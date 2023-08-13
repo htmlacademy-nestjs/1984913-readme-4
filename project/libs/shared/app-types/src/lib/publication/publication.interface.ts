@@ -1,13 +1,14 @@
+import { PublicationType, PublicationStatus } from '@prisma/client';
 
 export interface Publication {
-  _id?: string;
+  _id?: number;
   _userId?: string;
   _originUserId?: string;
   _originId?: string;
-  type: string;
-  createdDate?: string;
-  postedDate?: string;
-  status: string;
+  type: PublicationType;
+  createdDate: string;
+  postedDate: string;
+  status: PublicationStatus;
   isReposted: boolean;
   tags?: string[];
   likesCount: number;

@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { FileRepository } from './file.repository';
 import { WritedFile } from '@project/shared/app-types';
 import { FileEntity } from './file.entity';
+import { FORMAT_PATTERN, FileError } from './file.constant';
 
 @Injectable()
 export class FileService {
@@ -19,14 +20,14 @@ export class FileService {
   ) {}
 
   private async writeFile(file: Express.Multer.File): Promise<WritedFile> {
-    const [year, month] = dayjs().format('YYYY MM').split(' ');
+    const [year, month] = dayjs().format(FORMAT_PATTERN).split(' ');
     const { uploadDirectory } = this.applicationConfig;
     const subDirectory = `${year}/${month}`;
 
     const uuid = crypto.randomUUID();
     const fileExtension = extension(file.mimetype);
     if(!fileExtension){
-      throw new BadRequestException ('Wrong file mimetype');
+      throw new BadRequestException (FileError.MimetypeError);
     }
     const hashName = `${uuid}.${fileExtension}`;
 
@@ -61,7 +62,7 @@ export class FileService {
     const existFile = await this.fileRepository.findById(fileId);
 
     if (!existFile) {
-      throw new NotFoundException(`File with ${fileId} not found.`);
+      throw new NotFoundException(`${FileError.MimetypeError} (${fileId})`);
     }
 
     return existFile;

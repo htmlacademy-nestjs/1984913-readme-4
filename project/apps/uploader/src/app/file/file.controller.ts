@@ -7,8 +7,9 @@ import { fillObject } from '@project/util/util-core';
 import { UploadedFileRdo } from './rdo/uploaded-file.rdo';
 import { uploaderConfig } from '@project/config/config-uploader';
 import { ConfigType } from '@nestjs/config';
+import { FilePath } from './file.constant';
 
-@Controller('files')
+@Controller(FilePath.Main)
 export class FileController {
 
   constructor(
@@ -18,7 +19,7 @@ export class FileController {
     private readonly applicationConfig: ConfigType<typeof uploaderConfig>,
       ) {}
 
-  @Post('/upload')
+  @Post(FilePath.Upload)
   @UseInterceptors(FileInterceptor('file'))
   public async uploadFile(@UploadedFile() file: Express.Multer.File) {
     const newFile = await this.fileService.saveFile(file);
@@ -26,7 +27,7 @@ export class FileController {
     return fillObject(UploadedFileRdo, Object.assign(newFile, { path }));
   }
 
-  @Get(':fileId')
+  @Get(FilePath.Id)
   public async show(@Param('fileId') fileId: string) {
     const existFile = await this.fileService.getFile(fileId);
     const path = `${this.applicationConfig.serveRoot}${existFile.path}`;

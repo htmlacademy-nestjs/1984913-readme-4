@@ -34,9 +34,8 @@ export class BlogListController {
   })
 
   @Get(BlogListPath.Id)
-  public async showById(@Param('id') id: string) {
-    const postId = parseInt(id, 10);
-    const publication = await this.blogListService.findByPostId(postId);
+  public async showById(@Param('id') id: number) {
+    const publication = await this.blogListService.findByPostId(id);
     return fillObject(TextPublicationRdo, publication);
   }
 }

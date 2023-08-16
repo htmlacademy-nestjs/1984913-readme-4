@@ -33,9 +33,8 @@ export class CommentsController {
     description: CommentsError.PublicationNotFound
   })
   @Get(CommentsPath.PostId)
-  public async showByPostId(@Param('postId') id: string) {
-    const postId = parseInt(id, 10);
-    const comments = await this.commentsService.findByPostId(postId);
+  public async showByPostId(@Param('postId') id: number) {
+    const comments = await this.commentsService.findByPostId(id);
     return fillObject(CommentRdo, comments);
   }
 
@@ -44,8 +43,7 @@ export class CommentsController {
     description: CommentsMessages.Remove,
   })
   @Delete(CommentsPath.Delete)
-  public async remove( @Param('commentId') id: string) {
-    const commentId = parseInt(id, 10);
-    return await this.commentsService.delete(commentId );
+  public async remove( @Param('commentId') id: number) {
+    return await this.commentsService.delete(id);
   }
 }

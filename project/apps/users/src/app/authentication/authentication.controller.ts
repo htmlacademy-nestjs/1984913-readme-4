@@ -7,7 +7,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authentication.constant';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-
+import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 
 @ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)
@@ -46,7 +46,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
       description: AuthMessages.UserFound
     })
     @Get(AuthPath.Id)
-    public async show(@Param('id') id: string) {
+    public async show(@Param('id', MongoidValidationPipe) id: string) {
       const existUser = await this.authService.getUser(id);
       return fillObject(UserRdo, existUser);
     }

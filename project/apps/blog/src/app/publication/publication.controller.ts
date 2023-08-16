@@ -32,9 +32,8 @@ export class PublicationController {
     description: PublicationMessages.Update,
   })
   @Patch(PublicationPath.Id)
-  public async update(@Param('id') id: string, @Body() dto: UpdateBlogPublicationDto) {
-    const postId = parseInt(id, 10);
-    const publication = await this.publicationsService.update(postId, dto);
+  public async update(@Param('id') id: number, @Body() dto: UpdateBlogPublicationDto) {
+    const publication = await this.publicationsService.update(id, dto);
     return adaptRdoPublication(publication);
   }
 
@@ -47,8 +46,7 @@ export class PublicationController {
     description: PublicationsError.Delete
   })
   @Delete(PublicationPath.Id)
-  public async delete(@Param('id') id: string) {
-    const postId = parseInt(id, 10);
-    return await this.publicationsService.remove(postId);
+  public async delete(@Param('id') id: number) {
+    return await this.publicationsService.remove(id);
   }
 }

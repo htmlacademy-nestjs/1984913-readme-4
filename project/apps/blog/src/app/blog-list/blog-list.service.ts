@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationRepository } from '../publication/publication.repository';
 import { BlogPublication } from '@project/shared/app-types';
 import { BlogListError } from './blog-list.constant';
+import { PostQuery } from '../query/post.query';
 
 @Injectable()
 export class BlogListService {
@@ -17,7 +18,7 @@ export class BlogListService {
     return publication;
   }
 
-  async showAll(): Promise<BlogPublication[]> {
-    return this.publicationRepository.findAll();
+  async showAll(query:PostQuery): Promise<BlogPublication[]> {
+    return this.publicationRepository.findAll(query);
   }
 }

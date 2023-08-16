@@ -1,9 +1,10 @@
 import { CRUDRepository } from '@project/util/util-types';
-import { BlogPublication} from '@project/shared/app-types';
+import { BlogPublication, PublicationType} from '@project/shared/app-types';
 import { Injectable } from '@nestjs/common';
 import { PublicationEntity } from './entity/publication.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
+import { PublicationStatus } from '@prisma/client';
 
 @Injectable()
 export class PublicationRepository implements CRUDRepository<PublicationEntity, number, BlogPublication> {
@@ -30,13 +31,22 @@ export class PublicationRepository implements CRUDRepository<PublicationEntity, 
     return adaptPrismaPublication(publication)
   }
 
-  public async findAll(ids: number[] = []): Promise<BlogPublication[]> {
+  public async findAll({limit, page, sortBy,type, sortDirection }): Promise<BlogPublication[]> {
     const publications = await this.prisma.publication.findMany({
       where: {
-        postId: {
-          in: ids.length > 0 ? ids : undefined
+        AND:{
+          status:PublicationStatus.posted,
+          type:type as PublicationType,
         }
-      }
+      },
+      take: limit,
+      include: {
+        comments: true,
+      },
+      orderBy: [
+        { [sortBy]: sortDirection }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
     return publications.map((publication)=> adaptPrismaPublication(publication))
   }

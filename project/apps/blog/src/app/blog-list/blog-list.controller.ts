@@ -1,9 +1,10 @@
-import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, Query } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BlogListService } from './blog-list.service';
 import { API_TAG_NAME, BlogListError, BlogListMessages, BlogListPath } from './blog-list.constant';
 import { fillObject } from '@project/util/util-core';
 import { TextPublicationRdo } from '../publication/rdo/publication-text.rdo';
+import { PostQuery } from '../query/post.query';
 
 @ApiTags(API_TAG_NAME)
 @Controller(BlogListPath.Main)
@@ -20,8 +21,8 @@ export class BlogListController {
     description: BlogListError.EmptyList
   })
   @Get()
-  async show() {
-    const posts = await this.blogListService.showAll();
+  async show(@Query() query:PostQuery) {
+    const posts = await this.blogListService.showAll(query);
     return posts.map((post) => fillObject(TextPublicationRdo, post) );
   }
   @ApiResponse({

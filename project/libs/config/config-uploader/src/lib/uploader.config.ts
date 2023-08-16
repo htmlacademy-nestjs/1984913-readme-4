@@ -26,7 +26,7 @@ export default registerAs(CONFIG_NAME, (): UploaderConfig => {
     uploadDirectory: Joi.string(),
     db: Joi.object({
       host: Joi.string().valid().hostname(),
-      port: Joi.number().port(),
+      port: Joi.number().port().default(DefaultPort.Db),
       name: Joi.string().required(),
       user: Joi.string().required(),
       password: Joi.string().required(),

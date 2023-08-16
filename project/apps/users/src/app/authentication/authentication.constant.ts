@@ -4,7 +4,8 @@ export const AuthError = {
   UserExists: 'User with this email already exists',
   NotFound : 'User is not found',
   PasswordWrong : 'Password is wrong',
-  InvalidData: 'Email or password is invalid'
+  InvalidData: 'Data is invalid',
+  InvalidEmail:'Email is invalid'
 } as const;
 
 export const AuthMessages = {

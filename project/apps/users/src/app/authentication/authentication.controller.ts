@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { fillObject } from '@project/util/util-core';
@@ -8,6 +8,7 @@ import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authentication.constant';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)
@@ -38,13 +39,17 @@ import { MongoidValidationPipe } from '@project/shared/shared-pipes';
     @Post(AuthPath.Login)
     public async login(@Body() dto: LoginUserDto) {
       const verifiedUser = await this.authService.verifyUser(dto);
-      return fillObject(LoggedUserRdo, verifiedUser);
+      const loggedUser = await this.authService.createUserToken(verifiedUser);
+      const userData = Object.assign(verifiedUser, loggedUser)
+      return fillObject(LoggedUserRdo, userData);
     }
+
     @ApiResponse({
       type: UserRdo,
       status: HttpStatus.OK,
       description: AuthMessages.UserFound
     })
+    @UseGuards(JwtAuthGuard)
     @Get(AuthPath.Id)
     public async show(@Param('id', MongoidValidationPipe) id: string) {
       const existUser = await this.authService.getUser(id);

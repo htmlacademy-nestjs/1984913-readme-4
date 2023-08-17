@@ -5,6 +5,7 @@ import { PublicationEntity } from './entity/publication.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
 import { PublicationStatus } from '@prisma/client';
+import { PostQuery } from '../query/post.query';
 
 @Injectable()
 export class PublicationRepository implements CRUDRepository<PublicationEntity, number, BlogPublication> {
@@ -31,7 +32,7 @@ export class PublicationRepository implements CRUDRepository<PublicationEntity, 
     return adaptPrismaPublication(publication)
   }
 
-  public async findAll({limit, page, sortBy,type, sortDirection }): Promise<BlogPublication[]> {
+  public async findAll({limit, page, sortBy,type, sortDirection }:PostQuery): Promise<BlogPublication[]> {
     const publications = await this.prisma.publication.findMany({
       where: {
         AND:{

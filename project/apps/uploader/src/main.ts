@@ -8,7 +8,7 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 
-const DEFAULT_PORT=3000;
+const DEFAULT_PORT=3002;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

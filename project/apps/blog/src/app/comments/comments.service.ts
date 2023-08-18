@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentEntity } from './comment.entity';
+import { CommentQuery } from '../query/comment.query';
 
 @Injectable()
 export class CommentsService {
@@ -23,8 +24,8 @@ export class CommentsService {
       .create(commentEntity);
   }
 
-  public async findByPostId(postId: number) {
-  return await this.commentRepository.findByPostId(postId);
+  public async findByPostId(postId: number, query:CommentQuery) {
+  return await this.commentRepository.findByPostId(postId, query);
   }
 
   public async delete(id:number) {

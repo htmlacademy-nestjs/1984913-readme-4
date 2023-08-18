@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Delete, Query } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { fillObject } from '@project/util/util-core';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
+import { CommentQuery } from '../query/comment.query';
 
 @ApiTags(API_TAG_NAME)
 @Controller(CommentsPath.Main)
@@ -33,8 +34,8 @@ export class CommentsController {
     description: CommentsError.PublicationNotFound
   })
   @Get(CommentsPath.PostId)
-  public async showByPostId(@Param('postId') id: number) {
-    const comments = await this.commentsService.findByPostId(id);
+  public async showByPostId(@Param('postId') id: number, @Query() query:CommentQuery) {
+    const comments = await this.commentsService.findByPostId(id, query);
     return fillObject(CommentRdo, comments);
   }
 

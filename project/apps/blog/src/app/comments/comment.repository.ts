@@ -4,6 +4,7 @@ import { CommentEntity } from './comment.entity';
 import { IComment } from '@project/shared/app-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaComment } from './utils/adapt-prisma-comment';
+import { CommentQuery } from '../query/comment.query';
 
 @Injectable()
 export class CommentRepository implements CRUDRepository<CommentEntity, number, IComment> {
@@ -25,11 +26,13 @@ export class CommentRepository implements CRUDRepository<CommentEntity, number, 
     return adaptPrismaComment(comment);
   }
 
-  public async findByPostId(postId: number): Promise<IComment[] | null> {
+  public async findByPostId(postId: number, {limit, page}:CommentQuery): Promise<IComment[] | null> {
     const comments = await this.prisma.comment.findMany({
       where: {
         postId
-      }
+      },
+      take: limit,
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
     return comments.map((item) => {
       return adaptPrismaComment(item);
@@ -47,6 +50,6 @@ export class CommentRepository implements CRUDRepository<CommentEntity, number, 
   }
 
   public async destroy(commentId: number): Promise<void> {
-    await this.prisma.comment.delete({ where: {commentId} });  
+    await this.prisma.comment.delete({ where: {commentId} });
   }
 }

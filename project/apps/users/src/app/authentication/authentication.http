@@ -26,7 +26,18 @@ Content-Type: application/json
 
 {
   "email": "user@test.local",
-  "password": "123456"
+  "password": "1234567"
 }
 
+###
+
+# Change user password
+POST http://localhost:3000/api/auth/change-password/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword":"123456",
+  "newPassword":"1234567"
+}
 ###

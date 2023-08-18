@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, UseGuards, Req } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { fillObject } from '@project/util/util-core';
@@ -9,6 +9,8 @@ import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authenticatio
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UserInfoRdo } from './rdo/user-info.rdo';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)
@@ -45,7 +47,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     }
 
     @ApiResponse({
-      type: UserRdo,
+      type: UserInfoRdo,
       status: HttpStatus.OK,
       description: AuthMessages.UserFound
     })
@@ -53,7 +55,18 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     @Get(AuthPath.Id)
     public async show(@Param('id', MongoidValidationPipe) id: string) {
       const existUser = await this.authService.getUser(id);
-      return fillObject(UserRdo, existUser);
+      return fillObject(UserInfoRdo, existUser);
+    }
+
+    @ApiResponse({
+      type: LoggedUserRdo,
+      status: HttpStatus.OK,
+      description: AuthMessages.PasswordChanged
+    })
+    @UseGuards(JwtAuthGuard)
+    @Post(AuthPath.ChangePassword)
+    public async changePassword(@Param('id', MongoidValidationPipe) id: string, @Body() dto:ChangePasswordDto) {
+    return this.authService.changePassword(id, dto);
     }
   }
 

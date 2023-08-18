@@ -6,6 +6,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { BlogUserRepository } from '../blog-user/blog-user.repository';
 import { TokenPayload, User } from '@project/shared/app-types';
 import { JwtService } from '@nestjs/jwt';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -70,5 +71,12 @@ export class AuthenticationService {
     return {
       accessToken: await this.jwtService.signAsync(payload),
     }
+  }
+
+  public async changePassword(id:string, dto: ChangePasswordDto) {
+    const {newPassword} = dto;
+    const blogUser = await this.getUser(id);
+    const userEntity = await new BlogUserEntity(blogUser).setPassword(newPassword)
+    return this.blogUserRepository.update(id, userEntity);
   }
 }

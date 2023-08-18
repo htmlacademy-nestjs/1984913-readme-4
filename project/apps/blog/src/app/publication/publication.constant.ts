@@ -19,3 +19,26 @@ export const PublicationPath = {
   Add:'add',
   Id: ':id'
 }as const;
+
+export const PublicationTitleLength = {
+  Min: 20,
+  Max: 50,
+};
+export const PublicationAnnouncementLength = {
+  Min: 50,
+  Max: 225,
+};
+export const TextPublicationLength = {
+  Min: 100,
+  Max: 1024,
+};
+export const QuotePublicationLength = {
+  Min: 20,
+  Max: 300,
+};
+export const PublicationAuthorLength = {
+  Min: 3,
+  Max: 50,
+};
+
+export const LINK_DESCRIPTION_LENGTH = 300;

@@ -12,7 +12,7 @@ export class LinkPublicationEntity extends PublicationEntity implements LinkPubl
 
   public fillEntity(publicationData: LinkPublication) {
     this.link = publicationData.link;
-    this.description = publicationData.link;
+    this.description = publicationData.description;
   }
 
 }

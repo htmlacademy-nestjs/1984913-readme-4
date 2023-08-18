@@ -18,7 +18,8 @@ export class BlogListService {
     return publication;
   }
 
-  async showAll(query:PostQuery): Promise<BlogPublication[]> {
+  public async showAll(query:PostQuery): Promise<BlogPublication[]> {
     return this.publicationRepository.findAll(query);
   }
+
 }

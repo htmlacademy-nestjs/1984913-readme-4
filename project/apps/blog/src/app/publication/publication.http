@@ -24,6 +24,6 @@ Content-Type: application/json
 ###
 
 # Delete publication  by ID
-DELETE http://localhost:3001/api/publication/1 HTTP/1.1
+DELETE http://localhost:3001/api/publication/{{publicationId}} HTTP/1.1
 
 ###

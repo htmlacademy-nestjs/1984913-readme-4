@@ -17,7 +17,8 @@ GET http://localhost:3001/api/blog-list/2 HTTP/1.1
 
 ###
 
-# Get all posts
-GET http://localhost:3001/api/blog-list HTTP/1.1
-
 ###
+
+# Get all posts
+GET http://localhost:3001/api/blog-list?limit=25&page=1 HTTP/1.1
+

@@ -6,6 +6,8 @@ import { PublicationRdo } from './rdo/publication.rdo';
 import { CreateBlogPublicationDto } from './dto/create/blog-publication-dto.type';
 import { UpdateBlogPublicationDto } from './dto/update/blog-publication-dto.type';
 import { adaptRdoPublication } from './utils/adapt-rdo-publication';
+import { CreatePostValidationPipe } from './pipes/create-post-validation.pipe';
+import { UpdatePostValidationPipe } from './pipes/update-post-validation.pipe';
 
 
 @ApiTags(API_TAG_NAME)
@@ -21,7 +23,7 @@ export class PublicationController {
     description: PublicationMessages.Add,
   })
   @Post(PublicationPath.Add)
-  public async create(@Body() dto: CreateBlogPublicationDto) {
+  public async create(@Body(CreatePostValidationPipe) dto: CreateBlogPublicationDto) {
     const publication = await this.publicationsService.create(dto);
     return adaptRdoPublication(publication);
   }
@@ -32,7 +34,7 @@ export class PublicationController {
     description: PublicationMessages.Update,
   })
   @Patch(PublicationPath.Id)
-  public async update(@Param('id') id: number, @Body() dto: UpdateBlogPublicationDto) {
+  public async update(@Param('id') id: number, @Body(UpdatePostValidationPipe) dto: UpdateBlogPublicationDto) {
     const publication = await this.publicationsService.update(id, dto);
     return adaptRdoPublication(publication);
   }

@@ -5,6 +5,7 @@ export const  API_TAG_NAME ='publications'
 export const PublicationsError = {
   PublicationNotFound : 'Publication is not found',
   Delete : 'Publication is not deleted',
+  WrongSourse : 'Video link must be from Youtube',
 } as const;
 
 export const PublicationMessages = {
@@ -42,3 +43,7 @@ export const PublicationAuthorLength = {
 };
 
 export const LINK_DESCRIPTION_LENGTH = 300;
+
+export const VIDEO_REGEXP = /(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})/;
+
+export const VALIDATION_ARGUMENT_TYPE = 'body'

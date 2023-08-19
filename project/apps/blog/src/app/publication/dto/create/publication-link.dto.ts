@@ -1,4 +1,4 @@
-import { IsString, MaxLength } from "class-validator";
+import { IsString, IsUrl, MaxLength } from "class-validator";
 import { CreatePublicationDto } from "./publication.dto";
 import { ApiProperty } from '@nestjs/swagger';
 import { LINK_DESCRIPTION_LENGTH } from "../../publication.constant";
@@ -8,7 +8,7 @@ export class CreateLinkPublicationDto extends CreatePublicationDto {
     description: 'Link text',
     example: 'http://example.com'
   })
-  @IsString()
+  @IsUrl()
   public link: string;
   @ApiProperty({
     description: 'Description of publication  link',

@@ -1,5 +1,6 @@
 export const LikesError = {
   PublicationNotFound : ' Publication  is not found',
+  PublicationNotPosted : ' Can`t add like. Publication  is not posted',
   LikeNotFound: "Like is not existing",
   LikeExists: "Like already added"
 } as const;

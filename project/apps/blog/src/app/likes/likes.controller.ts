@@ -9,7 +9,7 @@ import { LikeRdo } from './rdo/like.rdo';
 @Controller(LikesPath.Main)
 export class LikesController {
   constructor(
-    private readonly likesService: LikesService
+    private readonly likesService: LikesService,
   ) {}
 
   @ApiResponse({

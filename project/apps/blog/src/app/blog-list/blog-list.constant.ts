@@ -10,7 +10,10 @@ export const BlogListMessages = {
   ShowAll: 'List of publications is showing',
 } as const;
 
-export const DEFAULT_POSTS_LIMIT = 25;
+export const DefaultPostsLimit ={
+  Query:25,
+  Search:20
+}as const;
 
 export const DefaultSortParam = {
   Direction: 'desc',
@@ -20,4 +23,6 @@ export const DefaultSortParam = {
 export const BlogListPath = {
   Main: 'blog-list',
   Id: ':id',
+  Drafts: 'drafts',
+  Search: 'search',
 } as const;

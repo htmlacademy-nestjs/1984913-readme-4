@@ -22,3 +22,18 @@ GET http://localhost:3001/api/blog-list/2 HTTP/1.1
 # Get all posts
 GET http://localhost:3001/api/blog-list?limit=25&page=1 HTTP/1.1
 
+###
+
+# Get all posts by name
+GET http://localhost:3001/api/blog-list/search?title=small%20title  HTTP/1.1
+
+###
+
+# Get drafts
+GET http://localhost:3001/api/blog-list/drafts  HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId":"1"
+}
+###

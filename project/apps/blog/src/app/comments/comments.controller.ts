@@ -1,7 +1,7 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Delete, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Delete, Query, UseGuards } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject } from '@project/util/util-core';
+import { JwtAuthGuard, fillObject } from '@project/util/util-core';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
@@ -18,6 +18,7 @@ export class CommentsController {
     status:HttpStatus.CREATED,
     description: CommentsMessages.Add
   })
+  @UseGuards(JwtAuthGuard)
   @Post(CommentsPath.Add)
   public async create( @Body() dto: CreateCommentDto) {
     const newComment = await this.commentsService.create(dto);
@@ -43,6 +44,7 @@ export class CommentsController {
     status: HttpStatus.OK,
     description: CommentsMessages.Remove,
   })
+  @UseGuards(JwtAuthGuard)
   @Delete(CommentsPath.Delete)
   public async remove( @Param('commentId') id: number) {
     return await this.commentsService.delete(id);

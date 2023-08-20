@@ -4,8 +4,7 @@ import { AuthenticationService } from './authentication.service';
 import { BlogUserModule } from '../blog-user/blog-user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { getJwtOptions } from '@project/config/config-users';
-import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
+import { JwtAccessStrategy, getJwtOptions } from '@project/util/util-core';
 
 @Module({
   imports: [BlogUserModule,

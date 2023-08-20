@@ -1,8 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { JWTConfig } from '@project/shared/app-types';
 import * as Joi from 'joi';
-import { DEFAULT_ERROR_MESSAGE } from '../config-users.constant';
-
+import { DEFAULT_ERROR_MESSAGE } from '../config-blog.constant';
 
 export default registerAs('jwt', (): JWTConfig => {
   const config: JWTConfig = {

@@ -1,3 +1,17 @@
+@token={{login.response.body.accessToken}}
+
+# Login user by email and password
+# @name login
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@test.local",
+  "password": "1234567"
+}
+
+###
+
 @publicationId={{createPost.response.body.id}}
 # Create a new post
 # @name createPost
@@ -31,6 +45,7 @@ GET http://localhost:3001/api/blog-list/search?title=small%20title  HTTP/1.1
 
 # Get drafts
 GET http://localhost:3001/api/blog-list/drafts  HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {

@@ -1,6 +1,20 @@
+@token={{login.response.body.accessToken}}
+# Login user by email and password
+# @name login
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@test.local",
+  "password": "1234567"
+}
+
+###
+
 # Add like
 POST http://localhost:3001/api/likes/3 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "userId": "2"

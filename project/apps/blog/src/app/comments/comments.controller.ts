@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Delete, Query, UseGuards } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject } from '@project/util/util-core';
+import { JwtAuthGuard, fillObject } from '@project/util/util-core';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
+import { CommentQuery } from '../query/comment.query';
 
 @ApiTags(API_TAG_NAME)
 @Controller(CommentsPath.Main)
@@ -17,6 +18,7 @@ export class CommentsController {
     status:HttpStatus.CREATED,
     description: CommentsMessages.Add
   })
+  @UseGuards(JwtAuthGuard)
   @Post(CommentsPath.Add)
   public async create( @Body() dto: CreateCommentDto) {
     const newComment = await this.commentsService.create(dto);
@@ -33,9 +35,8 @@ export class CommentsController {
     description: CommentsError.PublicationNotFound
   })
   @Get(CommentsPath.PostId)
-  public async showByPostId(@Param('postId') id: string) {
-    const postId = parseInt(id, 10);
-    const comments = await this.commentsService.findByPostId(postId);
+  public async showByPostId(@Param('postId') id: number, @Query() query:CommentQuery) {
+    const comments = await this.commentsService.findByPostId(id, query);
     return fillObject(CommentRdo, comments);
   }
 
@@ -43,9 +44,9 @@ export class CommentsController {
     status: HttpStatus.OK,
     description: CommentsMessages.Remove,
   })
+  @UseGuards(JwtAuthGuard)
   @Delete(CommentsPath.Delete)
-  public async remove( @Param('commentId') id: string) {
-    const commentId = parseInt(id, 10);
-    return await this.commentsService.delete(commentId );
+  public async remove( @Param('commentId') id: number) {
+    return await this.commentsService.delete(id);
   }
 }

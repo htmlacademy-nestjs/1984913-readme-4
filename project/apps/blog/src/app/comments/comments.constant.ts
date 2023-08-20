@@ -11,7 +11,7 @@ export const CommentsMessages = {
   Remove: "Comment removed"
 } as const;
 
-export const DEFAULT_COMMENTS_AMOUNT = 50;
+export const DEFAULT_COMMENTS_LIMIT = 50;
 
 export const CommentTextLength = {
   Min: 10,

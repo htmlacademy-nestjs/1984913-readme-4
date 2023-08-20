@@ -9,7 +9,7 @@ export class CreatePostValidationPipe implements PipeTransform {
     if (type === VALIDATION_ARGUMENT_TYPE) {
       let errors = [];
       const post = adaptCreateDtoPublication(dto)
-      errors = errors.concat(await validate(post));
+      errors = errors.concat(await validate(post, { validationError: { target: false }}));
       if (errors.length > 0) {
           throw new BadRequestException(errors)
       }

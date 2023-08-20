@@ -9,6 +9,7 @@ import { adaptRdoPublication } from './utils/adapt-rdo-publication';
 import { CreatePostValidationPipe } from './pipes/create-post-validation.pipe';
 import { UpdatePostValidationPipe } from './pipes/update-post-validation.pipe';
 import { JwtAuthGuard } from '@project/util/util-core';
+import { TypePostValidationPipe } from './pipes/type-post-validation.pipe';
 
 
 @ApiTags(API_TAG_NAME)
@@ -25,7 +26,7 @@ export class PublicationController {
   })
   @UseGuards(JwtAuthGuard)
   @Post(PublicationPath.Add)
-  public async create(@Body(CreatePostValidationPipe) dto: CreateBlogPublicationDto) {
+  public async create(@Body(TypePostValidationPipe,CreatePostValidationPipe) dto: CreateBlogPublicationDto) {
     const publication = await this.publicationsService.create(dto);
     return adaptRdoPublication(publication);
   }
@@ -37,7 +38,7 @@ export class PublicationController {
   })
   @UseGuards(JwtAuthGuard)
   @Patch(PublicationPath.Id)
-  public async update(@Param('id') id: number, @Body(UpdatePostValidationPipe) dto: UpdateBlogPublicationDto) {
+  public async update(@Param('id') id: number, @Body(TypePostValidationPipe, UpdatePostValidationPipe) dto: UpdateBlogPublicationDto) {
     const publication = await this.publicationsService.update(id, dto);
     return adaptRdoPublication(publication);
   }

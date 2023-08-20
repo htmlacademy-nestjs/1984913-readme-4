@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PublicationStatus, PublicationType } from '@project/shared/app-types';
-import { IsEnum } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 
 export class UpdatePublicationDto {
   @ApiProperty({
@@ -8,12 +8,13 @@ export class UpdatePublicationDto {
     example: 'text'
   })
   @IsEnum(PublicationType)
-  public type?: string;
+  public type: string;
 
   @ApiProperty({
     description: 'Status of post',
     example: 'posted'
   })
+  @IsOptional()
   @IsEnum(PublicationStatus)
   public status?: string;
 
@@ -21,5 +22,6 @@ export class UpdatePublicationDto {
     description: 'Tags of post',
     example: 'text-tag'
   })
+  @IsOptional()
   public tags?:string[];
 }

@@ -33,7 +33,8 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "title": "Small title for text publication"
+  "title": "Medium title for text publication",
+  "type":"text"
 }
 
 ###

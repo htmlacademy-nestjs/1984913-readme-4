@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { UpdatePublicationDto } from "./publication.dto";
-import { IsString, MaxLength, MinLength } from "class-validator";
+import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 import { PublicationAuthorLength, QuotePublicationLength } from "../../publication.constant";
 
 export class UpdateQuotePublicationDto extends UpdatePublicationDto {
@@ -9,6 +9,7 @@ export class UpdateQuotePublicationDto extends UpdatePublicationDto {
     example: 'Quote'
   })
   @IsString()
+  @IsOptional()
   @MinLength(QuotePublicationLength.Min)
   @MaxLength(QuotePublicationLength.Max)
   public text?: string;
@@ -18,6 +19,7 @@ export class UpdateQuotePublicationDto extends UpdatePublicationDto {
     example: 'Author'
   })
   @IsString()
+  @IsOptional()
   @MinLength(PublicationAuthorLength.Min)
   @MaxLength(PublicationAuthorLength.Max)
   public author?: string;

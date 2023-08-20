@@ -18,7 +18,7 @@ export default registerAs('jwt', (): JWTConfig => {
 
   if (error) {
     throw new Error(
-      `[JWT Config]: ${DEFAULT_ERROR_MESSAGE} ${error.message}`,
+      `${DEFAULT_ERROR_MESSAGE} ${error.message}`,
     );
   }
 

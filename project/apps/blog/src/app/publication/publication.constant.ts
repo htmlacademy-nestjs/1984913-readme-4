@@ -6,6 +6,7 @@ export const PublicationsError = {
   PublicationNotFound : 'Publication is not found',
   Delete : 'Publication is not deleted',
   WrongSourse : 'Video link must be from Youtube',
+  WrongType : 'Wrong post type',
 } as const;
 
 export const PublicationMessages = {

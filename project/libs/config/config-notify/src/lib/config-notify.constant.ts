@@ -5,5 +5,6 @@ export const DEFAULT_ERROR_MESSAGE =  '[Notify Config]: Environments validation 
 export const DefaultPort = {
   App: 3004,
   Mongo : 27017,
-  Rabbit: 5672
+  Rabbit: 5672,
+  Smtp:25,
 } as const;

@@ -2,17 +2,17 @@ import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { getMongoConnectionString } from '@project/util/util-core';
 import { ConfigService } from '@nestjs/config';
 
-export function getMongooseOptions(): MongooseModuleAsyncOptions {
+export function getMongooseOptions(optionSpace:string): MongooseModuleAsyncOptions {
   return {
     useFactory: async (config: ConfigService) => {
       return {
         uri: getMongoConnectionString({
-          username: config.get<string>('database.user'),
-          password: config.get<string>('database.password'),
-          host: config.get<string>('database.host'),
-          port: config.get<string>('database.port'),
-          authDatabase: config.get<string>('database.authBase'),
-          databaseName: config.get<string>('database.name'),
+          username: config.get<string>(`${optionSpace}.user`),
+          password: config.get<string>(`${optionSpace}.password`),
+          host: config.get<string>(`${optionSpace}.host`),
+          port: config.get<string>(`${optionSpace}.port`),
+          authDatabase: config.get<string>(`${optionSpace}.authBase`),
+          databaseName: config.get<string>(`${optionSpace}.name`),
         })
       }
     },

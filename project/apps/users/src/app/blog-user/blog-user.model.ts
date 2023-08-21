@@ -1,9 +1,10 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { User } from '@project/shared/app-types';
+import { USER_COLLECTION_NAME } from './blog-user.constant';
 
 @Schema({
-  collection: 'users',
+  collection: USER_COLLECTION_NAME,
   timestamps: true,
 })
 export class BlogUserModel extends Document implements User {

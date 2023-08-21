@@ -1,4 +1,4 @@
-export const  OPTION_SPACE_NAME ='application.db'
+export const  DEFAULT_OPTION_SPACE ='application.db'
 
 export const SUBSCRIBERS_COLLECTION_NAME = 'email-subscribers';
 

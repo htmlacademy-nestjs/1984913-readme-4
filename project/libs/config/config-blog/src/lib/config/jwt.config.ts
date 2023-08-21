@@ -1,9 +1,9 @@
 import { registerAs } from '@nestjs/config';
 import { JWTConfig } from '@project/shared/app-types';
 import * as Joi from 'joi';
-import { DEFAULT_ERROR_MESSAGE } from '../config-blog.constant';
+import { CONFIG_NAME, DEFAULT_ERROR_MESSAGE } from '../config-blog.constant';
 
-export default registerAs('jwt', (): JWTConfig => {
+export default registerAs(CONFIG_NAME, (): JWTConfig => {
   const config: JWTConfig = {
     accessTokenSecret: process.env.JWT_AT_SECRET,
     accessTokenExpiresIn: process.env.JWT_AT_EXPIRES_IN,

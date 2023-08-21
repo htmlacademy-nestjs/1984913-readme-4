@@ -3,6 +3,7 @@ export const ENV_USERS_FILE_PATH = 'apps/users/.users.env';
 export const ConfigName = {
   Db: 'database',
   App : 'application',
+  Jwt : 'jwt',
 } as const;
 
 export const DefaultPort = {

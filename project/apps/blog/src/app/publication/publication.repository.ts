@@ -53,6 +53,14 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     });
     return publications.map((publication) => adaptPrismaPublication(publication))
   }
+  public async getFullList(): Promise<BlogPublication[]> {
+    const publications = await this.prisma.publication.findMany({
+      where: {
+          status: PublicationStatus.Posted
+      },
+    });
+    return publications.map((publication) => adaptPrismaPublication(publication))
+  }
 
   public async searchByTitle({ title, limit }: SearchPostsQuery): Promise<BlogPublication[]> {
     const publications = await this.prisma.publication.findMany({

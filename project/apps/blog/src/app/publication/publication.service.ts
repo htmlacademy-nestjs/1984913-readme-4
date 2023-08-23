@@ -44,7 +44,6 @@ export class PublicationService {
     return publication;
   }
 
-
   public async remove(postId: number) {
     return this.publicationRepository.destroy(postId);
   }

@@ -39,4 +39,5 @@ export class EmailSubscriberRepository implements CRUDRepository<EmailSubscriber
       .findOne({ email })
       .exec()
   }
+
 }

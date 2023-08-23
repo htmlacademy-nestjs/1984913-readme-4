@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "email": "user@test.local",
-  "password": "1234567"
+  "password": "123456"
 }
 
 ###

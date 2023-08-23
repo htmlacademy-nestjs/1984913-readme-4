@@ -59,6 +59,7 @@ export class BlogListController {
     status: HttpStatus.OK,
     description: 'Publications sent'
   })
+  @UseGuards(JwtAuthGuard)
   @Get(BlogListPath.SendNewsletter)
   public async sendNews(@Body('email') email: string) {
     const posts = await this.blogListService.getPosts()

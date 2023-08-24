@@ -6,12 +6,14 @@ import { PostQuery } from '../query/post.query';
 import { adaptRdoPublication } from '../publication/utils/adapt-rdo-publication';
 import { SearchPostsQuery } from '../query/search.query';
 import { JwtAuthGuard } from '@project/util/util-core';
+import { NotifyService } from '../notify/notify.service';
 
 @ApiTags(API_TAG_NAME)
 @Controller(BlogListPath.Main)
 export class BlogListController {
   constructor(
-    private readonly blogListService: BlogListService
+    private readonly blogListService: BlogListService,
+    private readonly notifyService: NotifyService
   ) {}
   @ApiResponse({
     status: HttpStatus.OK,
@@ -50,6 +52,18 @@ export class BlogListController {
   async showDrafts(@Body("userId") userId:string) {
     const posts = await this.blogListService.showDrafts(userId);
     return posts.map((post) => adaptRdoPublication(post) );
+  }
+
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Publications sent'
+  })
+  @UseGuards(JwtAuthGuard)
+  @Get(BlogListPath.SendNewsletter)
+  public async sendNews(@Body('email') email: string) {
+    const posts = await this.blogListService.getPosts()
+    this.notifyService.sendNewsletter({email, posts});
   }
 
   @ApiResponse({

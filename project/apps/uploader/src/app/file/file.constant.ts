@@ -3,11 +3,6 @@ export const  FileError = {
   MimetypeError: "Wrong file mimetype",
 } as const;
 
-export const LikesMessages = {
-  Add : "Like added successfully",
-  Remove: "Like removed"
-} as const;
-
 export const FilePath = {
   Main:'files',
   Upload:'/upload',
@@ -15,3 +10,7 @@ export const FilePath = {
 }as const;
 
 export const FORMAT_PATTERN ='YYYY MM'
+
+export const DEFAULT_OPTION_SPACE = 'application.db'
+
+export const FILE_COLLECTION_NAME = 'files'

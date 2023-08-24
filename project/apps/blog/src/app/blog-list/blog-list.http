@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "email": "user@test.local",
-  "password": "1234567"
+  "password": "123456"
 }
 
 ###
@@ -26,12 +26,12 @@ Content-Type: application/json
 }
 
 ###
+
 # Get publication  by ID
 GET http://localhost:3001/api/blog-list/2 HTTP/1.1
 
 ###
 
-###
 
 # Get all posts
 GET http://localhost:3001/api/blog-list?limit=25&page=1 HTTP/1.1
@@ -50,5 +50,15 @@ Content-Type: application/json
 
 {
   "userId":"1"
+}
+###
+
+# Send news
+GET http://localhost:3001/api/blog-list/send-news HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "email":"user@test.local"
 }
 ###

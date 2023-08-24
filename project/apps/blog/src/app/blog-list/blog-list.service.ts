@@ -23,6 +23,10 @@ export class BlogListService {
     return this.publicationRepository.findAll(query);
   }
 
+  public async getPosts (): Promise<BlogPublication[]> {
+    return this.publicationRepository.getFullList();
+  }
+
   public async searchByTitle(query:SearchPostsQuery): Promise<BlogPublication[]> {
     return this.publicationRepository.searchByTitle(query);
   }

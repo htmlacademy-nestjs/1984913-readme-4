@@ -4,6 +4,7 @@ import { ENV_USERS_FILE_PATH } from './config-users.constant';
 import appConfig from './config/app.config';
 import dbConfig from './config/db.config';
 import jwtConfig from './config/jwt.config';
+import rabbitConfig from './config/rabbit.config';
 
 
 @Module({
@@ -11,7 +12,7 @@ import jwtConfig from './config/jwt.config';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      load: [appConfig, dbConfig, jwtConfig],
+      load: [appConfig, dbConfig, jwtConfig, rabbitConfig],
       envFilePath: ENV_USERS_FILE_PATH
     }),
   ]

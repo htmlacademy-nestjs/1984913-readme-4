@@ -1,9 +1,10 @@
 import { File } from '@project/shared/app-types';
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { FILE_COLLECTION_NAME } from './file.constant';
 
 @Schema({
-  collection: 'files',
+  collection: FILE_COLLECTION_NAME,
   timestamps: true
 })
 export class FileModel extends Document implements File {

@@ -25,4 +25,5 @@ export const BlogListPath = {
   Id: ':id',
   Drafts: 'drafts',
   Search: 'search',
+  SendNewsletter: 'send-news',
 } as const;

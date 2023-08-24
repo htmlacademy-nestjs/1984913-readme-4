@@ -10,12 +10,14 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { UserInfoRdo } from './rdo/user-info.rdo';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { NotifyService } from '../notify/notify.service';
 
 @ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)
   export class AuthenticationController {
     constructor(
-      private readonly authService: AuthenticationService
+      private readonly authService: AuthenticationService,
+      private readonly notifyService: NotifyService
     ) {}
 
     @ApiResponse({
@@ -25,6 +27,8 @@ import { ChangePasswordDto } from './dto/change-password.dto';
     @Post(AuthPath.Register)
     public async create(@Body() dto: CreateUserDto) {
       const newUser = await this.authService.register(dto);
+      const { email, name } = newUser;
+      await this.notifyService.registerSubscriber({ email, name })
       return fillObject(UserRdo, newUser);
     }
 

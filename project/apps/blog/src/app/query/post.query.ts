@@ -1,7 +1,8 @@
-import { IsIn, IsNumber,IsEnum,IsString, IsOptional } from 'class-validator';
+import { IsIn, IsNumber,IsEnum,IsString, IsOptional, MinLength, MaxLength } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { DefaultPostsLimit, DefaultSortParam } from '../blog-list/blog-list.constant';
 import { PublicationType } from '@project/shared/app-types';
+import { TagDefaultParam } from '../publication/publication.constant';
 
 export class PostQuery {
   @Transform(({ value } ) => +value || DefaultPostsLimit.Query)
@@ -24,6 +25,12 @@ export class PostQuery {
   @IsEnum(PublicationType)
   @IsOptional()
   public type?: string;
+
+  @Transform(({ value }) => value.toLowerCase())
+  @IsOptional()
+  @MinLength(TagDefaultParam.MinLength)
+  @MaxLength(TagDefaultParam.MaxLength)
+  public tag:string;
 
   @IsIn(['asc', 'desc'])
   @IsOptional()

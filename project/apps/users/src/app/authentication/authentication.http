@@ -1,4 +1,4 @@
-@userId={{login.response.body.id}}
+@userId= 64e63717c3b9e4e447524178
 @token={{login.response.body.accessToken}}
 # Create a new user
 # @name register
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
   "email": "user@test.local",
-  "password": "1234567"
+  "password": "123456"
 }
 
 ###
@@ -40,4 +40,10 @@ Content-Type: application/json
   "currentPassword":"123456",
   "newPassword":"1234567"
 }
+###
+
+# Get new JWT pair
+POST http://localhost:3000/api/auth/refresh HTTP/1.1
+Authorization: Bearer {{token}}
+
 ###

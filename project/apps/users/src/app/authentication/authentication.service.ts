@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AuthError, DEFAULT_AMOUNT } from './authentication.constant';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,12 +7,16 @@ import { BlogUserRepository } from '../blog-user/blog-user.repository';
 import { TokenPayload, User } from '@project/shared/app-types';
 import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { jwtConfig } from '@project/config/config-users';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly blogUserRepository: BlogUserRepository,
     private readonly jwtService: JwtService,
+    @Inject (jwtConfig.KEY)
+    private readonly jwtOptions: ConfigType<typeof jwtConfig>,
   ) {}
 
   public async register(dto: CreateUserDto) {
@@ -70,6 +74,10 @@ export class AuthenticationService {
 
     return {
       accessToken: await this.jwtService.signAsync(payload),
+      refreshToken: await this.jwtService.signAsync(payload, {
+        secret: this.jwtOptions.refreshTokenSecret,
+        expiresIn: this.jwtOptions.refreshTokenExpiresIn
+      })
     }
   }
 

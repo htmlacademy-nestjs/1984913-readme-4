@@ -6,6 +6,7 @@ import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
 import { PostQuery } from '../query/post.query';
 import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
 import { SearchPostsQuery } from '../query/search.query';
+import { formatTags } from './utils/format-tags';
 
 @Injectable()
 export class PublicationRepository implements CRUDRepository<BlogPublicationEntity, number, BlogPublication> {
@@ -14,6 +15,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
   public async create(item: BlogPublicationEntity): Promise<BlogPublication> {
     const data = {
       ...item.toObject(),
+      tags:formatTags(item.tags),
       userId: item._userId,
       originUserId: item._originUserId
     }
@@ -100,6 +102,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
   public async update(postId: number, item: BlogPublicationEntity): Promise<BlogPublication> {
     const data = {
       ...item.toObject(),
+      tags:formatTags(item.tags),
       userId: item._userId,
       originUserId: item._originUserId
     }

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { UpdatePublicationDto } from "./publication.dto";
 import { IsOptional, IsString, IsUrl, Matches, MaxLength, MinLength } from "class-validator";
-import { PublicationTitleLength, PublicationsError, VIDEO_REGEXP } from "../../publication.constant";
+import { PublicationTitleLength, PublicationsError, RegExpPattern } from "../../publication.constant";
 
 export class UpdateVideoPublicationDto extends UpdatePublicationDto{
   @ApiProperty({
@@ -20,6 +20,6 @@ export class UpdateVideoPublicationDto extends UpdatePublicationDto{
   })
   @IsOptional()
   @IsUrl()
-  @Matches(VIDEO_REGEXP, {message: PublicationsError.WrongSourse})
+  @Matches(RegExpPattern.Video, {message: PublicationsError.WrongSourse})
     public link?: string;
 }

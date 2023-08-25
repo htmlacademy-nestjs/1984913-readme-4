@@ -7,6 +7,8 @@ export const PublicationsError = {
   Delete : 'Publication is not deleted',
   WrongSourse : 'Video link must be from Youtube',
   WrongType : 'Wrong post type',
+  WrongTagStart : 'Tags should start with digit',
+  SpacesInTag:'Tags should not contain spaces',
 } as const;
 
 export const PublicationMessages = {
@@ -42,9 +44,17 @@ export const PublicationAuthorLength = {
   Min: 3,
   Max: 50,
 };
+export const TagDefaultParam = {
+  MinLength: 3,
+  MaxLength: 10,
+  Amount: 8,
+};
 
 export const LINK_DESCRIPTION_LENGTH = 300;
 
-export const VIDEO_REGEXP = /(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})/;
+export const RegExpPattern = {
+  Video:/(?:(?:https?:\/\/)(?:www)?\.?(?:youtu\.?be)(?:\.com)?\/(?:.*[=/])*)([^= &?/\r\n]{8,11})/,
+  Tag:/^[A-Za-zА-Яа-я]([A-Za-zА-Яа-я0-9_.])+$/g,
+} ;
 
 export const VALIDATION_ARGUMENT_TYPE = 'body'

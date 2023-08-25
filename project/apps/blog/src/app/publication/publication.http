@@ -22,7 +22,8 @@ Authorization: Bearer {{token}}
   "type": "text",
   "title": "Long title for text publication",
   "announcement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis erat sem, dictum ac cursus at, faucibus ut sapien. Duis ac."
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis erat sem, dictum ac cursus at, faucibus ut sapien. Duis ac.",
+  "tags":["test", "tag2"]
 }
 
 ###

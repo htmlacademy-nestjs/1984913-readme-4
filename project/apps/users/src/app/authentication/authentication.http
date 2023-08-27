@@ -1,5 +1,6 @@
 @userId= 64e63717c3b9e4e447524178
-@token={{login.response.body.accessToken}}
+@AToken={{login.response.body.accessToken}}
+@RToken={{login.response.body.refreshToken}}
 # Create a new user
 # @name register
 POST http://localhost:3000/api/auth/register HTTP/1.1
@@ -15,7 +16,7 @@ Content-Type: application/json
 
 # Get user by ID
 GET http://localhost:3000/api/auth/{{userId}} HTTP/1.1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{AToken}}
 
 ###
 
@@ -33,7 +34,7 @@ Content-Type: application/json
 
 # Change user password
 POST http://localhost:3000/api/auth/change-password/{{userId}} HTTP/1.1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{AToken}}
 Content-Type: application/json
 
 {
@@ -43,7 +44,8 @@ Content-Type: application/json
 ###
 
 # Get new JWT pair
+# @name refresh
 POST http://localhost:3000/api/auth/refresh HTTP/1.1
-Authorization: Bearer {{token}}
+Authorization: Bearer {{RToken}}
 
 ###

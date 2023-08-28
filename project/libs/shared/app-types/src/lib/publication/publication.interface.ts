@@ -4,7 +4,7 @@ export interface Publication {
   _id?: number;
   _userId?: string;
   _originUserId?: string;
-  _originId?: string;
+  _originId?: number;
   type: PublicationType;
   createdDate: string;
   postedDate: string;

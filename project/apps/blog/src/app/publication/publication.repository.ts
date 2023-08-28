@@ -6,7 +6,7 @@ import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
 import { PostQuery } from '../query/post.query';
 import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
 import { SearchPostsQuery } from '../query/search.query';
-import { formatTags } from './utils/format-tags';
+import { formatTags } from './utils/helpers';
 
 @Injectable()
 export class PublicationRepository implements CRUDRepository<BlogPublicationEntity, number, BlogPublication> {
@@ -17,10 +17,13 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
       ...item.toObject(),
       tags:formatTags(item.tags),
       userId: item._userId,
-      originUserId: item._originUserId
+      originUserId: item._originUserId,
+      originId: item._originId,
     }
     delete data._userId;
     delete data._originUserId;
+    delete data._id;
+    delete data._originId;
     const publication = await this.prisma.publication.create({ data });
     return adaptPrismaPublication(publication)
   }
@@ -30,6 +33,16 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
       where: {
         postId
       }
+    });
+    return adaptPrismaPublication(publication)
+  }
+  public async findRepost(postId: number, userId:string): Promise<BlogPublication | null> {
+    const publication = await this.prisma.publication.findFirst({
+      where: {
+      AND:{
+        originId:postId,
+        userId
+      }}
     });
     return adaptPrismaPublication(publication)
   }
@@ -58,6 +71,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     });
     return publications.map((publication) => adaptPrismaPublication(publication))
   }
+
   public async getFullList(): Promise<BlogPublication[]> {
     const publications = await this.prisma.publication.findMany({
       where: {

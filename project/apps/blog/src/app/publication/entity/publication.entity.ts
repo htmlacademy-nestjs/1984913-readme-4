@@ -6,7 +6,7 @@ export abstract class PublicationEntity implements Publication{
   public _id?: number;
   public _userId?: string;
   public _originUserId?: string;
-  public _originId?: string;
+  public _originId?: number;
   public type: PublicationType;
   public createdDate: string;
   public postedDate: string;

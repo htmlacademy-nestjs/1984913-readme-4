@@ -9,6 +9,7 @@ export const PublicationsError = {
   WrongType : 'Wrong post type',
   WrongTagStart : 'Tags should start with digit',
   SpacesInTag:'Tags should not contain spaces',
+  AlreadyReposted:'You already reposted this publication',
 } as const;
 
 export const PublicationMessages = {
@@ -20,6 +21,7 @@ export const PublicationMessages = {
 
 export const PublicationPath = {
   Main:'publication',
+  Respost:':id/repost',
   Add:'add',
   Id: ':id'
 }as const;

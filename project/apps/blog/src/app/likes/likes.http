@@ -6,19 +6,16 @@ Content-Type: application/json
 
 {
   "email": "user@test.local",
-  "password": "1234567"
+  "password": "123456"
 }
 
 ###
 
-# Add like
+# Add/remove like
 POST http://localhost:3001/api/likes/3 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
-{
-  "userId": "2"
-}
 
 ###
 

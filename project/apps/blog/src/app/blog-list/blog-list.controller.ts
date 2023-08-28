@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Query, UseGuards } from '@nestjs/common';
+import { Req, Controller, Get, HttpStatus, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BlogListService } from './blog-list.service';
 import { API_TAG_NAME, BlogListError, BlogListMessages, BlogListPath } from './blog-list.constant';
@@ -7,6 +7,7 @@ import { adaptRdoPublication } from '../publication/utils/adapt-rdo-publication'
 import { SearchPostsQuery } from '../query/search.query';
 import { JwtAuthGuard } from '@project/util/util-core';
 import { NotifyService } from '../notify/notify.service';
+import { RequestWithUserPayload } from '@project/shared/app-types';
 
 @ApiTags(API_TAG_NAME)
 @Controller(BlogListPath.Main)
@@ -49,7 +50,8 @@ export class BlogListController {
   })
   @UseGuards(JwtAuthGuard)
   @Get(BlogListPath.Drafts)
-  async showDrafts(@Body("userId") userId:string) {
+  async showDrafts(@Req() {user}: RequestWithUserPayload) {
+    const userId = user.sub;
     const posts = await this.blogListService.showDrafts(userId);
     return posts.map((post) => adaptRdoPublication(post) );
   }
@@ -57,11 +59,12 @@ export class BlogListController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Publications sent'
+    description:BlogListMessages.NewsSent
   })
   @UseGuards(JwtAuthGuard)
   @Get(BlogListPath.SendNewsletter)
-  public async sendNews(@Body('email') email: string) {
+  public async sendNews(@Req() {user}: RequestWithUserPayload) {
+    const {email} = user;
     const posts = await this.blogListService.getPosts()
     this.notifyService.sendNewsletter({email, posts});
   }

@@ -7,7 +7,7 @@ export const LikesError = {
 
 export const LikesMessages = {
   Add : "Like added successfully",
-  Remove: "Like removed"
+  Show: "Like showing"
 } as const;
 
 export const LikesPath = {

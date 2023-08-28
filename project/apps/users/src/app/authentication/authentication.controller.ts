@@ -10,7 +10,7 @@ import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { UserInfoRdo } from './rdo/user-info.rdo';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { NotifyService } from '../notify/notify.service';
-import { RequestWithUser } from '@project/shared/app-types';
+import { RequestWithUser, RequestWithUserPayload } from '@project/shared/app-types';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 
@@ -72,16 +72,21 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
     return this.authService.changePassword(id, dto);
     }
 
-    @Post('refresh')
+    @Post(AuthPath.Refresh)
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
       status: HttpStatus.OK,
-      description: 'Get a new access/refresh tokens'
+      description:AuthMessages.Refresh
     })
     @UseGuards(JwtRefreshGuard)
     public async refreshToken(@Req() { user }: RequestWithUser) {
       return this.authService.createUserToken(user);
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Post(AuthPath.Check)
+    public async checkToken(@Req() { user: payload }: RequestWithUserPayload) {
+      return payload;
+    }
   }
 

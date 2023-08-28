@@ -12,21 +12,6 @@ Content-Type: application/json
 
 ###
 
-@publicationId={{createPost.response.body.id}}
-# Create a new post
-# @name createPost
-POST http://localhost:3001/api/publication/add HTTP/1.1
-Content-Type: application/json
-
-{
-  "type": "text",
-  "title": "Test title",
-  "announcement": "test test",
-  "text": "Long text"
-}
-
-###
-
 # Get publication  by ID
 GET http://localhost:3001/api/blog-list/2 HTTP/1.1
 
@@ -48,9 +33,6 @@ GET http://localhost:3001/api/blog-list/drafts  HTTP/1.1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-{
-  "userId":"1"
-}
 ###
 
 # Send news
@@ -58,7 +40,4 @@ GET http://localhost:3001/api/blog-list/send-news HTTP/1.1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-{
-  "email":"user@test.local"
-}
 ###

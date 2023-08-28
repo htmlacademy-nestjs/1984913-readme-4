@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Delete, Query, UseGuards } from '@nestjs/common';
+import { Body, Req, Controller, Get, HttpStatus, Param, Post, Delete, Query, UseGuards } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard, fillObject } from '@project/util/util-core';
@@ -6,6 +6,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
 import { CommentQuery } from '../query/comment.query';
+import { RequestWithUserPayload } from '@project/shared/app-types';
 
 @ApiTags(API_TAG_NAME)
 @Controller(CommentsPath.Main)
@@ -20,8 +21,9 @@ export class CommentsController {
   })
   @UseGuards(JwtAuthGuard)
   @Post(CommentsPath.Add)
-  public async create( @Body() dto: CreateCommentDto) {
-    const newComment = await this.commentsService.create(dto);
+  public async create( @Body() dto: CreateCommentDto, @Req() {user}:RequestWithUserPayload) {
+    const userId = user.sub;
+    const newComment = await this.commentsService.create(dto, userId);
     return fillObject(CommentRdo, newComment);
   }
 
@@ -46,7 +48,8 @@ export class CommentsController {
   })
   @UseGuards(JwtAuthGuard)
   @Delete(CommentsPath.Delete)
-  public async remove( @Param('commentId') id: number) {
-    return await this.commentsService.delete(id);
+  public async remove( @Param('commentId') id: number, @Req() {user}:RequestWithUserPayload) {
+    const userId = user.sub;
+    return await this.commentsService.delete(id, userId);
   }
 }

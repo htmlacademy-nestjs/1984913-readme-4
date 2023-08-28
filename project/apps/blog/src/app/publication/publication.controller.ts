@@ -1,4 +1,4 @@
-import { Body, Req,Controller, HttpStatus, Param, Post, Delete, Patch, UseGuards } from '@nestjs/common';
+import { Body, Req, Controller, HttpStatus, Param, Post, Delete, Patch, UseGuards } from '@nestjs/common';
 import { PublicationService } from './publication.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { API_TAG_NAME, PublicationMessages, PublicationPath, PublicationsError } from './publication.constant';
@@ -10,7 +10,7 @@ import { CreatePostValidationPipe } from './pipes/create-post-validation.pipe';
 import { UpdatePostValidationPipe } from './pipes/update-post-validation.pipe';
 import { JwtAuthGuard } from '@project/util/util-core';
 import { TypePostValidationPipe } from './pipes/type-post-validation.pipe';
-import { RequestWithUser, TokenPayload } from '@project/shared/app-types';
+import { RequestWithUserPayload } from '@project/shared/app-types';
 
 
 @ApiTags(API_TAG_NAME)
@@ -51,7 +51,8 @@ export class PublicationController {
   })
   @UseGuards(JwtAuthGuard)
   @Post(PublicationPath.Respost)
-  public async repost(@Param('id') id: number, @Body('userId') userId:string ) {
+  public async repost(@Param('id') id: number, @Req() {user}:RequestWithUserPayload ) {
+    const userId = user.sub;
     const publication = await this.publicationsService.repost(id, userId);
     return adaptRdoPublication(publication);
   }

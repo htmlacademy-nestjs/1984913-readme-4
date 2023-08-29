@@ -27,8 +27,9 @@ export class PublicationController {
   })
   @UseGuards(JwtAuthGuard)
   @Post(PublicationPath.Add)
-  public async create(@Body(TypePostValidationPipe,CreatePostValidationPipe) dto: CreateBlogPublicationDto) {
-    const publication = await this.publicationsService.create(dto);
+  public async create(@Req() {user}:RequestWithUserPayload, @Body(TypePostValidationPipe,CreatePostValidationPipe) dto: CreateBlogPublicationDto) {
+    const userId = user.sub;
+    const publication = await this.publicationsService.create(dto, userId);
     return adaptRdoPublication(publication);
   }
 
@@ -39,8 +40,9 @@ export class PublicationController {
   })
   @UseGuards(JwtAuthGuard)
   @Patch(PublicationPath.Id)
-  public async update(@Param('id') id: number, @Body(TypePostValidationPipe, UpdatePostValidationPipe) dto: UpdateBlogPublicationDto) {
-    const publication = await this.publicationsService.update(id, dto);
+  public async update(@Req() {user}:RequestWithUserPayload, @Param('id') id: number, @Body(TypePostValidationPipe, UpdatePostValidationPipe) dto: UpdateBlogPublicationDto) {
+    const userId = user.sub;
+    const publication = await this.publicationsService.update(id, dto, userId);
     return adaptRdoPublication(publication);
   }
 
@@ -67,7 +69,8 @@ export class PublicationController {
   })
   @UseGuards(JwtAuthGuard)
   @Delete(PublicationPath.Id)
-  public async delete(@Param('id') id: number) {
-    return await this.publicationsService.remove(id);
+  public async delete(@Param('id') id: number, @Req() {user}:RequestWithUserPayload) {
+    const userId = user.sub;
+    return await this.publicationsService.remove(id, userId);
   }
 }

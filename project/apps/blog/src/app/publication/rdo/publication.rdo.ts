@@ -1,5 +1,6 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRdo } from './user.rdo';
 
 export class PublicationRdo {
   @ApiProperty({
@@ -21,7 +22,8 @@ export class PublicationRdo {
     example: '1'
   })
   @Expose({ name: '_userId' })
-  public userId: string;
+  @Type(() => UserRdo)
+  public userId: UserRdo;
 
   @ApiProperty({
     description: 'Date publication  was created',

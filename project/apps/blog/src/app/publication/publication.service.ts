@@ -13,10 +13,10 @@ export class PublicationService {
     private readonly publicationRepository: PublicationRepository,
   ) {}
 
-  public async create(dto:  CreateBlogPublicationDto ) {
+  public async create(dto:  CreateBlogPublicationDto, userId:string ) {
     const publication = {
       ...dto,
-      _userId: '1',
+      _userId: userId,
       createdDate: getDate(),
       postedDate: getDate(),
       status: PublicationStatus.posted,
@@ -28,8 +28,11 @@ export class PublicationService {
     return this.publicationRepository.create(postEntity);
   }
 
-  public async update(postId: number, dto: UpdateBlogPublicationDto ) {
+  public async update(postId: number, dto: UpdateBlogPublicationDto, userId:string ) {
     const publication = await this.findByPostId(postId);
+    if(userId !== publication._userId){
+      throw new BadRequestException(PublicationsError.NotUserAuthor)
+    }
     const updatedPublication = {...publication, ...dto,postedDate: getDate()  }
     const postEntity = await new TypeEntityAdapter[updatedPublication.type](updatedPublication);
     return this.publicationRepository.update(postId, postEntity);
@@ -63,7 +66,11 @@ export class PublicationService {
     return this.publicationRepository.create(postEntity);
   }
 
-  public async remove(postId: number) {
+  public async remove(postId: number,  userId:string ) {
+    const publication = await this.findByPostId(postId);
+    if(userId !== publication._userId){
+      throw new BadRequestException(PublicationsError.NotUserAuthor)
+    }
     return this.publicationRepository.destroy(postId);
   }
 

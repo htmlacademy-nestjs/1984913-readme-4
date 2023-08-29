@@ -10,6 +10,7 @@ export const PublicationsError = {
   WrongTagStart : 'Tags should start with digit',
   SpacesInTag:'Tags should not contain spaces',
   AlreadyReposted:'You already reposted this publication',
+  NotUserAuthor:'User is not an author of this publication',
 } as const;
 
 export const PublicationMessages = {

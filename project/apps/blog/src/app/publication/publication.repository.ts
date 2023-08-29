@@ -48,15 +48,13 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
   }
 
   public async findAll({ limit, page, sortBy, type, sortDirection, user, tag }: PostQuery): Promise<BlogPublication[]> {
-    const publications = await this.prisma.publication.findMany({
+    const queryParams = {
       where: {
         AND: {
           status: PublicationStatus.Posted,
           type: type as PublicationType,
           userId: user,
-          tags:{
-            has:tag
-          }
+          tags:undefined
         }
       },
       take: limit,
@@ -68,7 +66,11 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
         { [sortBy]: sortDirection }
       ],
       skip: page > 0 ? limit * (page - 1) : undefined,
-    });
+    }
+    if (tag) {
+      queryParams.where.AND.tags = { has: tag };
+    }
+    const publications = await this.prisma.publication.findMany(queryParams);
     return publications.map((publication) => adaptPrismaPublication(publication))
   }
 

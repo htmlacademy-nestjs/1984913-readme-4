@@ -33,7 +33,7 @@ Content-Type: application/json
 ###
 
 # Change user password
-POST http://localhost:3000/api/auth/change-password/{{userId}} HTTP/1.1
+POST http://localhost:3000/api/auth/change-password HTTP/1.1
 Authorization: Bearer {{AToken}}
 Content-Type: application/json
 

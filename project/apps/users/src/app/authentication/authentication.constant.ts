@@ -4,6 +4,7 @@ export const AuthError = {
   UserExists: 'User with this email already exists',
   NotFound : 'User is not found',
   PasswordWrong : 'Password is wrong',
+  PasswordSimilar : 'Current and new password are similar',
   InvalidData: 'Data is invalid',
   InvalidEmail:'Email is invalid'
 } as const;
@@ -26,7 +27,7 @@ export const AuthPath = {
   Id:':id',
   Refresh:'refresh',
   Check:'check',
-  ChangePassword:'change-password/:id'
+  ChangePassword:'change-password'
 }as const;
 
 export const UserNameLength = {

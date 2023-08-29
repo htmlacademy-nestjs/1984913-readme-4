@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { AuthError, DEFAULT_AMOUNT } from './authentication.constant';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -83,9 +83,16 @@ export class AuthenticationService {
   }
 
   public async changePassword(id:string, dto: ChangePasswordDto) {
-    const {newPassword} = dto;
+    const {newPassword, currentPassword} = dto;
+    if(currentPassword === newPassword){
+      throw new BadRequestException (AuthError.PasswordSimilar);
+    }
     const blogUser = await this.getUser(id);
-    const userEntity = await new BlogUserEntity(blogUser).setPassword(newPassword)
-    return this.blogUserRepository.update(id, userEntity);
+    const blogUserEntity = new BlogUserEntity(blogUser);
+    if (!await blogUserEntity.comparePassword(currentPassword)) {
+      throw new BadRequestException (AuthError.PasswordWrong);
+    }
+    await blogUserEntity.setPassword(newPassword)
+    return this.blogUserRepository.update(id, blogUserEntity);
   }
 }

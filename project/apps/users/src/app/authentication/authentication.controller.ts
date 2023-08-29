@@ -68,8 +68,8 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
     })
     @UseGuards(JwtAuthGuard)
     @Post(AuthPath.ChangePassword)
-    public async changePassword(@Param('id', MongoidValidationPipe) id: string, @Body() dto:ChangePasswordDto) {
-    return this.authService.changePassword(id, dto);
+    public async changePassword(@Req() { user }: RequestWithUserPayload, @Body() dto:ChangePasswordDto) {
+    return this.authService.changePassword(user.sub, dto);
     }
 
     @Post(AuthPath.Refresh)

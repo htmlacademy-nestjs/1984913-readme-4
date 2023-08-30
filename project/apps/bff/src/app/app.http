@@ -50,3 +50,32 @@ Authorization: Bearer {{RToken}}
 
 ###
 
+# Get publication  by ID
+GET http://localhost:4000/api/blog/2 HTTP/1.1
+
+###
+
+
+# Get all posts
+GET http://localhost:4000/api/blog?limit=25&page=1&tag=tag2 HTTP/1.1
+
+###
+
+# Get all posts by name
+GET http://localhost:4000/api/blog/search?title=small%20title  HTTP/1.1
+
+###
+
+# Get drafts
+GET http://localhost:4000/api/blog/drafts  HTTP/1.1
+Authorization: Bearer {{AToken}}
+Content-Type: application/json
+
+###
+
+# Send news
+GET http://localhost:4000/api/blog/send-news HTTP/1.1
+Authorization: Bearer {{AToken}}
+Content-Type: application/json
+
+###

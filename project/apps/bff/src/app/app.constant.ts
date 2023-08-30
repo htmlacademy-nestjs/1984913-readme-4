@@ -10,7 +10,7 @@ export const AuthPath = {
 export const CommentsPath = {
   Add:'add',
   PostId: ':postId',
-  Delete:'delete/:commentId'
+  Delete:'delete'
 }as const;
 
 export const BlogListPath = {

@@ -1,4 +1,4 @@
-import { Body, Req, Get, Param, Controller, Post, Query, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Req, Get, Param, Controller, Post, Query, UseFilters, UseGuards, Delete } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
@@ -6,6 +6,7 @@ import { ApplicationServiceURL } from '../app.config';
 import { BlogListPath } from '../app.constant';
 import { PostQuery } from '../query/post.query';
 import { SearchPostsQuery } from '../query/search.query';
+
 
 @Controller('blog')
 @UseFilters(AxiosExceptionFilter)
@@ -16,7 +17,7 @@ export class BlogController {
 
 
   @Get()
-  public async show(@Query() query:PostQuery) {
+  public async showPublications(@Query() query:PostQuery) {
   const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}`, {
     params:query
   });
@@ -25,7 +26,7 @@ export class BlogController {
 
 
   @Get(BlogListPath.Search)
-  public async searchByTitle(@Query() query:SearchPostsQuery) {
+  public async searchPublicationsByTitle(@Query() query:SearchPostsQuery) {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${BlogListPath.Search}`, {
       params:query
     });
@@ -44,7 +45,6 @@ export class BlogController {
     return data
   }
 
-
   @UseGuards(CheckAuthGuard)
   @Get(BlogListPath.SendNewsletter)
   public async sendNews(@Req() req:Request) {
@@ -56,8 +56,9 @@ export class BlogController {
   }
 
   @Get(BlogListPath.Id)
-  public async showById(@Param('id') id: number) {
+  public async showPublicationById(@Param('id') id: number) {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${id}`);
     return data
   }
+
 }

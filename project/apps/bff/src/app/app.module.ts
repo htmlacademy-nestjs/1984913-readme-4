@@ -4,6 +4,7 @@ import { BlogController } from './controllers/blog.controller';
 import { HttpModule } from '@nestjs/axios';
 import { HttpCLientParam } from './app.config';
 import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CommentsController } from './controllers/comments.controller';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
   controllers: [
     UsersController,
     BlogController,
+    CommentsController,
   ],
   providers: [CheckAuthGuard],
 })

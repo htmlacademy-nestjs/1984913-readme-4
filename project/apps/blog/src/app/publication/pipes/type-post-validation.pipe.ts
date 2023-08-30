@@ -1,7 +1,7 @@
 import { BadRequestException, PipeTransform } from "@nestjs/common";
-import { UpdateBlogPublicationDto } from "../dto/update/blog-publication-dto.type";
+import { UpdateBlogPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/blog-publication-dto.type";
 import { PublicationType } from "@project/shared/app-types";
-import { CreateBlogPublicationDto } from "../dto/create/blog-publication-dto.type";
+import { CreateBlogPublicationDto } from "@project/shared/shared-dto";
 import { PublicationsError } from "../publication.constant";
 
 export class TypePostValidationPipe implements PipeTransform {

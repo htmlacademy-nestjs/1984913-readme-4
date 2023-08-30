@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsString, MaxLength, MinLength } from 'class-validator';
-import { CommentTextLength } from '../comments.constant';
+import { CommentTextLength } from './comment-dto.constant';
 
 export class CreateCommentDto {
   @ApiProperty({

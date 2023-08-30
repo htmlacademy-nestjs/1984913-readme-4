@@ -5,8 +5,7 @@ export const AuthError = {
   NotFound : 'User is not found',
   PasswordWrong : 'Password is wrong',
   PasswordSimilar : 'Current and new password are similar',
-  InvalidData: 'Data is invalid',
-  InvalidEmail:'Email is invalid'
+  InvalidData: 'Data is invalid'
 } as const;
 
 export const AuthMessages = {
@@ -16,7 +15,6 @@ export const AuthMessages = {
   PasswordChanged: "Password successfully changed",
   Refresh: 'Get a new access/refresh tokens',
 } as const;
-
 
 export const DEFAULT_AMOUNT = 0;
 
@@ -29,13 +27,3 @@ export const AuthPath = {
   Check:'check',
   ChangePassword:'change-password'
 }as const;
-
-export const UserNameLength = {
-  Min: 3,
-  Max: 50,
-};
-
-export const UserPasswordLength = {
-  Min: 6,
-  Max: 12,
-};

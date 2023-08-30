@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PublicationStatus, PublicationType } from '@project/shared/app-types';
 import { ArrayMaxSize, IsEnum, IsOptional, Matches, MaxLength, MinLength, NotContains } from 'class-validator';
-import { PublicationsError, RegExpPattern, TagDefaultParam } from '../../publication.constant';
+import { PublicationsError, RegExpPattern, TagDefaultParam } from "../publication-dto.constant";
 
-export class CreatePublicationDto {
+export class UpdatePublicationDto {
   @ApiProperty({
     description: 'Type of post',
     example: 'text'

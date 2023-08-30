@@ -1,8 +1,9 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateCommentDto } from '@project/shared/shared-dto';
 import { CommentEntity } from './comment.entity';
 import { CommentQuery } from '../query/comment.query';
+import { CommentsError } from './comments.constant';
 
 @Injectable()
 export class CommentsService {
@@ -29,7 +30,7 @@ export class CommentsService {
   public async delete(id:number, userId:string) {
     const commentData = await this.commentRepository.findById(id)
     if(commentData._userId !== userId){
-      throw new BadRequestException('Comment is not authored by this user')
+      throw new BadRequestException(CommentsError.WrongUser)
     }
         return this.commentRepository.destroy(id);
   }

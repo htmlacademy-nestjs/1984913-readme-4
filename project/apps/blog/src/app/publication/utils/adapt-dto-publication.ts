@@ -1,17 +1,12 @@
 import { plainToInstance } from "class-transformer";
-import { CreateLinkPublicationDto } from "../dto/create/publication-link.dto";
-import { CreatePhotoPublicationDto } from "../dto/create/publication-photo.dto";
-import { CreateQuotePublicationDto } from "../dto/create/publication-quote.dto";
-import { CreateTextPublicationDto } from "../dto/create/publication-text.dto";
-import { CreateVideoPublicationDto } from "../dto/create/publication-video.dto";
-import { CreateBlogPublicationDto } from "../dto/create/blog-publication-dto.type";
+import { CreateLinkPublicationDto, CreatePhotoPublicationDto, CreateQuotePublicationDto, CreateTextPublicationDto, CreateVideoPublicationDto , CreateBlogPublicationDto } from "@project/shared/shared-dto";
 import { PublicationType } from "@project/shared/app-types";
-import { UpdateLinkPublicationDto } from "../dto/update/publication-link.dto";
-import { UpdatePhotoPublicationDto } from "../dto/update/publication-photo.dto";
-import { UpdateQuotePublicationDto } from "../dto/update/publication-quote.dto";
-import { UpdateTextPublicationDto } from "../dto/update/publication-text.dto";
-import { UpdateVideoPublicationDto } from "../dto/update/publication-video.dto";
-import { UpdateBlogPublicationDto } from "../dto/update/blog-publication-dto.type";
+import { UpdateLinkPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-link.dto";
+import { UpdatePhotoPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-photo.dto";
+import { UpdateQuotePublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-quote.dto";
+import { UpdateTextPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-text.dto";
+import { UpdateVideoPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-video.dto";
+import { UpdateBlogPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/blog-publication-dto.type";
 
 export function adaptCreateDtoPublication(dto: CreateBlogPublicationDto) {
   switch (dto.type) {

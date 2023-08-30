@@ -1,6 +1,5 @@
 import { Body, Req, Controller, Get, HttpStatus,HttpCode, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard, fillObject } from '@project/util/util-core';
 import { UserRdo } from './rdo/user.rdo';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
@@ -8,11 +7,11 @@ import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authenticatio
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { UserInfoRdo } from './rdo/user-info.rdo';
-import { ChangePasswordDto } from './dto/change-password.dto';
 import { NotifyService } from '../notify/notify.service';
 import { RequestWithUser, RequestWithUserPayload } from '@project/shared/app-types';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { ChangePasswordDto, CreateUserDto } from '@project/shared/shared-dto';
 
 @ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)

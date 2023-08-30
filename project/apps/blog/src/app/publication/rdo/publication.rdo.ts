@@ -22,8 +22,7 @@ export class PublicationRdo {
     example: '1'
   })
   @Expose({ name: '_userId' })
-  @Type(() => UserRdo)
-  public userId: UserRdo;
+  public userId: string;
 
   @ApiProperty({
     description: 'Date publication  was created',
@@ -71,4 +70,9 @@ export class PublicationRdo {
   })
   @Expose()
   public tags: string[];
+
+  @Expose()
+  @Type(() => UserRdo)
+  public userInfo: UserRdo;
+
 }

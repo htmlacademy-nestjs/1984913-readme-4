@@ -1,13 +1,11 @@
 import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { AuthError, DEFAULT_AMOUNT } from './authentication.constant';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 import { BlogUserRepository } from '../blog-user/blog-user.repository';
 import { User } from '@project/shared/app-types';
 import { JwtService } from '@nestjs/jwt';
-import { ChangePasswordDto } from './dto/change-password.dto';
 import { jwtConfig } from '@project/config/config-users';
+import { ChangePasswordDto, CreateUserDto, LoginUserDto,  } from '@project/shared/shared-dto';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from '../refresh-token/refresh-token.service';
 import { createJWTPayload } from '@project/util/util-core';

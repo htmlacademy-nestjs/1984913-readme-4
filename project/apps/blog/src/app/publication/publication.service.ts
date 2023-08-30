@@ -1,9 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationRepository } from './publication.repository';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
-import { CreateBlogPublicationDto } from './dto/create/blog-publication-dto.type';
+import { CreateBlogPublicationDto,UpdateBlogPublicationDto } from '@project/shared/shared-dto';
 import { TypeEntityAdapter } from './utils/entity-adapter';
-import { UpdateBlogPublicationDto } from './dto/update/blog-publication-dto.type';
 import { PublicationStatus } from '@prisma/client';
 import { getDate } from './utils/helpers';
 

@@ -2,7 +2,7 @@ import { Body, Req, Controller, Get, HttpStatus, Param, Post, Delete, Query, Use
 import { CommentsService } from './comments.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard, fillObject } from '@project/util/util-core';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateCommentDto } from '@project/shared/shared-dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
 import { CommentQuery } from '../query/comment.query';

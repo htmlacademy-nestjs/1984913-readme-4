@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { CreatePublicationDto } from "./publication.dto";
 import { IsString, IsUrl, Matches, MaxLength, MinLength } from "class-validator";
-import { PublicationTitleLength, PublicationsError, RegExpPattern,  } from "../../publication.constant";
+import { PublicationTitleLength, PublicationsError, RegExpPattern  } from "../publication-dto.constant";
 
 export class CreateVideoPublicationDto extends CreatePublicationDto {
   @ApiProperty({

@@ -1,13 +1,11 @@
 import { Body, Req, Get, Param, Controller, Post, UseFilters, UseGuards } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServiceURL } from '../app.config';
-import { LoginUserDto } from '../dto/login-user.dto';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { AuthPath } from '../app.constant';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
-import { ChangePasswordDto } from '../dto/change-password.dto';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
+import { ChangePasswordDto, CreateUserDto, LoginUserDto } from '@project/shared/shared-dto';
 
 @Controller('users')
 @UseFilters(AxiosExceptionFilter)

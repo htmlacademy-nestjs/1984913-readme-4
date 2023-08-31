@@ -1,11 +1,10 @@
 import { CRUDRepository } from '@project/util/util-types';
 import { BlogPublication, PublicationStatus, PublicationType } from '@project/shared/app-types';
+import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
-import { PostQuery } from '../query/post.query';
 import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
-import { SearchPostsQuery } from '../query/search.query';
 import { formatTags } from './utils/helpers';
 
 @Injectable()

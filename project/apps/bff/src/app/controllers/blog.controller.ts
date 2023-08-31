@@ -4,9 +4,8 @@ import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { ApplicationServiceURL } from '../app.config';
 import { AppPath, ControllerName } from '../app.constant';
-import { PostQuery } from '../query/post.query';
-import { SearchPostsQuery } from '../query/search.query';
 import { CreateBlogPublicationDto, UpdateBlogPublicationDto } from '@project/shared/shared-dto';
+import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
 
 
 @Controller(ControllerName.Blog)

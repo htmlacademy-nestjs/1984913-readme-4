@@ -2,7 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { CreateCommentDto } from '@project/shared/shared-dto';
 import { CommentEntity } from './comment.entity';
-import { CommentQuery } from '../query/comment.query';
+import { CommentQuery } from '@project/shared/shared-queries';
 import { CommentsError } from './comments.constant';
 
 @Injectable()

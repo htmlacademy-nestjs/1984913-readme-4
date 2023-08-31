@@ -1,7 +1,7 @@
 import { IsIn, IsNumber,IsEnum,IsString, IsOptional, MinLength, MaxLength } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { DefaultPostsLimit, DefaultSortParam,TagDefaultParam  } from '../app.constant';
 import { PublicationType } from '@project/shared/app-types';
+import { DefaultPostsLimit, DefaultSortParam, TagDefaultParam } from './query.constant';
 
 export class PostQuery {
   @Transform(({ value } ) => +value || DefaultPostsLimit.Query)

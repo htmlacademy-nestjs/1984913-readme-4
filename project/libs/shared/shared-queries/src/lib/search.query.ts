@@ -1,6 +1,6 @@
 import {IsInt, IsOptional, IsString} from 'class-validator';
 import {Transform} from 'class-transformer';
-import { DefaultPostsLimit } from '../app.constant';
+import { DefaultPostsLimit } from './query.constant';
 
 export class SearchPostsQuery {
   @Transform(({value}) => decodeURIComponent(value))

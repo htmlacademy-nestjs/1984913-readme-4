@@ -3,7 +3,7 @@ import { CommentEntity } from './comment.entity';
 import { IComment } from '@project/shared/app-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaComment } from './utils/adapt-prisma-comment';
-import { CommentQuery } from '../query/comment.query';
+import { CommentQuery } from '@project/shared/shared-queries';
 
 @Injectable()
 export class CommentRepository {

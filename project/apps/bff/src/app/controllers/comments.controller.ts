@@ -5,7 +5,7 @@ import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { ApplicationServiceURL } from '../app.config';
 import { AppPath, ControllerName } from '../app.constant';
 import { CreateCommentDto } from '@project/shared/shared-dto';
-import { CommentQuery } from '../query/comment.query';
+import { CommentQuery } from '@project/shared/shared-queries';
 
 @Controller(ControllerName.Comment)
 @UseFilters(AxiosExceptionFilter)

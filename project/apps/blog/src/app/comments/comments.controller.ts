@@ -5,7 +5,7 @@ import { JwtAuthGuard, fillObject } from '@project/util/util-core';
 import { CreateCommentDto } from '@project/shared/shared-dto';
 import { CommentRdo } from './rdo/comment.rdo';
 import { API_TAG_NAME, CommentsError, CommentsMessages, CommentsPath } from './comments.constant';
-import { CommentQuery } from '../query/comment.query';
+import { CommentQuery } from '@project/shared/shared-queries';
 import { RequestWithUserPayload } from '@project/shared/app-types';
 
 @ApiTags(API_TAG_NAME)

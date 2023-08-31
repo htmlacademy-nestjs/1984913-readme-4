@@ -2,9 +2,8 @@ import { Req, Controller, Get, HttpStatus, Param, Query, UseGuards } from '@nest
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BlogListService } from './blog-list.service';
 import { API_TAG_NAME, BlogListError, BlogListMessages, BlogListPath } from './blog-list.constant';
-import { PostQuery } from '../query/post.query';
+import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
 import { adaptRdoPublication } from '../publication/utils/adapt-rdo-publication';
-import { SearchPostsQuery } from '../query/search.query';
 import { JwtAuthGuard } from '@project/util/util-core';
 import { NotifyService } from '../notify/notify.service';
 import { RequestWithUserPayload } from '@project/shared/app-types';

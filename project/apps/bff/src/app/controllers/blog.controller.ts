@@ -6,6 +6,7 @@ import { ApplicationServiceURL } from '../app.config';
 import { AppPath, ControllerName } from '../app.constant';
 import { CreateBlogPublicationDto, UpdateBlogPublicationDto } from '@project/shared/shared-dto';
 import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
+import { getUserInfo, getUserInfoForAll } from '../utils/get-user-info';
 
 
 @Controller(ControllerName.Blog)
@@ -20,7 +21,7 @@ export class BlogController {
   const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}`, {
     params:query
   });
-  return data;
+  return getUserInfoForAll(data, this.httpService);
   }
 
   @Get(AppPath.Search)
@@ -28,7 +29,7 @@ export class BlogController {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${AppPath.Search}`, {
       params:query
     });
-    return data;
+    return getUserInfoForAll(data, this.httpService);
   }
 
   @UseGuards(CheckAuthGuard)
@@ -54,8 +55,9 @@ export class BlogController {
 
   @Get(AppPath.Id)
   public async showPublicationById(@Param('id') id: number) {
-    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${id}`);
-    return data
+    const { data:publicationData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${id}`);
+    const userInfo = await getUserInfo(publicationData, this.httpService)
+    return {...publicationData, userInfo}
   }
 
 

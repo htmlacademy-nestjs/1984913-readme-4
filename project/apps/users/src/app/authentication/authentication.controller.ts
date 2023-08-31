@@ -6,7 +6,6 @@ import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authentication.constant';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
-import { UserInfoRdo } from './rdo/user-info.rdo';
 import { NotifyService } from '../notify/notify.service';
 import { RequestWithUser, RequestWithUserPayload } from '@project/shared/app-types';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -49,15 +48,14 @@ import { ChangePasswordDto, CreateUserDto } from '@project/shared/shared-dto';
     }
 
     @ApiResponse({
-      type: UserInfoRdo,
+      type: UserRdo,
       status: HttpStatus.OK,
       description: AuthMessages.UserFound
     })
-    @UseGuards(JwtAuthGuard)
     @Get(AuthPath.Id)
     public async show(@Param('id', MongoidValidationPipe) id: string) {
       const existUser = await this.authService.getUser(id);
-      return fillObject(UserInfoRdo, existUser);
+      return fillObject(UserRdo, existUser);
     }
 
     @ApiResponse({

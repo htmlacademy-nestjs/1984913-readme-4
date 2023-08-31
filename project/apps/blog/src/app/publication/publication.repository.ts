@@ -39,6 +39,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     });
     return adaptPrismaPublication(publication)
   }
+
   public async findRepost(postId: number, userId:string): Promise<BlogPublication | null> {
     const publication = await this.prisma.publication.findFirst({
       where: {

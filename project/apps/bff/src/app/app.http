@@ -50,8 +50,25 @@ Authorization: Bearer {{RToken}}
 
 ###
 
+@postId={{createPost.response.body.id}}
+# Create a new post
+# @name createPost
+POST http://localhost:4000/api/blog/add HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{AToken}}
+
+{
+  "type": "text",
+  "title": "Long title for text publication",
+  "announcement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis erat sem, dictum ac cursus at, faucibus ut sapien. Duis ac.",
+  "tags":["test", "tag2"]
+}
+
+###
+
 # Get publication  by ID
-GET http://localhost:4000/api/blog/{{postId}} HTTP/1.1
+GET http://localhost:4000/api/blog/53 HTTP/1.1
 
 ###
 
@@ -76,23 +93,6 @@ Content-Type: application/json
 GET http://localhost:4000/api/blog/send-news HTTP/1.1
 Authorization: Bearer {{AToken}}
 Content-Type: application/json
-
-###
-
-@postId={{createPost.response.body.id}}
-# Create a new post
-# @name createPost
-POST http://localhost:4000/api/blog/add HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer {{AToken}}
-
-{
-  "type": "text",
-  "title": "Long title for text publication",
-  "announcement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis erat sem, dictum ac cursus at, faucibus ut sapien. Duis ac.",
-  "tags":["test", "tag2"]
-}
 
 ###
 

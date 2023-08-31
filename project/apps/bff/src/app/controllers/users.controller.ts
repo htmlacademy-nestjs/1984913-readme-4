@@ -26,14 +26,9 @@ export class UsersController {
     return data;
   }
 
-  @UseGuards(CheckAuthGuard)
   @Get(AppPath.Id)
-  public async show(@Req() req:Request, @Param('id') id: MongoidValidationPipe) {
-    const { data: userData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`,{
-      headers: {
-        'Authorization': req.headers['authorization']
-      }
-    });
+  public async show( @Param('id') id: MongoidValidationPipe) {
+    const { data: userData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`);
     const { data: postsData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}?user=${id}`);
     const postsCount = postsData.length;
     return { ...userData, postsCount }

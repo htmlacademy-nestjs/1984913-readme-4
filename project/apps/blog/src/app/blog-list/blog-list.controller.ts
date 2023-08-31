@@ -63,9 +63,9 @@ export class BlogListController {
   @UseGuards(JwtAuthGuard)
   @Get(BlogListPath.SendNewsletter)
   public async sendNews(@Req() {user}: RequestWithUserPayload) {
-    const {email} = user;
+    const {email, sub} = user;
     const posts = await this.blogListService.getPosts()
-    this.notifyService.sendNewsletter({email, posts});
+    this.notifyService.sendNewsletter({email, posts, id:sub});
   }
 
   @ApiResponse({

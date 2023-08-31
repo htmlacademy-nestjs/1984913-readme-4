@@ -51,10 +51,9 @@ Authorization: Bearer {{RToken}}
 ###
 
 # Get publication  by ID
-GET http://localhost:4000/api/blog/2 HTTP/1.1
+GET http://localhost:4000/api/blog/{{postId}} HTTP/1.1
 
 ###
-
 
 # Get all posts
 GET http://localhost:4000/api/blog?limit=25&page=1&tag=tag2 HTTP/1.1
@@ -79,8 +78,49 @@ Authorization: Bearer {{AToken}}
 Content-Type: application/json
 
 ###
+
+@postId={{createPost.response.body.id}}
+# Create a new post
+# @name createPost
+POST http://localhost:4000/api/blog/add HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{AToken}}
+
+{
+  "type": "text",
+  "title": "Long title for text publication",
+  "announcement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis erat sem, dictum ac cursus at, faucibus ut sapien. Duis ac.",
+  "tags":["test", "tag2"]
+}
+
+###
+
+# Repost
+POST  http://localhost:4000/api/blog/repost/{{postId}} HTTP/1.1
+Authorization: Bearer {{AToken}}
+
+###
+
+# Update post
+PATCH http://localhost:4000/api/blog/update-post/{{postId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{AToken}}
+
+{
+  "title": "Small title for text publication",
+  "type":"text"
+}
+
+###
+
+# Delete publication  by ID
+DELETE http://localhost:4000/api/blog/delete-post/{{postId}} HTTP/1.1
+Authorization: Bearer {{AToken}}
+
+###
+
 @commentId = {{addComment.response.body.id}}
-@postId = {{addComment.response.body.postId}}
 # Send comment
 # @name addComment
 POST http://localhost:4000/api/comments/add HTTP/1.1
@@ -88,7 +128,7 @@ Content-Type: application/json
 Authorization: Bearer {{AToken}}
 
 {
-  "postId": 2,
+  "postId": 50,
   "text": "Comment text for publication"
 }
 
@@ -100,6 +140,13 @@ Content-Type: application/json
 ###
 # Delete comment
 DELETE  http://localhost:4000/api/comments/delete/{{commentId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{AToken}}
+
+###
+
+# Add/remove like
+POST http://localhost:4000/api/blog/change-like-status/{{postId}} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{AToken}}
 

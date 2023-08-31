@@ -18,7 +18,13 @@ export const BlogListPath = {
   Drafts: 'drafts',
   Search: 'search',
   SendNewsletter: 'send-news',
+  Repost: 'repost',
 } as const;
+
+export const LikesPath = {
+  Main:'likes',
+  Id:':postId',
+}as const;
 
 export const UserNameLength = {
   Min: 3,

@@ -33,8 +33,7 @@ export class EmailSubscriberController {
     const { email, posts } = dto;
     const recipient = await this.subscriberService.getSubscriber(email);
     if (recipient && posts.length > 0) {
-      const newPosts = posts.filter((post) =>
-        dayjs(post.createdDate).isAfter(recipient.dateNotify)
+      const newPosts = posts.filter((post) =>  dayjs(post.createdDate).isAfter(recipient.dateNotify)
       );
       if (newPosts.length > 0) {
         await this.mailService.sendNewsletter(recipient.email, newPosts);

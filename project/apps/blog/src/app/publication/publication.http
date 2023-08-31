@@ -30,7 +30,6 @@ Authorization: Bearer {{token}}
 
 # Repost
 POST  http://localhost:3001/api/publication/38/repost HTTP/1.1
-Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###

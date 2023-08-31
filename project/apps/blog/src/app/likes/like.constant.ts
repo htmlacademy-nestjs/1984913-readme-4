@@ -12,7 +12,7 @@ export const LikesMessages = {
 
 export const LikesPath = {
   Main:'likes',
-  Id:'/:postId',
+  Id:':postId',
 }as const;
 
 export const  API_TAG_NAME ='likes'

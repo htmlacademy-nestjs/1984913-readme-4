@@ -3,13 +3,13 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { ApplicationServiceURL } from '../app.config';
-import { BlogListPath, CommentsPath } from '../app.constant';
+import { AppPath, ControllerName } from '../app.constant';
 import { PostQuery } from '../query/post.query';
 import { SearchPostsQuery } from '../query/search.query';
 import { CreateBlogPublicationDto, UpdateBlogPublicationDto } from '@project/shared/shared-dto';
 
 
-@Controller('blog')
+@Controller(ControllerName.Blog)
 @UseFilters(AxiosExceptionFilter)
 export class BlogController {
   constructor(
@@ -24,18 +24,18 @@ export class BlogController {
   return data;
   }
 
-  @Get(BlogListPath.Search)
+  @Get(AppPath.Search)
   public async searchPublicationsByTitle(@Query() query:SearchPostsQuery) {
-    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${BlogListPath.Search}`, {
+    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${AppPath.Search}`, {
       params:query
     });
     return data;
   }
 
   @UseGuards(CheckAuthGuard)
-  @Get(BlogListPath.Drafts)
+  @Get(AppPath.Drafts)
   async showDrafts(@Req() req:Request) {
-    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${BlogListPath.Drafts}`,{
+    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${AppPath.Drafts}`,{
       headers: {
         'Authorization': req.headers['authorization']
       }
@@ -44,30 +44,26 @@ export class BlogController {
   }
 
   @UseGuards(CheckAuthGuard)
-  @Get(BlogListPath.SendNewsletter)
+  @Get(AppPath.SendNewsletter)
   public async sendNews(@Req() req:Request) {
-    await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${BlogListPath.SendNewsletter}`,{
+    await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${AppPath.SendNewsletter}`,{
       headers: {
         'Authorization': req.headers['authorization']
       }
     });
   }
 
-  @Get(BlogListPath.Id)
+  @Get(AppPath.Id)
   public async showPublicationById(@Param('id') id: number) {
-    const { data:publicationData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${id}`);
-    const { data:likesData} = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Likes}/${id}`);
-    const { data:commentsData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Comments}/${id}`);
-    const likesCount = likesData.likedByUsersIds.length;
-    const commentsCount = commentsData.length;
-    return {...publicationData, likesCount, commentsCount}
+    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}/${id}`);
+    return data
   }
 
 
   @UseGuards(CheckAuthGuard)
-  @Post(CommentsPath.Add)
+  @Post(AppPath.Add)
   public async createPublication(@Req() req:Request, @Body() dto: CreateBlogPublicationDto) {
-    const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Publications}/${CommentsPath.Add}`, dto,{
+    const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Publications}/${AppPath.Add}`, dto,{
       headers: {
         'Authorization': req.headers['authorization']
       }
@@ -76,7 +72,7 @@ export class BlogController {
   }
 
   @UseGuards(CheckAuthGuard)
-  @Patch('update-post/:id')
+  @Patch(`${AppPath.Update}/${AppPath.Id}`)
   public async update(@Req() req:Request, @Param('id') id: number, @Body() dto: UpdateBlogPublicationDto) {
     const {data} = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Publications}/${id}`, dto,{
       headers: {
@@ -87,9 +83,9 @@ export class BlogController {
   }
 
   @UseGuards(CheckAuthGuard)
-  @Post(`repost/:id`)
+  @Post(`${AppPath.Repost}/${AppPath.Id}`)
   public async repost(@Param('id') id: number, @Req() req:Request ) {
-    const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Publications}/${id}/${BlogListPath.Repost}`,null, {
+    const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Publications}/${id}/${AppPath.Repost}`,null, {
       headers: {
         'Authorization': req.headers['authorization']
       }
@@ -98,7 +94,7 @@ export class BlogController {
   }
 
   @UseGuards(CheckAuthGuard)
-  @Delete('delete-post/:id')
+  @Delete(`${AppPath.Delete}/${AppPath.Id}`)
   public async delete(@Param('id') id: number, @Req() req:Request) {
     await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Publications}/${id}`, {
       headers: {
@@ -108,7 +104,7 @@ export class BlogController {
   }
 
   @UseGuards(CheckAuthGuard)
-  @Post('change-like-status/:id')
+  @Post(`${AppPath.Like}/${AppPath.Id}`)
   public async changeLikeStatus( @Param('id') id:number, @Req() req:Request) {
     const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Likes}/${id}`,null,{
       headers: {

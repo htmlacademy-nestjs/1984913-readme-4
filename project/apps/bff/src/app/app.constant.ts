@@ -1,53 +1,30 @@
-export const AuthPath = {
-  Register:'register',
-  Login:'login',
-  Id:':id',
-  Refresh:'refresh',
-  Check:'check',
-  ChangePassword:'change-password'
-}as const;
+export const ControllerName = {
+  Blog: 'blog',
+  Comment: 'login',
+  User: 'users'
+} as const;
 
-export const CommentsPath = {
-  Add:'add',
-  PostId: ':postId',
-  Delete:'delete'
-}as const;
-
-export const BlogListPath = {
+export const AppPath = {
+  Register: 'register',
+  Login: 'login',
   Id: ':id',
+  ChangePassword: 'change-password',
+  Refresh: 'refresh',
+  Check: 'check',
+  Add: 'add',
+  Update: 'update',
+  Delete: 'delete',
   Drafts: 'drafts',
   Search: 'search',
   SendNewsletter: 'send-news',
   Repost: 'repost',
+  Like: 'change-like-status',
 } as const;
 
-export const LikesPath = {
-  Main:'likes',
-  Id:':postId',
-}as const;
-
-export const UserNameLength = {
-  Min: 3,
-  Max: 50,
-};
-
-export const UserPasswordLength = {
-  Min: 6,
-  Max: 12,
-};
-
-export const AuthError = {
-  UserExists: 'User with this email already exists',
-  NotFound : 'User is not found',
-  PasswordWrong : 'Password is wrong',
-  InvalidData: 'Data is invalid',
-  InvalidEmail:'Email is invalid'
+export const DefaultPostsLimit = {
+  Query: 25,
+  Search: 20,
 } as const;
-
-export const DefaultPostsLimit ={
-  Query:25,
-  Search:20
-}as const;
 
 export const DefaultSortParam = {
   Direction: 'desc',

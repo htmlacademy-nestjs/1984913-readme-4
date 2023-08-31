@@ -103,7 +103,7 @@ Authorization: Bearer {{AToken}}
 ###
 
 # Update post
-PATCH http://localhost:4000/api/blog/update-post/{{postId}} HTTP/1.1
+PATCH http://localhost:4000/api/blog/update/{{postId}} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{AToken}}
 
@@ -115,7 +115,7 @@ Authorization: Bearer {{AToken}}
 ###
 
 # Delete publication  by ID
-DELETE http://localhost:4000/api/blog/delete-post/{{postId}} HTTP/1.1
+DELETE http://localhost:4000/api/blog/delete/{{postId}} HTTP/1.1
 Authorization: Bearer {{AToken}}
 
 ###

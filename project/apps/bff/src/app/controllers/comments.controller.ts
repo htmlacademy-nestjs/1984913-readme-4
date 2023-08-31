@@ -3,11 +3,11 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { ApplicationServiceURL } from '../app.config';
-import { CommentsPath } from '../app.constant';
+import { AppPath, ControllerName } from '../app.constant';
 import { CreateCommentDto } from '@project/shared/shared-dto';
 import { CommentQuery } from '../query/comment.query';
 
-@Controller('comments')
+@Controller(ControllerName.Comment)
 @UseFilters(AxiosExceptionFilter)
 export class CommentsController {
   constructor(
@@ -15,9 +15,9 @@ export class CommentsController {
   ) { }
 
   @UseGuards(CheckAuthGuard)
-  @Post(CommentsPath.Add)
+  @Post(AppPath.Add)
   public async createComment( @Body() dto: CreateCommentDto, @Req() req:Request) {
-    const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Comments}/${CommentsPath.Add}`, dto,{
+    const {data} = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Comments}/${AppPath.Add}`, dto,{
       headers: {
         'Authorization': req.headers['authorization']
       }
@@ -25,8 +25,8 @@ export class CommentsController {
     return data;
   }
 
-  @Get(CommentsPath.PostId)
-  public async showCommentsByPostId(@Param('postId') id: number, @Query() query:CommentQuery) {
+  @Get(AppPath.Id)
+  public async showCommentsByPostId(@Param('id') id: number, @Query() query:CommentQuery) {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Comments}/${id}`, {
       params:query
     });
@@ -35,9 +35,9 @@ export class CommentsController {
 
 
   @UseGuards(CheckAuthGuard)
-  @Delete(`${CommentsPath.Delete}/:commentId`)
-  public async remove( @Param('commentId') id: number, @Req() req:Request) {
-    const {data} = await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Comments}/${CommentsPath.Delete}/${id}`, {
+  @Delete(`${AppPath.Delete}/${AppPath.Id}`)
+  public async remove( @Param('id') id: number, @Req() req:Request) {
+    const {data} = await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Comments}/${AppPath.Delete}/${id}`, {
       headers: {
         'Authorization': req.headers['authorization']
       }

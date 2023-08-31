@@ -2,32 +2,32 @@ import { Body, Req, Get, Param, Controller, Post, UseFilters, UseGuards } from '
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServiceURL } from '../app.config';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
-import { AuthPath } from '../app.constant';
+import { AppPath, ControllerName } from '../app.constant';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { ChangePasswordDto, CreateUserDto, LoginUserDto } from '@project/shared/shared-dto';
 
-@Controller('users')
+@Controller(ControllerName.User)
 @UseFilters(AxiosExceptionFilter)
 export class UsersController {
   constructor(
     private readonly httpService: HttpService
   ) { }
 
-  @Post(AuthPath.Register)
+  @Post(AppPath.Register)
   public async register(@Body() createUserDto: CreateUserDto) {
-    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AuthPath.Register}`, createUserDto);
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.Register}`, createUserDto);
     return data;
   }
 
-  @Post(AuthPath.Login)
+  @Post(AppPath.Login)
   public async login(@Body() loginUserDto: LoginUserDto) {
-    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AuthPath.Login}`, loginUserDto);
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.Login}`, loginUserDto);
     return data;
   }
 
   @UseGuards(CheckAuthGuard)
-  @Get(AuthPath.Id)
+  @Get(AppPath.Id)
   public async show(@Req() req:Request, @Param('id') id: MongoidValidationPipe) {
     const { data: userData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`,{
       headers: {
@@ -40,9 +40,9 @@ export class UsersController {
   }
 
   @UseGuards(CheckAuthGuard)
-  @Post(AuthPath.ChangePassword)
+  @Post(AppPath.ChangePassword)
   public async changePassword(@Req() req: Request, @Body() dto: ChangePasswordDto) {
-    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AuthPath.ChangePassword}`, dto, {
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.ChangePassword}`, dto, {
       headers: {
         'Authorization': req.headers['authorization']
       }
@@ -50,9 +50,9 @@ export class UsersController {
     return data;
   }
 
-  @Post(AuthPath.Refresh)
+  @Post(AppPath.Refresh)
   public async refreshtoken(@Req() req: Request) {
-    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AuthPath.Refresh}`, null, {
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.Refresh}`, null, {
       headers: {
         'Authorization': req.headers['authorization']
       }

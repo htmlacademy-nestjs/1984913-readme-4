@@ -19,7 +19,7 @@ model Publication {
   originId      Int?              @map("origin_post_id")
   type          PublicationType
   createdDate   DateTime          @default(now()) @map("created_date")
-  postedDate    DateTime          @updatedAt @map("posted_date")
+  postedDate    DateTime          @default(now()) @map("posted_date")
   status        PublicationStatus @default(posted)
   isReposted    Boolean           @default(false) @map("is_reposted")
   tags          String[]
@@ -33,7 +33,7 @@ model Publication {
   title         String?
   announcement  String?
   comments      Comment[]
-  likes         Like[]
+  likes         Like?
 
   @@map("publications")
 }

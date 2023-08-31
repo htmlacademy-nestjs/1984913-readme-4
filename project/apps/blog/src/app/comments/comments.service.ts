@@ -32,7 +32,7 @@ export class CommentsService {
     if(commentData._userId !== userId){
       throw new BadRequestException(CommentsError.WrongUser)
     }
-        return this.commentRepository.destroy(id);
+        return this.commentRepository.destroy(id, commentData.postId);
   }
 
 }

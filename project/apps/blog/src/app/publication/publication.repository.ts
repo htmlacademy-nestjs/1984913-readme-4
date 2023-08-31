@@ -32,7 +32,11 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     const publication = await this.prisma.publication.findFirst({
       where: {
         postId
-      }
+      },
+      include: {
+        comments: true,
+        likes: true,
+      },
     });
     return adaptPrismaPublication(publication)
   }
@@ -42,7 +46,11 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
       AND:{
         originId:postId,
         userId
-      }}
+      }},
+      include: {
+        comments: true,
+        likes: true,
+      },
     });
     return adaptPrismaPublication(publication)
   }
@@ -78,6 +86,10 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     const publications = await this.prisma.publication.findMany({
       where: {
           status: PublicationStatus.Posted
+      },
+      include: {
+        comments: true,
+        likes: true,
       },
     });
     return publications.map((publication) => adaptPrismaPublication(publication))
@@ -131,7 +143,11 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
 
     const publication = await this.prisma.publication.update({
       where: { postId },
-      data
+      data,
+      include: {
+        comments: true,
+        likes: true,
+      }
     });
     return adaptPrismaPublication(publication)
   }

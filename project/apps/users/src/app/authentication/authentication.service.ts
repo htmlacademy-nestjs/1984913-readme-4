@@ -22,12 +22,12 @@ export class AuthenticationService {
   ) {}
 
   public async register(dto: CreateUserDto) {
-    const {email, name, password } = dto;
+    const {email, name, password, avatarId } = dto;
 
     const blogUser = {
       email,
       name,
-      avatar: '',
+      avatar: avatarId || '',
       passwordHash: '',
       postsCount: DEFAULT_AMOUNT,
       subscribersCount: DEFAULT_AMOUNT
@@ -91,6 +91,12 @@ export class AuthenticationService {
       throw new BadRequestException (AuthError.PasswordWrong);
     }
     await blogUserEntity.setPassword(newPassword)
+    return this.blogUserRepository.update(id, blogUserEntity);
+  }
+
+  public async updateAvatar (id:string, avatarId:string){
+    const blogUser = await this.getUser(id);
+    const blogUserEntity = new BlogUserEntity({...blogUser, avatar:avatarId});
     return this.blogUserRepository.update(id, blogUserEntity);
   }
 }

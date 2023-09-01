@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import {EMAIL_ERROR,UserNameLength, UserPasswordLength} from './user-dto.constant'
 
 export class CreateUserDto {
@@ -25,4 +25,12 @@ export class CreateUserDto {
   @MinLength(UserPasswordLength.Min)
   @MaxLength(UserPasswordLength.Max)
   public password: string;
+
+  @ApiProperty({
+    description: 'Avatar id from db',
+    example: '123456'
+  })
+  @IsString()
+  @IsOptional()
+  public avatarId?: string;
 }

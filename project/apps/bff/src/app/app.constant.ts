@@ -9,6 +9,7 @@ export const AppPath = {
   Login: 'login',
   Id: ':id',
   ChangePassword: 'change-password',
+  UpdateAvatar: 'upload-avatar',
   Refresh: 'refresh',
   Check: 'check',
   Add: 'add',

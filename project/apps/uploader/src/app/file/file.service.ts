@@ -19,7 +19,7 @@ export class FileService {
     private readonly fileRepository: FileRepository
   ) {}
 
-  private async writeFile(file: Express.Multer.File): Promise<WritedFile> {
+  private async writeFile(file: Express.Multer.File, type:string): Promise<WritedFile> {
     const [year, month] = dayjs().format(FORMAT_PATTERN).split(' ');
     const { uploadDirectory } = this.applicationConfig;
     const subDirectory = `${year}/${month}`;
@@ -31,7 +31,7 @@ export class FileService {
     }
     const hashName = `${uuid}.${fileExtension}`;
 
-    const uploadDirectoryPath = `${uploadDirectory}/${subDirectory}`;
+    const uploadDirectoryPath = `${uploadDirectory}/${subDirectory}/${type}`;
     const destinationFile = `${uploadDirectoryPath}/${hashName}`;
 
     await ensureDir(uploadDirectoryPath);
@@ -45,8 +45,8 @@ export class FileService {
     };
   }
 
-  public async saveFile(file: Express.Multer.File) {
-    const writedFile = await this.writeFile(file);
+  public async saveFile(file: Express.Multer.File, type: string) {
+    const writedFile = await this.writeFile(file, type);
     const newFile = new FileEntity({
       size: file.size,
       hashName: writedFile.hashName,

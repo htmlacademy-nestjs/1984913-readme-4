@@ -1,4 +1,4 @@
-import { Body, Req, Get, Param, Controller, Post, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Req, Get, Param, Controller, Post, UseFilters, UseGuards, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServiceURL } from '../app.config';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
@@ -6,6 +6,11 @@ import { AppPath, ControllerName } from '../app.constant';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { ChangePasswordDto, CreateUserDto, LoginUserDto } from '@project/shared/shared-dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import 'multer';
+import FormData from 'form-data'
+
 
 @Controller(ControllerName.User)
 @UseFilters(AxiosExceptionFilter)
@@ -27,7 +32,7 @@ export class UsersController {
   }
 
   @Get(AppPath.Id)
-  public async show( @Param('id') id: MongoidValidationPipe) {
+  public async show(@Param('id') id: MongoidValidationPipe) {
     const { data: userData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`);
     const { data: postsData } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.BlogList}?user=${id}`);
     const postsCount = postsData.length;
@@ -53,6 +58,25 @@ export class UsersController {
       }
     });
 
+    return data;
+  }
+
+  @Post(AppPath.UpdateAvatar)
+  @UseInterceptors(FileInterceptor('avatar'))
+  public async uploadAvatar(@Req() req: Request, @UploadedFile() file: Express.Multer.File) {
+    const formData = new FormData()
+    formData.append('avatar', Buffer.from(file.buffer), file.originalname)
+    const { data:avatarData } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Uploader}/upload/avatar`, formData, {
+      headers: {
+        'Content-Type': req.headers['content-type'],
+        ...formData.getHeaders()
+      }
+    });
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.UpdateAvatar}`, {avatarId:avatarData.id}, {
+      headers: {
+        'Authorization': req.headers['authorization']
+      }
+    });
     return data;
   }
 

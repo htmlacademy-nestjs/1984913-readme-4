@@ -25,5 +25,6 @@ export const AuthPath = {
   Id:':id',
   Refresh:'refresh',
   Check:'check',
-  ChangePassword:'change-password'
+  ChangePassword:'change-password',
+  UpdateAvatar: 'upload-avatar',
 }as const;

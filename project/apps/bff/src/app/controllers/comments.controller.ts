@@ -1,12 +1,14 @@
-import { Body, Req, Get, Param, Controller, Post, Query, UseFilters, UseGuards, Delete } from '@nestjs/common';
+import { Body, Req, Get, Param, Controller, Post, Query, UseFilters, UseGuards, Delete, HttpStatus } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { ApplicationServiceURL } from '../app.config';
-import { AppPath, ControllerName } from '../app.constant';
+import { AppPath, CommentsMessages, ControllerName } from '../app.constant';
 import { CreateCommentDto } from '@project/shared/shared-dto';
 import { CommentQuery } from '@project/shared/shared-queries';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags(ControllerName.Comment)
 @Controller(ControllerName.Comment)
 @UseFilters(AxiosExceptionFilter)
 export class CommentsController {
@@ -14,6 +16,10 @@ export class CommentsController {
     private readonly httpService: HttpService
   ) { }
 
+  @ApiResponse({
+    status:HttpStatus.CREATED,
+    description: CommentsMessages.Add
+  })
   @UseGuards(CheckAuthGuard)
   @Post(AppPath.Add)
   public async createComment( @Body() dto: CreateCommentDto, @Req() req:Request) {
@@ -25,6 +31,15 @@ export class CommentsController {
     return data;
   }
 
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: CommentsMessages.Show
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: CommentsMessages.InvalidPublication
+  })
   @Get(AppPath.Id)
   public async showCommentsByPostId(@Param('id') id: number, @Query() query:CommentQuery) {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Comments}/${id}`, {
@@ -34,6 +49,14 @@ export class CommentsController {
   }
 
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: CommentsMessages.Remove,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: CommentsMessages.InvalidComment,
+  })
   @UseGuards(CheckAuthGuard)
   @Delete(`${AppPath.Delete}/${AppPath.Id}`)
   public async remove( @Param('id') id: number, @Req() req:Request) {

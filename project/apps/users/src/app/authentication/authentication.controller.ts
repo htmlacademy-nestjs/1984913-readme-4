@@ -69,12 +69,12 @@ import { ChangePasswordDto, CreateUserDto } from '@project/shared/shared-dto';
     return this.authService.changePassword(user.sub, dto);
     }
 
-    @Post(AuthPath.Refresh)
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
       status: HttpStatus.OK,
       description:AuthMessages.Refresh
     })
+    @Post(AuthPath.Refresh)
     @UseGuards(JwtRefreshGuard)
     public async refreshToken(@Req() { user }: RequestWithUser) {
       return this.authService.createUserToken(user);
@@ -86,6 +86,10 @@ import { ChangePasswordDto, CreateUserDto } from '@project/shared/shared-dto';
       return payload;
     }
 
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description:AuthMessages.AvatarAdded
+    })
     @UseGuards(JwtAuthGuard)
     @Post(AuthPath.UpdateAvatar)
     public async updateAvatar(@Req() { user }: RequestWithUserPayload, @Body('avatarId') avatarId:string) {

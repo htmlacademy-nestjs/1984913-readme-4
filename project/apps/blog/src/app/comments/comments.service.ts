@@ -9,12 +9,12 @@ import { CommentsError } from './comments.constant';
 export class CommentsService {
   constructor(
     private readonly commentRepository: CommentRepository,
-  ) {}
+  ) { }
 
-  public async create(dto: CreateCommentDto, userId:string) {
+  public async create(dto: CreateCommentDto, userId: string) {
     const comment = {
       ...dto,
-      _userId:userId
+      _userId: userId
     };
 
     const commentEntity = new CommentEntity(comment);
@@ -23,16 +23,16 @@ export class CommentsService {
       .create(commentEntity);
   }
 
-  public async findByPostId(postId: number, query:CommentQuery) {
-  return await this.commentRepository.findByPostId(postId, query);
+  public async findByPostId(postId: number, query: CommentQuery) {
+    return await this.commentRepository.findByPostId(postId, query);
   }
 
-  public async delete(id:number, userId:string) {
+  public async delete(id: number, userId: string) {
     const commentData = await this.commentRepository.findById(id)
-    if(commentData._userId !== userId){
+    if (commentData._userId !== userId) {
       throw new BadRequestException(CommentsError.WrongUser)
     }
-        return this.commentRepository.destroy(id, commentData.postId);
+    return this.commentRepository.destroy(id, commentData.postId);
   }
 
 }

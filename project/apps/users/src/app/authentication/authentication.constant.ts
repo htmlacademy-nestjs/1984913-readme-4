@@ -14,6 +14,7 @@ export const AuthMessages = {
   UserFound: "User data found",
   PasswordChanged: "Password successfully changed",
   Refresh: 'Get a new access/refresh tokens',
+  AvatarAdded: "Avatar added successfully"
 } as const;
 
 export const DEFAULT_AMOUNT = 0;

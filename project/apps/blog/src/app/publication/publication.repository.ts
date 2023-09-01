@@ -14,10 +14,12 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
   public async create(item: BlogPublicationEntity): Promise<BlogPublication> {
     const data = {
       ...item.toObject(),
-      tags:formatTags(item.tags),
       userId: item._userId,
       originUserId: item._originUserId,
       originId: item._originId,
+    }
+    if(item.tags){
+      data.tags = formatTags(item.tags)
     }
     delete data._userId;
     delete data._originUserId;

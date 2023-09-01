@@ -1,6 +1,6 @@
 export const ControllerName = {
   Blog: 'blog',
-  Comment: 'login',
+  Comment: 'comments',
   User: 'users'
 } as const;
 
@@ -9,7 +9,7 @@ export const AppPath = {
   Login: 'login',
   Id: ':id',
   ChangePassword: 'change-password',
-  UpdateAvatar: 'upload-avatar',
+  Upload: 'upload',
   Refresh: 'refresh',
   Check: 'check',
   Add: 'add',
@@ -20,4 +20,9 @@ export const AppPath = {
   SendNewsletter: 'send-news',
   Repost: 'repost',
   Like: 'change-like-status',
+} as const;
+
+export const ImageType = {
+  Avatar: 'avatar',
+  Photo: 'photo'
 } as const;

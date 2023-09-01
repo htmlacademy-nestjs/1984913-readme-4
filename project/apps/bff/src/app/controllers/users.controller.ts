@@ -2,7 +2,7 @@ import { Body, Req, Get, Param, Controller, Post, UseFilters, UseGuards, Uploade
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServiceURL } from '../app.config';
 import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
-import { AppPath, ControllerName } from '../app.constant';
+import { AppPath, ControllerName, ImageType } from '../app.constant';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
 import { ChangePasswordDto, CreateUserDto, LoginUserDto } from '@project/shared/shared-dto';
@@ -61,18 +61,19 @@ export class UsersController {
     return data;
   }
 
-  @Post(AppPath.UpdateAvatar)
-  @UseInterceptors(FileInterceptor('avatar'))
+  @UseGuards(CheckAuthGuard)
+  @Post(`${AppPath.Upload}-${ImageType.Avatar}`)
+  @UseInterceptors(FileInterceptor(ImageType.Avatar))
   public async uploadAvatar(@Req() req: Request, @UploadedFile() file: Express.Multer.File) {
     const formData = new FormData()
-    formData.append('avatar', Buffer.from(file.buffer), file.originalname)
-    const { data:avatarData } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Uploader}/upload/avatar`, formData, {
+    formData.append(ImageType.Avatar, Buffer.from(file.buffer), file.originalname)
+    const { data:avatarData } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Uploader}/${AppPath.Upload}/${ImageType.Avatar}`, formData, {
       headers: {
         'Content-Type': req.headers['content-type'],
         ...formData.getHeaders()
       }
     });
-    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.UpdateAvatar}`, {avatarId:avatarData.id}, {
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/${AppPath.Upload}-${ImageType.Avatar}`, {avatarId:avatarData.id}, {
       headers: {
         'Authorization': req.headers['authorization']
       }

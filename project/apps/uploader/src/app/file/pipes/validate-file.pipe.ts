@@ -10,7 +10,6 @@ export class FileValidationPipe implements PipeTransform {
     if (!fileExtension || !ALLOWED_MIMETYPES.includes(fileExtension)) {
       throw new BadRequestException(FileError.MimetypeError);
     }
-    console.log(value)
     const maxSize = fieldname === ImageType.Avatar
       ? MaxImageSizeInByte.Avatar
       : MaxImageSizeInByte.Photo;

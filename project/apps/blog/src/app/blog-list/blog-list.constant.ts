@@ -8,6 +8,7 @@ export const BlogListError = {
 export const BlogListMessages = {
   ShowSingle: 'Publication is showing',
   ShowAll: 'List of publications is showing',
+  NewsSent: 'Publications sent',
 } as const;
 
 export const DefaultPostsLimit ={

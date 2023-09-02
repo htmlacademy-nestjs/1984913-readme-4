@@ -9,6 +9,16 @@ export class LikeRepository implements CRUDRepository<LikeEntity, number, Like> 
   constructor(private readonly prisma: PrismaService) {}
 
   public async create(item: LikeEntity): Promise<Like> {
+    await this.prisma.publication.update(
+      {
+        where: {
+          postId:item.postId
+        },
+        data:{
+          likesCount: {increment:1}
+        }
+      }
+    )
   return await this.prisma.like.create({data: {...item.toObject()}})
   }
 
@@ -21,6 +31,16 @@ export class LikeRepository implements CRUDRepository<LikeEntity, number, Like> 
   }
 
   public async update(postId: number, item: LikeEntity): Promise<Like> {
+    await this.prisma.publication.update(
+      {
+        where: {
+          postId
+        },
+        data:{
+          likesCount: item.likedByUsersIds.length
+        }
+      }
+    )
     return await this.prisma.like.update({
       where: {
         postId

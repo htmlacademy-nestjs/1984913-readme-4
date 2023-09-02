@@ -1,11 +1,11 @@
 import { CRUDRepository } from '@project/util/util-types';
 import { BlogPublication, PublicationStatus, PublicationType } from '@project/shared/app-types';
+import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaPublication } from './utils/adapt-prisma-publication';
-import { PostQuery } from '../query/post.query';
 import { BlogPublicationEntity } from './entity/blog-publication-entity.type';
-import { SearchPostsQuery } from '../query/search.query';
+import { formatTags } from './utils/helpers';
 
 @Injectable()
 export class PublicationRepository implements CRUDRepository<BlogPublicationEntity, number, BlogPublication> {
@@ -15,10 +15,16 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     const data = {
       ...item.toObject(),
       userId: item._userId,
-      originUserId: item._originUserId
+      originUserId: item._originUserId,
+      originId: item._originId,
+    }
+    if(item.tags){
+      data.tags = formatTags(item.tags)
     }
     delete data._userId;
     delete data._originUserId;
+    delete data._id;
+    delete data._originId;
     const publication = await this.prisma.publication.create({ data });
     return adaptPrismaPublication(publication)
   }
@@ -27,18 +33,38 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
     const publication = await this.prisma.publication.findFirst({
       where: {
         postId
-      }
+      },
+      include: {
+        comments: true,
+        likes: true,
+      },
     });
     return adaptPrismaPublication(publication)
   }
 
-  public async findAll({ limit, page, sortBy, type, sortDirection, user }: PostQuery): Promise<BlogPublication[]> {
-    const publications = await this.prisma.publication.findMany({
+  public async findRepost(postId: number, userId:string): Promise<BlogPublication | null> {
+    const publication = await this.prisma.publication.findFirst({
+      where: {
+      AND:{
+        originId:postId,
+        userId
+      }},
+      include: {
+        comments: true,
+        likes: true,
+      },
+    });
+    return adaptPrismaPublication(publication)
+  }
+
+  public async findAll({ limit, page, sortBy, type, sortDirection, user, tag }: PostQuery): Promise<BlogPublication[]> {
+    const queryParams = {
       where: {
         AND: {
           status: PublicationStatus.Posted,
           type: type as PublicationType,
-          userId: user
+          userId: user,
+          tags:undefined
         }
       },
       take: limit,
@@ -50,13 +76,22 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
         { [sortBy]: sortDirection }
       ],
       skip: page > 0 ? limit * (page - 1) : undefined,
-    });
+    }
+    if (tag) {
+      queryParams.where.AND.tags = { has: tag };
+    }
+    const publications = await this.prisma.publication.findMany(queryParams);
     return publications.map((publication) => adaptPrismaPublication(publication))
   }
+
   public async getFullList(): Promise<BlogPublication[]> {
     const publications = await this.prisma.publication.findMany({
       where: {
           status: PublicationStatus.Posted
+      },
+      include: {
+        comments: true,
+        likes: true,
       },
     });
     return publications.map((publication) => adaptPrismaPublication(publication))
@@ -100,6 +135,7 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
   public async update(postId: number, item: BlogPublicationEntity): Promise<BlogPublication> {
     const data = {
       ...item.toObject(),
+      tags:formatTags(item.tags),
       userId: item._userId,
       originUserId: item._originUserId
     }
@@ -109,7 +145,11 @@ export class PublicationRepository implements CRUDRepository<BlogPublicationEnti
 
     const publication = await this.prisma.publication.update({
       where: { postId },
-      data
+      data,
+      include: {
+        comments: true,
+        likes: true,
+      }
     });
     return adaptPrismaPublication(publication)
   }

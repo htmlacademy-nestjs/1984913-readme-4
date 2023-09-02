@@ -10,14 +10,14 @@ export class LikesService {
   constructor(
     private readonly likeRepository: LikeRepository,
     private readonly publicationRepository: PublicationRepository,
-    ) { }
+  ) { }
 
-  private async checkPostedStatus(id:number){
+  private async checkPostedStatus(id: number) {
     const publicationStatus = (await this.publicationRepository.findById(id)).status;
     return publicationStatus === PublicationStatus.Posted;
   }
 
-  public async create(postId: number, userId:string) {
+  public async create(postId: number, userId: string) {
     const like = { postId, likedByUsersIds: [userId] };
     const likeEntity = new LikeEntity(like);
     return this.likeRepository.create(likeEntity);
@@ -29,13 +29,13 @@ export class LikesService {
 
   public async changeLikePublication(postId: number, userId: string) {
     const status = await this.checkPostedStatus(postId);
-    if(!status){
+    if (!status) {
       throw new BadRequestException(LikesError.PublicationNotPosted)
     }
 
     const likesInfo = await this.findByPostId(postId)
-    if(!likesInfo){
-      return await this.create(postId,userId)
+    if (!likesInfo) {
+      return await this.create(postId, userId)
     }
 
     const likesData = likesInfo.likedByUsersIds;

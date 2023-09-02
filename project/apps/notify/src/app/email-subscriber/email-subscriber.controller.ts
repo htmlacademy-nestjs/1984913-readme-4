@@ -5,7 +5,7 @@ import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { RabbitRouting } from '@project/shared/app-types';
 import { MailService } from '../mail/mail.service';
 import { NewsletterDto } from './dto/newsletter.dto';
-import dayjs from 'dayjs';
+import { getNewPosts } from './utils/get-new-posts';
 
 @Controller()
 export class EmailSubscriberController {
@@ -33,9 +33,7 @@ export class EmailSubscriberController {
     const { email, posts } = dto;
     const recipient = await this.subscriberService.getSubscriber(email);
     if (recipient && posts.length > 0) {
-      const newPosts = posts.filter((post) =>
-        dayjs(post.createdDate).isAfter(recipient.dateNotify)
-      );
+      const newPosts = getNewPosts(dto, recipient);
       if (newPosts.length > 0) {
         await this.mailService.sendNewsletter(recipient.email, newPosts);
         this.subscriberService.updateDateSent(recipient);

@@ -1,16 +1,16 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Req, Controller, Get, HttpStatus,HttpCode, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard, fillObject } from '@project/util/util-core';
 import { UserRdo } from './rdo/user.rdo';
-import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { API_TAG_NAME, AuthError, AuthMessages, AuthPath } from './authentication.constant';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoidValidationPipe } from '@project/shared/shared-pipes';
-import { UserInfoRdo } from './rdo/user-info.rdo';
-import { ChangePasswordDto } from './dto/change-password.dto';
 import { NotifyService } from '../notify/notify.service';
+import { RequestWithUser, RequestWithUserPayload } from '@project/shared/app-types';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { ChangePasswordDto, CreateUserDto } from '@project/shared/shared-dto';
 
 @ApiTags(API_TAG_NAME)
 @Controller(AuthPath.Main)
@@ -41,24 +41,21 @@ import { NotifyService } from '../notify/notify.service';
       status: HttpStatus.UNAUTHORIZED,
       description: AuthError.InvalidData,
     })
+    @UseGuards(LocalAuthGuard)
     @Post(AuthPath.Login)
-    public async login(@Body() dto: LoginUserDto) {
-      const verifiedUser = await this.authService.verifyUser(dto);
-      const loggedUser = await this.authService.createUserToken(verifiedUser);
-      const userData = Object.assign(verifiedUser, loggedUser)
-      return fillObject(LoggedUserRdo, userData);
+    public async login(@Req() {user}: RequestWithUser) {
+    return await this.authService.createUserToken(user);
     }
 
     @ApiResponse({
-      type: UserInfoRdo,
+      type: UserRdo,
       status: HttpStatus.OK,
       description: AuthMessages.UserFound
     })
-    @UseGuards(JwtAuthGuard)
     @Get(AuthPath.Id)
     public async show(@Param('id', MongoidValidationPipe) id: string) {
       const existUser = await this.authService.getUser(id);
-      return fillObject(UserInfoRdo, existUser);
+      return fillObject(UserRdo, existUser);
     }
 
     @ApiResponse({
@@ -68,8 +65,35 @@ import { NotifyService } from '../notify/notify.service';
     })
     @UseGuards(JwtAuthGuard)
     @Post(AuthPath.ChangePassword)
-    public async changePassword(@Param('id', MongoidValidationPipe) id: string, @Body() dto:ChangePasswordDto) {
-    return this.authService.changePassword(id, dto);
+    public async changePassword(@Req() { user }: RequestWithUserPayload, @Body() dto:ChangePasswordDto) {
+    return this.authService.changePassword(user.sub, dto);
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description:AuthMessages.Refresh
+    })
+    @Post(AuthPath.Refresh)
+    @UseGuards(JwtRefreshGuard)
+    public async refreshToken(@Req() { user }: RequestWithUser) {
+      return this.authService.createUserToken(user);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post(AuthPath.Check)
+    public async checkToken(@Req() { user: payload }: RequestWithUserPayload) {
+      return payload;
+    }
+
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description:AuthMessages.AvatarAdded
+    })
+    @UseGuards(JwtAuthGuard)
+    @Post(AuthPath.UpdateAvatar)
+    public async updateAvatar(@Req() { user }: RequestWithUserPayload, @Body('avatarId') avatarId:string) {
+      return this.authService.updateAvatar(user.sub, avatarId);
     }
   }
 

@@ -6,16 +6,27 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtAccessStrategy, getJwtOptions } from '@project/util/util-core';
 import { NotifyModule } from '../notify/notify.module';
+import { LocalStrategy } from './strategies/local.strategy';
+import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { RefreshTokenModule } from '../refresh-token/refresh-token.module';
 
 @Module({
-  imports: [BlogUserModule,
-  JwtModule.registerAsync({
-    inject:[ConfigService],
-    useFactory: getJwtOptions
-  }),
-  NotifyModule,
+  imports: [
+    BlogUserModule,
+    JwtModule.registerAsync({
+      imports: [],
+      inject: [ConfigService],
+      useFactory: getJwtOptions,
+    }),
+    NotifyModule,
+    RefreshTokenModule,
   ],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService, JwtAccessStrategy],
+  providers: [
+    AuthenticationService,
+    JwtAccessStrategy,
+    LocalStrategy,
+    JwtRefreshStrategy,
+  ],
 })
 export class AuthenticationModule {}

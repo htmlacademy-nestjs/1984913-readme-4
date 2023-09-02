@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
+import { TokenPayload, User } from '@project/shared/app-types'
 
 export async function getJwtOptions(configService: ConfigService): Promise<JwtModuleOptions> {
   return {
@@ -9,4 +10,12 @@ export async function getJwtOptions(configService: ConfigService): Promise<JwtMo
       algorithm: 'HS256',
     }
   }
+}
+
+export function createJWTPayload(user: User): TokenPayload {
+  return {
+    sub: user._id,
+    email: user.email,
+    name: user.name,
+  };
 }

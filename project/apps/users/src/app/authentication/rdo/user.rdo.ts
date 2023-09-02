@@ -32,6 +32,13 @@ export class UserRdo {
   public avatar: string;
 
   @ApiProperty({
+    description: 'User registration date',
+  })
+  @Expose({ name: 'createdAt'})
+  @Transform(({obj}) => obj.createdAt.toString())
+  public createdAt: string;
+
+  @ApiProperty({
     description: 'User posts amount',
     example: '0'
   })

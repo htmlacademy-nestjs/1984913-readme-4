@@ -1,19 +1,26 @@
-import { CRUDRepository } from '@project/util/util-types';
 import { Injectable } from '@nestjs/common';
 import { CommentEntity } from './comment.entity';
 import { IComment } from '@project/shared/app-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { adaptPrismaComment } from './utils/adapt-prisma-comment';
-import { CommentQuery } from '../query/comment.query';
+import { CommentQuery } from '@project/shared/shared-queries';
 
 @Injectable()
-export class CommentRepository implements CRUDRepository<CommentEntity, number, IComment> {
+export class CommentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   public async create(item: CommentEntity): Promise<IComment> {
     const data = { ...item.toObject(), userId: item._userId};
     delete data._userId;
     const comment = await this.prisma.comment.create({data})
+   await this.prisma.publication.update({
+    where:{
+      postId:item.postId
+    },
+    data:{
+      commentsCount:{increment:1}
+    }
+   })
     return adaptPrismaComment(comment);
   }
 
@@ -39,17 +46,15 @@ export class CommentRepository implements CRUDRepository<CommentEntity, number, 
     })
   }
 
-  public async update(commentId: number, item: CommentEntity): Promise<IComment> {
-    const comment = await this.prisma.comment.update({
-      where: {
-        commentId
-      },
-      data: {...item.toObject()}
-    });
-    return adaptPrismaComment(comment);
-  }
-
-  public async destroy(commentId: number): Promise<void> {
+  public async destroy(commentId: number, postId:number): Promise<void> {
     await this.prisma.comment.delete({ where: {commentId} });
+    await this.prisma.publication.update({
+      where:{
+        postId
+      },
+      data:{
+        commentsCount:{decrement:1}
+      }
+     })
   }
 }

@@ -1,5 +1,5 @@
 import { ArgumentMetadata, BadRequestException, PipeTransform } from "@nestjs/common";
-import { CreateBlogPublicationDto } from "../dto/create/blog-publication-dto.type";
+import { CreateBlogPublicationDto } from "@project/shared/shared-dto";
 import { validate } from "class-validator";
 import { adaptCreateDtoPublication } from "../utils/adapt-dto-publication";
 import { VALIDATION_ARGUMENT_TYPE } from "../publication.constant";

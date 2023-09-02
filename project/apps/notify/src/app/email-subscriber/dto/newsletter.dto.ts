@@ -1,4 +1,4 @@
-import { IsArray, IsEmail } from 'class-validator';
+import { IsArray, IsEmail, IsString } from 'class-validator';
 import { EmailError} from '../email-subscriber.constant';
 import { BlogPublication } from '@project/shared/app-types';
 
@@ -8,5 +8,8 @@ export class NewsletterDto {
 
   @IsArray()
   public posts: BlogPublication[];
+
+  @IsString()
+  public id: string;
 
 }

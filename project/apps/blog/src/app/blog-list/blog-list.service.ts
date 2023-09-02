@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationRepository } from '../publication/publication.repository';
 import { BlogPublication } from '@project/shared/app-types';
 import { BlogListError } from './blog-list.constant';
-import { PostQuery } from '../query/post.query';
-import { SearchPostsQuery } from '../query/search.query';
+import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
+
 
 @Injectable()
 export class BlogListService {

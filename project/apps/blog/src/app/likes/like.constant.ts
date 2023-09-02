@@ -7,12 +7,12 @@ export const LikesError = {
 
 export const LikesMessages = {
   Add : "Like added successfully",
-  Remove: "Like removed"
+  Show: "Like showing"
 } as const;
 
 export const LikesPath = {
   Main:'likes',
-  Id:'/:postId',
+  Id:':postId',
 }as const;
 
 export const  API_TAG_NAME ='likes'

@@ -1,25 +1,23 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PublicationRepository } from './publication.repository';
-import dayjs from 'dayjs';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
-import { CreateBlogPublicationDto } from './dto/create/blog-publication-dto.type';
+import { CreateBlogPublicationDto, UpdateBlogPublicationDto } from '@project/shared/shared-dto';
 import { TypeEntityAdapter } from './utils/entity-adapter';
-import { UpdateBlogPublicationDto } from './dto/update/blog-publication-dto.type';
 import { PublicationStatus } from '@prisma/client';
+import { getDate } from './utils/helpers';
 
 @Injectable()
 export class PublicationService {
   constructor(
     private readonly publicationRepository: PublicationRepository,
-  ) {}
+  ) { }
 
-  public async create(dto:  CreateBlogPublicationDto ) {
+  public async create(dto: CreateBlogPublicationDto, userId: string) {
     const publication = {
       ...dto,
-      _userId: '1',
-      _originUserId: '1',
-      createdDate: dayjs().toISOString(),
-      postedDate: dayjs().toISOString(),
+      _userId: userId,
+      createdDate: getDate(),
+      postedDate: getDate(),
       status: PublicationStatus.posted,
       likesCount: DEFAULT_AMOUNT,
       commentsCount: DEFAULT_AMOUNT,
@@ -29,22 +27,49 @@ export class PublicationService {
     return this.publicationRepository.create(postEntity);
   }
 
-  public async update(postId: number, dto: UpdateBlogPublicationDto ) {
+  public async update(postId: number, dto: UpdateBlogPublicationDto, userId: string) {
     const publication = await this.findByPostId(postId);
-    const updatedPublication = {...publication, ...dto}
+    if (userId !== publication._userId) {
+      throw new BadRequestException(PublicationsError.NotUserAuthor)
+    }
+    const updatedPublication = { ...publication, ...dto, postedDate: getDate() }
     const postEntity = await new TypeEntityAdapter[updatedPublication.type](updatedPublication);
     return this.publicationRepository.update(postId, postEntity);
   }
 
   public async findByPostId(id: number) {
-    const publication  = await this.publicationRepository.findById(id);
+    const publication = await this.publicationRepository.findById(id);
     if (!publication) {
       throw new NotFoundException(PublicationsError.PublicationNotFound);
     }
     return publication;
   }
 
-  public async remove(postId: number) {
+  public async repost(id: number, userId: string) {
+    const originalPost = await this.findByPostId(id);
+    const isAlreadyReposted = await this.publicationRepository.findRepost(id, userId)
+    if (isAlreadyReposted) {
+      throw new BadRequestException(PublicationsError.AlreadyReposted)
+    }
+    const publication = {
+      ...originalPost as CreateBlogPublicationDto,
+      isReposted: true,
+      _userId: userId,
+      _originUserId: originalPost._userId,
+      _originId: originalPost._id,
+      postedDate: getDate(),
+      likesCount: DEFAULT_AMOUNT,
+      commentsCount: DEFAULT_AMOUNT,
+    };
+    const postEntity = await new TypeEntityAdapter[publication.type](publication);
+    return this.publicationRepository.create(postEntity);
+  }
+
+  public async remove(postId: number, userId: string) {
+    const publication = await this.findByPostId(postId);
+    if (userId !== publication._userId) {
+      throw new BadRequestException(PublicationsError.NotUserAuthor)
+    }
     return this.publicationRepository.destroy(postId);
   }
 

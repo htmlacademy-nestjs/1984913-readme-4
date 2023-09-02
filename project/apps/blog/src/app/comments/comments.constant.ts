@@ -13,11 +13,6 @@ export const CommentsMessages = {
 
 export const DEFAULT_COMMENTS_LIMIT = 50;
 
-export const CommentTextLength = {
-  Min: 10,
-  Max: 300,
-};
-
 export const CommentsPath = {
   Main:'comments',
   Add:'add',

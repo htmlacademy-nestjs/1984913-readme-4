@@ -11,16 +11,6 @@ export const BlogListMessages = {
   NewsSent: 'Publications sent',
 } as const;
 
-export const DefaultPostsLimit ={
-  Query:25,
-  Search:20
-}as const;
-
-export const DefaultSortParam = {
-  Direction: 'desc',
-  Type: 'postedDate',
-} as const;
-
 export const BlogListPath = {
   Main: 'blog-list',
   Id: ':id',

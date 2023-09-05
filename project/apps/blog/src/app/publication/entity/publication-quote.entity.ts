@@ -1,7 +1,7 @@
 import {QuotePublication} from '@project/shared/app-types';
 import { PublicationEntity } from './publication.entity';
 
-export class QuotePublicationEntity extends PublicationEntity implements QuotePublication {
+export class PublicationQuoteEntity extends PublicationEntity implements QuotePublication {
   public text: string;
   public author: string;
 

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PublicationRdo } from './publication.rdo';
 import { Expose } from 'class-transformer';
 
-export class LinkPublicationRdo extends PublicationRdo {
+export class PublicationLinkRdo extends PublicationRdo {
   @ApiProperty({
     description: 'Link text',
     example: 'http://example.com'

@@ -1,7 +1,7 @@
 import {LinkPublication} from '@project/shared/app-types';
 import { PublicationEntity } from './publication.entity';
 
-export class LinkPublicationEntity extends PublicationEntity implements LinkPublication {
+export class PublicationLinkEntity extends PublicationEntity implements LinkPublication {
   public link: string;
   public description: string;
 

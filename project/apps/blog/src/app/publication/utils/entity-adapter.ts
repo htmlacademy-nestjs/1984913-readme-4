@@ -1,13 +1,13 @@
-import { LinkPublicationEntity } from "../entity/publication-link.entity";
-import { PhotoPublicationEntity } from "../entity/publication-photo.entity";
-import { QuotePublicationEntity } from "../entity/publication-quote.entity";
-import { TextPublicationEntity } from "../entity/publication-text.entity";
-import { VideoPublicationEntity } from "../entity/publication-video.entity";
+import { PublicationLinkEntity } from "../entity/publication-link.entity";
+import { PublicationPhotoEntity } from "../entity/publication-photo.entity";
+import { PublicationQuoteEntity } from "../entity/publication-quote.entity";
+import { PublicationTextEntity } from "../entity/publication-text.entity";
+import { PublicationVideoEntity } from "../entity/publication-video.entity";
 
 export const TypeEntityAdapter = {
-  'link': LinkPublicationEntity,
-  'photo': PhotoPublicationEntity,
-  'quote': QuotePublicationEntity,
-  'text': TextPublicationEntity,
-  'video': VideoPublicationEntity
+  'link': PublicationLinkEntity,
+  'photo': PublicationPhotoEntity,
+  'quote': PublicationQuoteEntity,
+  'text': PublicationTextEntity,
+  'video': PublicationVideoEntity
 }

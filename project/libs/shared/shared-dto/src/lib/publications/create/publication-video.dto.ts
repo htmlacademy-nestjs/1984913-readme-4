@@ -3,7 +3,7 @@ import { CreatePublicationDto } from "./publication.dto";
 import { IsString, IsUrl, Matches, MaxLength, MinLength } from "class-validator";
 import { PublicationTitleLength, PublicationsError, RegExpPattern  } from "../publication-dto.constant";
 
-export class CreateVideoPublicationDto extends CreatePublicationDto {
+export class CreatePublicationVideoDto extends CreatePublicationDto {
   @ApiProperty({
     description: 'Title of post',
     example: 'Title'

@@ -2,7 +2,7 @@ import { IsString } from "class-validator";
 import { CreatePublicationDto } from "./publication.dto";
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreatePhotoPublicationDto extends CreatePublicationDto {
+export class CreatePublicationPhotoDto extends CreatePublicationDto {
   @ApiProperty({
     description: 'Publication photo id',
     example: '1'

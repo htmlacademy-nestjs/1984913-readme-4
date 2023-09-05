@@ -4,7 +4,7 @@ import { AxiosExceptionFilter } from '../filters/axios-exception.filter';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { ApplicationServiceURL } from '../app.config';
 import { AppPath, BlogMessages, ControllerName, ImageType } from '../app.constant';
-import { CreateBlogPublicationDto, CreateLinkPublicationDto, CreatePhotoPublicationDto, CreateQuotePublicationDto, CreateTextPublicationDto, CreateVideoPublicationDto, UpdateBlogPublicationDto, UpdateLinkPublicationDto, UpdatePhotoPublicationDto, UpdateQuotePublicationDto, UpdateTextPublicationDto, UpdateVideoPublicationDto } from '@project/shared/shared-dto';
+import { CreateBlogPublicationDto, CreatePublicationLinkDto, CreatePublicationPhotoDto, CreatePublicationQuoteDto, CreatePublicationTextDto, CreatePublicationVideoDto, UpdateBlogPublicationDto, UpdatePublicationLinkDto, UpdatePublicationPhotoDto, UpdatePublicationQuoteDto, UpdatePublicationTextDto, UpdatePublicationVideoDto } from '@project/shared/shared-dto';
 import { PostQuery, SearchPostsQuery } from '@project/shared/shared-queries';
 import { getUserInfo, getUserInfoForAll } from '../utils/get-user-info';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -14,7 +14,7 @@ import FormData from 'form-data'
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags(ControllerName.Blog)
-@ApiExtraModels(CreateLinkPublicationDto, CreatePhotoPublicationDto, CreateQuotePublicationDto, CreateTextPublicationDto,CreateVideoPublicationDto, UpdateLinkPublicationDto, UpdatePhotoPublicationDto, UpdateQuotePublicationDto, UpdateTextPublicationDto, UpdateVideoPublicationDto)
+@ApiExtraModels(CreatePublicationLinkDto, CreatePublicationPhotoDto, CreatePublicationQuoteDto, CreatePublicationTextDto,CreatePublicationVideoDto, UpdatePublicationLinkDto, UpdatePublicationPhotoDto, UpdatePublicationQuoteDto, UpdatePublicationTextDto, UpdatePublicationVideoDto)
 @Controller(ControllerName.Blog)
 @UseFilters(AxiosExceptionFilter)
 export class BlogController {

@@ -2,7 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { UpdatePublicationDto } from "./publication.dto";
 import { PublicationAnnouncementLength, PublicationTitleLength, TextPublicationLength } from "../publication-dto.constant";
 import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
-export class UpdateTextPublicationDto extends UpdatePublicationDto{
+
+export class UpdatePublicationTextDto extends UpdatePublicationDto{
   @ApiProperty({
     description: 'Text of post',
     example: 'Text'

@@ -1,7 +1,7 @@
 import {TextPublication} from '@project/shared/app-types';
 import { PublicationEntity } from './publication.entity';
 
-export class TextPublicationEntity extends PublicationEntity implements TextPublication {
+export class PublicationTextEntity extends PublicationEntity implements TextPublication {
   public text: string;
   public title: string;
   public announcement: string;

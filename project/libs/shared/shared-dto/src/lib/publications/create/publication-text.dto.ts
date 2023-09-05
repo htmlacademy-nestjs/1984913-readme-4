@@ -3,7 +3,7 @@ import { CreatePublicationDto } from "./publication.dto";
 import { PublicationAnnouncementLength, PublicationTitleLength, TextPublicationLength } from "../publication-dto.constant";
 import { IsString, MaxLength, MinLength } from "class-validator";
 
-export class CreateTextPublicationDto extends CreatePublicationDto{
+export class CreatePublicationTextDto extends CreatePublicationDto{
   @ApiProperty({
     description: 'Text of post',
     example: 'Text'

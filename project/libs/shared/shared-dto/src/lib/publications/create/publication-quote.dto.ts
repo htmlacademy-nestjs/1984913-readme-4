@@ -3,7 +3,7 @@ import { CreatePublicationDto } from "./publication.dto";
 import { IsString, MaxLength, MinLength } from "class-validator";
 import { PublicationAuthorLength, QuotePublicationLength } from "../publication-dto.constant";
 
-export class CreateQuotePublicationDto extends CreatePublicationDto {
+export class CreatePublicationQuoteDto extends CreatePublicationDto {
   @ApiProperty({
     description: 'Text of publication  quote',
     example: 'Quote'

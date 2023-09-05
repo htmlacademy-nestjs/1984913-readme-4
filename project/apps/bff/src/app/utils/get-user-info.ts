@@ -1,9 +1,9 @@
-import { Publication } from '@prisma/client';
+import { PrismaPublication } from '@project/shared/app-types';
 import { ApplicationServiceURL } from '../app.config';
 import { HttpService } from '@nestjs/axios';
 
 export async function getUserInfo(
-  postData: Publication,
+  postData: PrismaPublication,
   httpService: HttpService
 ) {
   const userId = postData.isReposted ? postData.originUserId : postData.userId;
@@ -15,10 +15,10 @@ const {email, name, id} = userData
 }
 
 export async function getUserInfoForAll(
-  postData: Publication[],
+  postData: PrismaPublication[],
   httpService: HttpService
 ) {
-  return await Promise.all(postData.map(async (item:Publication)=>{
+  return await Promise.all(postData.map(async (item:PrismaPublication)=>{
     const userInfo = await getUserInfo(item, httpService);
     return {...item, userInfo}
   }))

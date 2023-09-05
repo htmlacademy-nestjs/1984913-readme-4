@@ -1,7 +1,6 @@
-import { Comment } from "@prisma/client";
-import { IComment } from '@project/shared/app-types';
+import { IComment, PrismaComment } from '@project/shared/app-types';
 
-export function adaptPrismaComment(prismaComment: Comment | null): IComment {
+export function adaptPrismaComment(prismaComment: PrismaComment| null): IComment {
   if (prismaComment) {
     const comment = {
       ...prismaComment,

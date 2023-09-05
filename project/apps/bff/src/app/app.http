@@ -178,7 +178,7 @@ Content-Type: application/json
 Authorization: Bearer {{AToken}}
 
 {
-  "postId": 62,
+  "postId": 61,
   "text": "Comment text for publication"
 }
 

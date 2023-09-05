@@ -1,7 +1,6 @@
-import { Publication } from "@prisma/client";
-import { BlogPublication, PublicationStatus, PublicationType } from "@project/shared/app-types";
+import { BlogPublication, PrismaPublication, PublicationStatus, PublicationType } from "@project/shared/app-types";
 
-export function adaptPrismaPublication(prismaPublication: Publication | null): BlogPublication {
+export function adaptPrismaPublication(prismaPublication: PrismaPublication | null): BlogPublication {
   if (prismaPublication) {
     const publication = {
       ...prismaPublication,

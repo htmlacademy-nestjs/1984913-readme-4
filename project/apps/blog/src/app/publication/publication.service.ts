@@ -3,8 +3,8 @@ import { PublicationRepository } from './publication.repository';
 import { DEFAULT_AMOUNT, PublicationsError } from './publication.constant';
 import { CreateBlogPublicationDto, UpdateBlogPublicationDto } from '@project/shared/shared-dto';
 import { TypeEntityAdapter } from './utils/entity-adapter';
-import { PublicationStatus } from '@prisma/client';
 import { getDate } from './utils/helpers';
+import { PublicationStatus } from '@project/shared/app-types';
 
 @Injectable()
 export class PublicationService {
@@ -18,7 +18,7 @@ export class PublicationService {
       _userId: userId,
       createdDate: getDate(),
       postedDate: getDate(),
-      status: PublicationStatus.posted,
+      status: PublicationStatus.Posted,
       likesCount: DEFAULT_AMOUNT,
       commentsCount: DEFAULT_AMOUNT,
       isReposted: false,

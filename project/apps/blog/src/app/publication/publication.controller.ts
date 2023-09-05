@@ -3,7 +3,7 @@ import { PublicationService } from './publication.service';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { API_TAG_NAME, PublicationMessages, PublicationPath, PublicationsError } from './publication.constant';
 import { PublicationRdo } from './rdo/publication.rdo';
-import { CreateBlogPublicationDto, CreateLinkPublicationDto, CreatePhotoPublicationDto, CreateQuotePublicationDto, CreateTextPublicationDto, CreateVideoPublicationDto, UpdateBlogPublicationDto, UpdateLinkPublicationDto, UpdatePhotoPublicationDto, UpdateQuotePublicationDto, UpdateTextPublicationDto, UpdateVideoPublicationDto } from '@project/shared/shared-dto';
+import { CreateBlogPublicationDto, CreatePublicationLinkDto, CreatePublicationPhotoDto, CreatePublicationQuoteDto, CreatePublicationTextDto, CreatePublicationVideoDto, UpdateBlogPublicationDto, UpdatePublicationLinkDto, UpdatePublicationPhotoDto, UpdatePublicationQuoteDto, UpdatePublicationTextDto, UpdatePublicationVideoDto } from '@project/shared/shared-dto';
 import { adaptRdoPublication } from './utils/adapt-rdo-publication';
 import { CreatePostValidationPipe } from './pipes/create-post-validation.pipe';
 import { UpdatePostValidationPipe } from './pipes/update-post-validation.pipe';
@@ -13,7 +13,7 @@ import { RequestWithUserPayload } from '@project/shared/app-types';
 
 
 @ApiTags(API_TAG_NAME)
-@ApiExtraModels(CreateLinkPublicationDto, CreatePhotoPublicationDto, CreateQuotePublicationDto, CreateTextPublicationDto,CreateVideoPublicationDto, UpdateLinkPublicationDto, UpdatePhotoPublicationDto, UpdateQuotePublicationDto, UpdateTextPublicationDto, UpdateVideoPublicationDto)
+@ApiExtraModels(CreatePublicationLinkDto, CreatePublicationPhotoDto, CreatePublicationQuoteDto, CreatePublicationTextDto,CreatePublicationVideoDto, UpdatePublicationLinkDto, UpdatePublicationPhotoDto, UpdatePublicationQuoteDto, UpdatePublicationTextDto, UpdatePublicationVideoDto)
 @Controller(PublicationPath.Main)
 export class PublicationController {
   constructor(

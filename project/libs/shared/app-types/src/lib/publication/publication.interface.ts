@@ -1,4 +1,5 @@
-import { PublicationType, PublicationStatus } from '@prisma/client';
+import { PublicationStatus } from "./publication-status.enum";
+import { PublicationType } from "./publication-type.enum";
 
 export interface Publication {
   _id?: number;

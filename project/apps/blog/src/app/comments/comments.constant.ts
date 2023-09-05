@@ -11,8 +11,6 @@ export const CommentsMessages = {
   Remove: "Comment removed"
 } as const;
 
-export const DEFAULT_COMMENTS_LIMIT = 50;
-
 export const CommentsPath = {
   Main:'comments',
   Add:'add',

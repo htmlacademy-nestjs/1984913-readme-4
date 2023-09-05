@@ -1,25 +1,19 @@
 import { plainToInstance } from "class-transformer";
-import { CreateLinkPublicationDto, CreatePhotoPublicationDto, CreateQuotePublicationDto, CreateTextPublicationDto, CreateVideoPublicationDto , CreateBlogPublicationDto } from "@project/shared/shared-dto";
+import { CreatePublicationLinkDto, CreatePublicationPhotoDto, CreatePublicationQuoteDto, CreatePublicationTextDto, CreatePublicationVideoDto , CreateBlogPublicationDto,UpdatePublicationLinkDto, UpdatePublicationPhotoDto, UpdatePublicationQuoteDto, UpdatePublicationTextDto,UpdatePublicationVideoDto,UpdateBlogPublicationDto  } from "@project/shared/shared-dto";
 import { PublicationType } from "@project/shared/app-types";
-import { UpdateLinkPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-link.dto";
-import { UpdatePhotoPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-photo.dto";
-import { UpdateQuotePublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-quote.dto";
-import { UpdateTextPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-text.dto";
-import { UpdateVideoPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/publication-video.dto";
-import { UpdateBlogPublicationDto } from "../../../../../../libs/shared/shared-dto/src/lib/publications/update/blog-publication-dto.type";
 
 export function adaptCreateDtoPublication(dto: CreateBlogPublicationDto) {
   switch (dto.type) {
     case PublicationType.Link:
-      return plainToInstance(CreateLinkPublicationDto, dto);
+      return plainToInstance(CreatePublicationLinkDto, dto);
     case PublicationType.Photo:
-      return plainToInstance(CreatePhotoPublicationDto, dto);
+      return plainToInstance(CreatePublicationPhotoDto, dto);
     case PublicationType.Quote:
-      return plainToInstance(CreateQuotePublicationDto, dto);
+      return plainToInstance(CreatePublicationQuoteDto, dto);
     case PublicationType.Text:
-      return plainToInstance(CreateTextPublicationDto, dto);
+      return plainToInstance(CreatePublicationTextDto, dto);
     case PublicationType.Video:
-      return plainToInstance(CreateVideoPublicationDto, dto);
+      return plainToInstance(CreatePublicationVideoDto, dto);
   }
 }
 
@@ -27,14 +21,14 @@ export function adaptCreateDtoPublication(dto: CreateBlogPublicationDto) {
 export function adaptUpdateDtoPublication(dto: UpdateBlogPublicationDto) {
   switch (dto.type) {
     case PublicationType.Link:
-      return plainToInstance(UpdateLinkPublicationDto, dto);
+      return plainToInstance(UpdatePublicationLinkDto, dto);
     case PublicationType.Photo:
-      return plainToInstance(UpdatePhotoPublicationDto, dto);
+      return plainToInstance(UpdatePublicationPhotoDto, dto);
     case PublicationType.Quote:
-      return plainToInstance(UpdateQuotePublicationDto, dto);
+      return plainToInstance(UpdatePublicationQuoteDto, dto);
     case PublicationType.Text:
-      return plainToInstance(UpdateTextPublicationDto, dto);
+      return plainToInstance(UpdatePublicationTextDto, dto);
     case PublicationType.Video:
-      return plainToInstance(UpdateVideoPublicationDto, dto);
+      return plainToInstance(UpdatePublicationVideoDto, dto);
   }
 }

@@ -1,7 +1,7 @@
 import {VideoPublication} from '@project/shared/app-types';
 import { PublicationEntity } from './publication.entity';
 
-export class VideoPublicationEntity extends PublicationEntity implements VideoPublication {
+export class PublicationVideoEntity extends PublicationEntity implements VideoPublication {
   public title: string;
   public link: string;
 

@@ -1,23 +1,22 @@
-import { Publication } from "@project/shared/app-types";
+import { Publication, PublicationType } from "@project/shared/app-types";
 import { fillObject } from "@project/util/util-core";
-import { LinkPublicationRdo } from "../rdo/publication-link.rdo";
-import { PhotoPublicationRdo } from "../rdo/publication-photo.rdo";
-import { QuotePublicationRdo } from "../rdo/publication-quote.rdo";
-import { TextPublicationRdo } from "../rdo/publication-text.rdo";
-import { VideoPublicationRdo } from "../rdo/publication-video.rdo";
-import { PublicationType } from "@prisma/client";
+import { PublicationLinkRdo } from "../rdo/publication-link.rdo";
+import { PublicationPhotoRdo } from "../rdo/publication-photo.rdo";
+import { PublicationQuoteRdo } from "../rdo/publication-quote.rdo";
+import { PublicationTextRdo } from "../rdo/publication-text.rdo";
+import { PublicationVideoRdo } from "../rdo/publication-video.rdo";
 
 export function adaptRdoPublication(publication: Publication) {
   switch (publication.type) {
-    case PublicationType.link:
-      return fillObject(LinkPublicationRdo, publication);
-    case PublicationType.photo:
-      return fillObject(PhotoPublicationRdo, publication);
-    case PublicationType.quote:
-      return fillObject(QuotePublicationRdo, publication);
-    case PublicationType.text:
-      return fillObject(TextPublicationRdo, publication);
-    case PublicationType.video:
-      return fillObject(VideoPublicationRdo, publication);
+    case PublicationType.Link:
+      return fillObject(PublicationLinkRdo, publication);
+    case PublicationType.Photo:
+      return fillObject(PublicationPhotoRdo, publication);
+    case PublicationType.Quote:
+      return fillObject(PublicationQuoteRdo, publication);
+    case PublicationType.Text:
+      return fillObject(PublicationTextRdo, publication);
+    case PublicationType.Video:
+      return fillObject(PublicationVideoRdo, publication);
     }
 }

@@ -1,7 +1,7 @@
 import {PhotoPublication} from '@project/shared/app-types';
 import { PublicationEntity } from './publication.entity';
 
-export class PhotoPublicationEntity extends PublicationEntity implements PhotoPublication {
+export class PublicationPhotoEntity extends PublicationEntity implements PhotoPublication {
   public photo: string;
 
   constructor(publicationData: PhotoPublication) {

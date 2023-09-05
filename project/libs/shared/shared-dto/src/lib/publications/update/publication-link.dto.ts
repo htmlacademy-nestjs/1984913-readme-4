@@ -3,7 +3,7 @@ import { UpdatePublicationDto } from "./publication.dto";
 import { IsOptional, IsString, IsUrl, MaxLength } from "class-validator";
 import { LINK_DESCRIPTION_LENGTH } from "../publication-dto.constant";
 
-export class UpdateLinkPublicationDto  extends UpdatePublicationDto{
+export class UpdatePublicationLinkDto  extends UpdatePublicationDto{
   @ApiProperty({
     description: 'Link text',
     example: 'http://example.com'

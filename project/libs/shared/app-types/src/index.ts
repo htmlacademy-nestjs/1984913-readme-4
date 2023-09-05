@@ -1,3 +1,5 @@
+export * from './lib/publication/prisma-types/prisma-publication.interface'
+export * from './lib/publication/prisma-types/prisma-comment.interface'
 export * from './lib/publication/publication-link.interface'
 export * from './lib/publication/publication-photo.interface'
 export * from './lib/publication/publication-quote.interface'

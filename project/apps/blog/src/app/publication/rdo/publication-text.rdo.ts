@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PublicationRdo } from './publication.rdo';
 import { Expose } from 'class-transformer';
 
-export class TextPublicationRdo extends PublicationRdo {
+export class PublicationTextRdo extends PublicationRdo {
   @ApiProperty({
     description: 'Text of post',
     example: 'Text'
